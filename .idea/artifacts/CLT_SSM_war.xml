@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="CLT-SSM:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="CLT-SSM.war">
+      <element id="artifact" artifact-name="CLT-SSM:war exploded" />
+    </root>
+  </artifact>
+</component>

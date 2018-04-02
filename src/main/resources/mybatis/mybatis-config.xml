@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--对参数null的处理，mysql默认，oracle会报错-->
+        <setting name="jdbcTypeForNull" value="NULL"/>
+        <!-- 是否开启驼峰命名规则映射-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--开启懒加载，使用association分步查询时候使用-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--表示开启懒加载后，在使用到分步的那个对象的时候才发送sql请求查询-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+    <!-- 为实体类创建别名-->
+    <typeAliases>
+        <!-- 扫描包下所有实体类(匿名内部类,接口除外),如果实体类有@Alias注解,就使用改别名,没有就使用实体类第一个字母小写作为别名-->
+        <package name="cn.clt.core.entity"/>
+    </typeAliases>
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--分页合理化,如果分页小于 pageNum<0时默认会查询第一页，pageNum>pages时会默认最后一页-->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+</configuration>
+
+
+

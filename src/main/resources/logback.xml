@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--Logback basicConfiguration-->
+<!--scan 配置文件自动加载 sanPeriod需san="true"起作用,默认milliseconds 还可设置seconds,minutes,hours-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!--获取时间戳字符串 遵循java.txt.SimpleDateFormat的格式 -->
+    <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
+    <!--<property scope = "local" name = "USER_HOME" value="/home/sebastien"/>-->
+    <!--<property scope="context" name = "USER_HOME" value="/home/sebastien1"/>-->
+    <!--<property scope="system" name = "USER_HOME" value="/home/sebastien2"/>-->
+    <!--定义变量值 可运用于上下文 格式${},lockback在替换变量时,local>context>system-->
+    <property name = "LOG_NAME" value = "ks-ssm"/>
+    <!--logger上下文 默认是default-->
+    <contextName>${LOG_NAME}</contextName>
+
+    <!--设置监听器,监听自身的状态信息,也可以设置configuratuon debug = "true" 来实现-->
+    <!--<statusListener class = "ch.qos.logback.core.status.OnConsoleStatusListener" />-->
+    <!--设置监听器,监听logger context上发生的事情,如：日志级别的变化-->
+    <!--<contextListener class = "ch.qos.logback.classic.jul.LevelChangePropagator"/>-->
+    <!--支持外部的配置文件-->
+    <!--<property resource = "application.properties"/>-->
+    <!--如果变量未定义,可指定默认是,格式如下-->
+    <!--${变量名:-变量值}-->
+
+    <!--appender可设多个-->
+    <!--控制台输出日志-->
+    <appender name = "STDOUT" class = "ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+<!--    &lt;!&ndash;文件添加日志&ndash;&gt;
+    <appender name = "FILE" class = "ch.qos.logback.core.FileAppender">
+        &lt;!&ndash;file文件名,可使用绝对路径和相对路径,如果目录不存在会自动创建&ndash;&gt;
+        <file>${USER_HOME:-/home/sebastien}/myApp.log</file>
+        &lt;!&ndash;append 默认true日志追加在文件结尾,falase清空现有文件&ndash;&gt;
+        <append>true</append>
+        &lt;!&ndash;prudent 如果true文件被安全的写入文件,即使其他的FileAppender也在向此文件做写入操作,效率低，默认false&ndash;&gt;
+        <prudent>false</prudent>
+        &lt;!&ndash;encoder对记录事件进行格式化&ndash;&gt;
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>-->
+
+    <!--滚动记录文件-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/home/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            &lt;!&ndash;每天生成一个日志文件,保存30天的日志文件,删除之前的旧文件==》归档文件(为了归档常见的目录也会被删除)&ndash;&gt;
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>-->
+
+        <!--根据固定窗口算法重命名文件的滚动策略-->
+        <file>logs/kdrms-shop.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <!--必须包含i 会产生归档文件 ,之前会被覆盖-->
+            <fileNamePattern>logs/kdrms-shop.log.%i.bak</fileNamePattern>
+            <!--窗口索引值如果过大时候,会自动将窗口设置为12-->
+            <minIndex>1</minIndex>
+            <maxIndex>12</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <!--查看文件当前活动文件大小,超过告知-->
+            <maxFileSize>5MB</maxFileSize>
+        </triggeringPolicy>
+
+
+        <!--encoder对记录事件进行格式化-->
+        <!--class是PatternLayoutEncoder可以省略-->
+        <encoder>
+            <pattern>%d{yyyy/MM/dd'T'HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+
+        <!--class是PatternLayout可以省略-->
+<!--        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5level %logger{32} - %msg%n
+            </Pattern>
+        </layout>-->
+
+        <!--级别过滤器(appender中可有一个或多个) 执行一个过滤器返回一个枚举值,即DENY(日志将立即被抛弃不再经过其他过滤器)、
+        返回NEUTRAL(有序列表里的下个过滤器接着处理日志)、返回ACCEPT(日志会被立即处理,不再经过剩余过滤器)-->
+<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            &lt;!&ndash;过滤级别&ndash;&gt;
+            <level>INFO</level>
+            &lt;!&ndash;用于配置符合过滤条件的操作&ndash;&gt;
+            <onMatch>ACCEPT</onMatch>
+            &lt;!&ndash;用于配置不符合过滤条件的操作&ndash;&gt;
+            <onMismatch>DENY</onMismatch>
+        </filter>-->
+
+        <!--临界值过滤器,过滤掉低于指定临界值的日志.当日志级别等于或高于临界值时,过滤器返回NEUTRALl;当日志级别低于临界值时,日志会被拒绝-->
+<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            &lt;!&ndash;过滤级别&ndash;&gt;
+            <level>INFO</level>&lt;!&ndash;过滤掉TRACE 和 DEBUG 级别的日志&ndash;&gt;
+            &lt;!&ndash;用于配置符合过滤条件的操作&ndash;&gt;
+            <onMatch>ACCEPT</onMatch>
+            &lt;!&ndash;用于配置不符合过滤条件的操作&ndash;&gt;
+            <onMismatch>DENY</onMismatch>
+        </filter>-->
+    </appender>
+
+    <!--0个或多个logger name必须,level(没有设置打印级别,向上级传递信息,additivity必须为true)、additivity(默认true向上级root传递信息)可选.
+    logger下可以有appender-ref可以有0个或者多个-->
+    <!--<logger name = "cn.kc.module.business.api.LogbackDemo" level = "DEBUG" additivity = "true"/>-->
+    <logger name="cn.clt.core.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <!--最多一个root 只有一个level,root下可以有appender-ref可以有0个或者多个-->
+<!--    <root level = "info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>-->
+
+</configuration>
