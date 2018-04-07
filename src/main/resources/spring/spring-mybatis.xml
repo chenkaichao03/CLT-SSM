@@ -5,6 +5,9 @@
        xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
+    <!--shiro-->
+    <import resource="classpath:/shiro/shiro.xml"/>
+
     <context:component-scan base-package="cn.clt">
         <!--spring扫描除了控制器controller外的所有-->
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
@@ -38,7 +41,7 @@
         <!-- 指定mybatis全局配置文件的位置 -->
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
         <!-- 指定mybatis，mapper文件的位置 -->
-        <!--<property name="mapperLocations" value="classpath:mybatis/sqlMappers/*.xml" />-->
+        <property name="mapperLocations" value="classpath:mybatis/sqlMappers/*.xml" />
         <!-- 数据源 -->
         <property name="dataSource" ref="dataSourceHikari"/>
 

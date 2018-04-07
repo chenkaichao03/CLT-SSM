@@ -11,9 +11,9 @@
         </commentGenerator>
         <!-- 配置数据库连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/kc-ssm"
+                        connectionURL="jdbc:mysql://localhost:3306/clt-ssm"
                         userId="root"
-                        password="java.ckc10">
+                        password="123456">
         </jdbcConnection>
 
         <javaTypeResolver >
@@ -37,6 +37,6 @@
         </javaClientGenerator>
 
         <!-- table指定每个表的生成策略 -->
-        <table tableName="sequence" domainObjectName="Sequence"></table>
+        <table tableName="pr_user" domainObjectName="PrUser"></table>
     </context>
 </generatorConfiguration>
