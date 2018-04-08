@@ -18,7 +18,7 @@ public class ShiroMD5Util {
     /**获取6位随机字符**/
     public static String getSalt(){
         SecureRandomNumberGenerator secureRandom = new SecureRandomNumberGenerator();
-        return secureRandom.nextBytes(100).toHex();
+        return secureRandom.nextBytes(3).toHex();
     }
 
 }

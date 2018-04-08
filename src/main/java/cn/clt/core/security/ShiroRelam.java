@@ -3,14 +3,18 @@ import cn.clt.core.entity.PrUser;
 import cn.clt.core.entity.PrUserExample;
 import cn.clt.core.mapper.PrUserMapper;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthenticatingRealm;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 /**
- * @Description Realm(数据安全认证，授权)
+ * @Description Realm(数据安全认证,授权)
  * @Aouthor CLT
  * @Date 2018/04/05 23:44
  */
@@ -19,7 +23,15 @@ public class ShiroRelam extends AuthenticatingRealm {
     @Autowired
     private PrUserMapper prUserMapper;
 
-    /**shiro认证**/
+    /**
+     /**
+     * @Title doGetAuthenticationInfo
+     * @Description
+     * @Author CLT
+     * @Date 2018/4/8 10:35
+     * @param token
+     * @return
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         //这个token其实就是UsernamePasswordToken，对其进行强转
@@ -48,7 +60,14 @@ public class ShiroRelam extends AuthenticatingRealm {
         return info;
     }
 
-    /**根据名字获取用户信息**/
+    /**
+     * @Title getPrUserByUsername
+     * @Description 根据用户名获取用户信息
+     * @Author CLT
+     * @Date 2018/4/8 10:41
+     * @param username
+     * @return
+     */
     private PrUser getPrUserByUsername(String username){
         PrUserExample example = new PrUserExample();
         example.createCriteria().andUserNameEqualTo(username);

@@ -11,7 +11,7 @@
     <title>login</title>
 </head>
 <body>
-<form action="/shiro/login" method="post">
+<form action="/account/login" method="post">
     Account:<input type = "text" name = "username"/>
     <br/>
     Password:<input type = "password" name = "password"/>

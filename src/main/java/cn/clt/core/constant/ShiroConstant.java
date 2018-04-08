@@ -8,7 +8,7 @@ package cn.clt.core.constant;
 public class ShiroConstant {
 
     /**shiroMD5加密次数**/
-    public static final int HASHITERATIONS = 100;
+    public static final int HASHITERATIONS = 3;
     /**shiroMD5加密类型**/
     public static final String ALGORITHMNAME = "MD5";
 }

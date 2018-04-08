@@ -11,6 +11,6 @@
     <title>list</title>
 </head>
 <body>
-<h1><a href="/shiro/logout"/>logout</h1>
+<h1><a href="/account/logout"/>logout</h1>
 </body>
 </html>
