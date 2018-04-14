@@ -1,24 +1,22 @@
 package cn.clt.core.service;
 
-import cn.clt.core.entity.PrUser;
-
-import java.util.List;
+import cn.clt.core.vo.ActiveUser;
 
 /**
- * @Description PrUserService
+ * @Description UserService
  * @Aouthor CLT
  * @Date 2018/04/08 15:55
  */
-public interface PrUserService {
+public interface UserService {
     /**
      * @Title getPrUserByUsername
-     * @Description 根据用户名获取用户
+     * @Description 校验用户，并返回用户信息
      * @Author CLT
      * @Date 2018/4/8 15:57
      * @param username
      * @return
      */
-    List<PrUser> getPrUserByUsername(String username);
+    ActiveUser authenticat(String username, String password);
 
     /**
      * @Title insertPrUser

@@ -37,6 +37,6 @@
         </javaClientGenerator>
 
         <!-- table指定每个表的生成策略 -->
-        <table tableName="pr_user" domainObjectName="PrUser"></table>
+        <table tableName="user" domainObjectName="User"></table>
     </context>
 </generatorConfiguration>
