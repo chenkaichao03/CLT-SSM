@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>注册</title>
+	<link rel="shortcut icon" href="/images/crplog.ico">
 	<link href="../css/css1.css" rel="stylesheet" type="text/css" />
 
 	<script src="../js/jquery-1.7.2.min.js" type="text/javascript"></script>
@@ -11,7 +12,7 @@
             var username = document.getElementById("username");
             if(username.value.length==0)
             {
-                alert("用户账号不能为空！");
+                alert("用户名不能为空！");
                 return false;
             }
             var password = document.getElementById("password");
@@ -37,7 +38,7 @@
 	<form action="/account/register" name="f" method="post" onsubmit="return condition(this)">
 		<div class="input_outer">
 			<span class="u_user"></span>
-			<input name="username" id = "username" class="text" placeholder="输入用户账号" style="color: #FFFFFF !important" type="text">
+			<input name="username" id = "username" class="text" placeholder="输入用户名" style="color: #FFFFFF !important" type="text">
 		</div>
 		<div class="input_outer">
 			<span class="us_uer"></span>
@@ -48,7 +49,9 @@
 			<input type="submit" id="register" class="submit" style="color: #FFFFFF" value="注册">
 		</div>
 	</form>
-
+	<div class="sas">
+		已有账号，<a href="/views/login.jsp">&nbsp;登录&nbsp;</a>账号！
+	</div>
 </div>
 </body>
 </html>
