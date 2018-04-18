@@ -2,14 +2,15 @@
 <html>
 <head>
 	<title>登录</title>
+	<link rel="shortcut icon" href="/images/crplog.ico">
 	<link href="../css/css1.css" rel="stylesheet" type="text/css" />
 	<script src="../js/jquery-1.7.2.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
         function condition(f)
         {
-            if(f.useraccount.value==="")
+            if(f.username.value==="")
             {
-                alert("用户账号不能为空！");
+                alert("用户名不能为空！");
                 return false;
             }
             if(f.password.value==="")
@@ -28,7 +29,7 @@
 		<form action="/account/login" name="f" method="post" onsubmit="return condition(this)">
 			<div class="input_outer">
 				<span class="u_user"></span>
-				<input name="username" class="text" placeholder="输入账号登录" style="color: #FFFFFF !important" type="text">
+				<input name="username" class="text" placeholder="输入用户名登录" style="color: #FFFFFF !important" type="text">
 			</div>
 			<div class="input_outer">
 				<span class="us_uer"></span>
@@ -44,7 +45,7 @@
 
 
 		<div class="sas">
-			还没注册账号，请先<a href="/views/register.jsp">&nbsp;注册</a>&nbsp;账号！
+			还没注册账号，请先<a href="/views/register.jsp">&nbsp;注册&nbsp;</a>账号！
 		</div>
 	</div>
 
