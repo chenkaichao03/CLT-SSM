@@ -158,7 +158,7 @@
                         </ul>
 
                     <li>
-                        <a href="views/face.jsp">
+                        <a href="views/activity.jsp">
                             <i class="fa fa-gift"></i>
                             <span>活动</span>
                         </a>
@@ -213,8 +213,8 @@
                                         KindEditor.ready(function(K) {
                                             var editor1 = K.create('textarea[name="content"]', {
                                                 cssPath : '../plugins/code/prettify.css',
-                                                uploadJson : '../views/article.jsp',
-                                                fileManagerJson : '../views/article.jsp',
+                                                uploadJson : '../jsp/upload_json.jsp',
+                                                fileManagerJson : '../jsp/file_manager_json.jsp',
                                                 allowFileManager : true,
                                                 afterCreate : function() {
                                                     var self = this;

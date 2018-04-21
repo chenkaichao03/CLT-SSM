@@ -53,7 +53,7 @@
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <img alt="" src="images/2.png">
-                        <span class="username">${username}</span>
+                        <span class="username">Leta Chen</span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended logout">
@@ -153,7 +153,7 @@
                         </ul>
 
                     <li>
-                        <a href="views/face.jsp">
+                        <a href="views/activity.jsp">
                             <i class="fa fa-gift"></i>
                             <span>活动</span>
                         </a>

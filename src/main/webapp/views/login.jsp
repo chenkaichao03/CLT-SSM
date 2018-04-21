@@ -39,8 +39,8 @@
 			<div class="mb2">
 				<input type="submit" class="submit" style="color: #FFFFFF" value="登录">
 			</div>
-			<input type="checkbox" value="0" id="check-box" class="checkbox" title="remember"><span>记住账号</span>
-			<a href="#" class="login-fgetpwd" style="color: #FFFFFF">忘记密码？</a>
+			<input type="checkbox" value="0" id="check-box" class="checkbox" title="rememberps"><span>记住账号</span>
+			<a href="/views/forgetpwd1.jsp" class="login-fgetpwd" style="color: #FFFFFF">忘记密码？</a>
 		</form>
 
 

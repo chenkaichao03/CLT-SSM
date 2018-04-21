@@ -153,7 +153,7 @@
                         </ul>
 
                     <li>
-                        <a href="views/face.jsp">
+                        <a href="views/activity.jsp">
                             <i class="fa fa-gift"></i>
                             <span>活动</span>
                         </a>

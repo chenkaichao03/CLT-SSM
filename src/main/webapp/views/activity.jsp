@@ -6,7 +6,7 @@
 <html>
 <head>
     <base href="<%=basePath%>">
-    <title>账号信息</title>
+    <title>活动</title>
     <link rel="shortcut icon" href="images/crplog.ico">
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- bootstrap-css -->
@@ -27,14 +27,6 @@
     <script src="js/raphael-min.js"></script>
     <script src="js/morris.js"></script>
     <link rel="stylesheet" href="css/gonggao.css">
-    <link href="css/public.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript">
-        function view(form1)
-        {
-            form1.picture.src=form1.userimage.value;
-            return true;
-        }
-    </script>
 </head>
 <body>
 <section id="container">
@@ -161,7 +153,7 @@
                         </ul>
 
                     <li>
-                        <a href="views/activity.jsp">
+                        <a class="active" href="views/activity.jsp">
                             <i class="fa fa-gift"></i>
                             <span>活动</span>
                         </a>
@@ -180,75 +172,45 @@
                     <div class="col-md-12 w3ls-graph">
                         <div>
                             <ul class="f-navart">
-                                <i class="fa fa-user"></i>
-                                <span>个人信息</span>
+                                <i class="fa fa-list-alt"></i>
+                                <span>活动详情</span>
                             </ul>
                         </div>
-                        <form name="form1" action="">
-                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
-                                <tr>
-                                    <td width="90" align="right">用户名</td>
-                                    <td>
-                                        <label>
-                                            <input type="text" name="username" value="" size="80" class="inpMain" />
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="90" align="right">用户介绍</td>
-                                    <td>
-                                        <label>
-                                            <input type="text" name="userintro" value="" size="80" class="inpMain" />
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="90" align="right">用户头像</td>
-                                    <td colspan="2">
-                                        <div style="float: left;padding-top: 63px" >
-                                            <input type="file" name="userimage" value="image" size="38" class="inpFlie"/>
-                                        </div>
-                                        <div style="float: left;padding-left: 63px">
-                                            <input type="button" class="btn"  value="预览" onclick="return view(this)" />
-                                            <img src="" width="150" height="160" id="picture" />
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="90" align="right">用户ID</td>
-                                    <td>
-                                        <label>
-                                            <input type="text" name="userID" value="" size="80" class="inpMain" />
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="90" align="right">手机号</td>
-                                    <td>
-                                        <label>
-                                            <input type="text" name="userID" value="" size="80" class="inpMain" />
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="90" align="right">所在地</td>
-                                    <td>
-                                        <label>
-                                            <input type="text" name="address" value="" size="80" class="inpMain" />
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        <input type="hidden" name="token" value="7e4a88fb" />
-                                        <input type="hidden" name="image" value="">
-                                        <input type="hidden" name="id" value="">
-                                        <input name="usersubmit" class="btn" type="submit" value="保存" />
-                                    </td>
-                                </tr>
-                            </table>
-                        </form>
+                        <div id="gonggao">
+                            <div class="announcement">
+
+                                <a target="_blank"  href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
+                                    <span style="color: red;font-style: italic">new</span></a>
+                                <span class="create_time">2018-04-16</span>
+
+                            </div>
+                            <div class="announcement">
+                                <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
+                                    <span style="color: red;font-style: italic">new</span>
+                                </a>
+                                <span class="create_time">2018-04-16</span>
+                            </div>
+                            <div class="announcement">
+                                <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
+                                    <span style="color: red;font-style: italic">new</span></a>
+                                <span class="create_time">2018-04-16</span>
+                            </div>
+                            <div class="announcement">
+                                <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
+                                    <span class="create_time">2018-04-16</span>
+                                </a>
+                            </div>
+                            <div class="announcement">
+                                <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
+                                    <span class="create_time">2018-04-16</span>
+                                </a>
+                            </div>
+                            <div class="announcement">
+                                <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
+                                </a>
+                                <span class="create_time">2018-04-16</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
