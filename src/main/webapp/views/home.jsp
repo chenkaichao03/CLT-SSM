@@ -54,6 +54,7 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <img alt="" src="images/2.png">
                         <span class="username">Leta Chen</span>
+                        <span class="username">${username}</span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended logout">

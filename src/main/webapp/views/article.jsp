@@ -215,6 +215,8 @@
                                                 cssPath : '../plugins/code/prettify.css',
                                                 uploadJson : '../jsp/upload_json.jsp',
                                                 fileManagerJson : '../jsp/file_manager_json.jsp',
+                                                uploadJson : '../views/article.jsp',
+                                                fileManagerJson : '../views/article.jsp',
                                                 allowFileManager : true,
                                                 afterCreate : function() {
                                                     var self = this;
