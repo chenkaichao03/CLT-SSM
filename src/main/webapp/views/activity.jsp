@@ -34,7 +34,7 @@
     <header class="header fixed-top clearfix">
         <!--logo start-->
         <div class="brand">
-            <a href="views/home.jsp" class="logo">
+            <a href="views/show.jsp" class="logo">
                 &nbsp;&nbsp;&nbsp;&nbsp;CRP
             </a>
             <div class="sidebar-toggle-box">

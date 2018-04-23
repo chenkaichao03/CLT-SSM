@@ -1,0 +1,155 @@
+/*-----show------*/
+.showbd{
+    font-family: "微软雅黑";
+    background: url(../images/firstpage.jpg) no-repeat;
+    padding-left: 80px;
+    padding-right: 80px;
+    margin-top: 20px;
+}
+.header{
+    background-color: rgba(178, 178, 178, 0.38);
+    width: 1200px;
+    padding:0px 0px 0px 50px;
+}
+.header p{
+    color: #ffffff;
+    font-size: 40px;
+}
+.fw2{
+    color: #ffffff;
+    font-size: 20px;
+    float: right;
+    text-decoration:none;
+    padding-right: 60px;
+}
+.fw1{
+    color: #ffffff;
+    font-size: 15px;
+    float: right;
+    text-decoration:none;
+    padding-top: 4px;
+    padding-right: 10px;
+}
+/*-------content------*/
+
+/*- tableBasic -*/
+.tableBasic {
+    width: 900px;
+    background-color: #F9F9F9;
+    color: #666666;
+    font-size: 10px;
+    border: 1px dotted #CCCCCC;
+    margin-top: 50px;
+}
+.tableBasic td, .tableBasic th {
+    border-bottom: 1px dotted #CCCCCC;
+    padding:10px 10px 10px 30px;
+}
+.tableBasic th {
+    background-color: #EEEEEE;
+    height: 10px;
+}
+/*-------left--------*/
+.tableBasic-left {
+    width: 800px;
+    background-color: #F9F9F9;
+    color: #666666;
+    font-size: 10px;
+    border: 1px dotted #CCCCCC;
+    margin-top: 50px;
+    margin-left: 40px;
+    float: left;
+}
+.tableBasic-left td, .tableBasic-left th {
+    border-bottom: 1px dotted #CCCCCC;
+    padding:10px 30px 10px 30px;
+}
+.tableBasic-left th {
+    background-color: #EEEEEE;
+    height: 10px;
+}
+
+/*-------right-----*/
+
+.tableBasic-right {
+    width: 280px;
+    background-color: #F9F9F9;
+    color: #666666;
+    font-size: 10px;
+    border: 1px dotted #CCCCCC;
+    margin-top: 50px;
+    margin-right: 40px;
+    float: right;
+}
+.tableBasic-right td, .tableBasic-right th {
+    border-right: 1px dotted #CCCCCC;
+    border-bottom: 1px dotted #CCCCCC;
+    padding:10px 10px 10px 40px;
+}
+.tableBasic-right th {
+    background-color: #EEEEEE;
+    height: 10px;
+}
+.listbtn{
+    display: inline-block;
+    background-color: #0072C6;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border: 0;
+    color: #FFF;
+    padding: 6px 15px;
+    font-weight: bold;
+    text-transform: capitalize;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+.fw3{
+    color: #000000;
+    font-size: 20px;
+    text-decoration:none;
+    padding-right: 60px;
+    font-family: 黑体;
+}
+.fw3:hover{
+    color: #1e5e74;
+}
+/*------showpage------*/
+.tablepage-left {
+    width: 800px;
+    background-color: #F9F9F9;
+    color: #666666;
+    font-size: 10px;
+    border: 1px dotted #CCCCCC;
+    margin-top: 50px;
+    margin-left: 40px;
+    float: left;
+}
+.tablepage-left td, .tablepage-left th {
+    border-bottom: 1px dotted #CCCCCC;
+    padding:10px 30px 10px 30px;
+}
+.tablepage-left th {
+    background-color: #EEEEEE;
+    height: 10px;
+}
+
+
+.tablepage-right {
+    width: 280px;
+    background-color: #F9F9F9;
+    color: #666666;
+    font-size: 10px;
+    border: 1px dotted #CCCCCC;
+    margin-top: 50px;
+    margin-right: 30px;
+    float: right;
+}
+.tablepage-right td, .tablepage-right th {
+    border-right: 1px dotted #CCCCCC;
+    border-bottom: 1px dotted #CCCCCC;
+    padding:10px 10px 10px 40px;
+}
+.tablepage-right th {
+    background-color: #EEEEEE;
+    height: 10px;
+}

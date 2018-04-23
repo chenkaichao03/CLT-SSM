@@ -6,7 +6,7 @@
 <html>
 <head>
     <base href="<%=basePath%>">
-    <title>首页</title>
+    <title>后台首页</title>
     <link rel="shortcut icon" href="images/crplog.ico">
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- bootstrap-css -->
@@ -34,7 +34,7 @@
     <header class="header fixed-top clearfix">
         <!--logo start-->
         <div class="brand">
-            <a href="views/home.jsp" class="logo">
+            <a href="views/show.jsp" class="logo">
                 &nbsp;&nbsp;&nbsp;&nbsp;CRP
             </a>
             <div class="sidebar-toggle-box">
@@ -54,10 +54,11 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <img alt="" src="images/2.png">
                         <span class="username">Leta Chen</span>
-                        <span class="username">${username}</span>
+                        <!--<span class="username">${username}</span>-->
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended logout">
+                        <li><a href="views/usercenter.jsp"><i class=" fa fa-asterisk"></i>个人主页</a></li>
                         <li><a href="views/userinfo.jsp"><i class=" fa fa-user"></i>账号信息</a></li>
                         <li><a href="views/usersetting.jsp"><i class="fa fa-cog"></i>账号设置</a></li>
                         <li><a href="views/login.jsp"><i class="fa fa-power-off"></i>退出登录</a></li>
@@ -152,12 +153,22 @@
                             <li><a href="views/face.jsp">我的收益</a></li>
                             <li><a href="views/face.jsp">结算中心</a></li>
                         </ul>
-
+                    </li>
                     <li>
                         <a href="views/activity.jsp">
                             <i class="fa fa-gift"></i>
                             <span>活动</span>
                         </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class=" fa fa-key"></i>
+                            <span>管理员操作</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="views/face.jsp">发布公告</a></li>
+                            <li><a href="views/face.jsp">结算中心</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -246,7 +257,7 @@
                                     公告
                                 </span>
                             </ul>
-                            <div id="gonggao">
+                         <div id="gonggao">
                         <div class="announcement">
                             <a target="_blank"  href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
                                 <span style="color: red;font-style: italic">new</span></a>
