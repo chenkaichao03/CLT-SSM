@@ -52,7 +52,7 @@
                 <!-- user login dropdown start-->
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <img  src="${activeUser.userPicture}">
+                        <img  src="${userInfo.userPicture}">
                         <span class="username">${activeUser.userName}</span>
                         <b class="caret"></b>
                     </a>

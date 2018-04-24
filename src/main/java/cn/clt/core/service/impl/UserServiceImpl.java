@@ -2,12 +2,16 @@ package cn.clt.core.service.impl;
 
 import cn.clt.core.entity.User;
 import cn.clt.core.entity.UserExample;
+import cn.clt.core.entity.UserInfo;
+import cn.clt.core.entity.UserInfoExample;
 import cn.clt.core.exception.BussinessException;
+import cn.clt.core.mapper.UserInfoMapper;
 import cn.clt.core.mapper.UserMapper;
 import cn.clt.core.service.UserService;
 import cn.clt.core.utils.GuidUtil;
 import cn.clt.core.utils.ShiroMD5Util;
 import cn.clt.core.vo.ActiveUser;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -24,6 +28,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
     /**
      * @Title getPrUserByUsername
@@ -78,6 +84,8 @@ public class UserServiceImpl implements UserService {
         user.setUserName(username);
         user.setPassword(password);
         user.setSalt(salt);
+        user.setRole("user");
+        user.setIsLogin(0);
         user.setStatus(1);
         user.setCreateDate(date);
         user.setModifyDate(date);
@@ -98,4 +106,61 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByExample(example);
     }
 
+    /**
+     * @Title erificationUserInfo
+     * @Description 手机号校验
+     * @Author Lizi
+     * @Date 2018/4/24 15:23
+     * @param userName
+     * @param phone
+     */
+    @Override
+    public String erificationUserInfo(String userName, String phone) {
+        User user = null;
+        UserInfo userInfo = null;
+        List<User> userList = getUserByName(userName);
+        if (!CollectionUtils.isEmpty(userList)){
+            user = userList.get(0);
+        }
+        String userId = user.getId();
+        UserInfoExample example = new UserInfoExample();
+        example.createCriteria().andUserIdEqualTo(userId);
+        List<UserInfo> userInfos = userInfoMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(userInfos)){
+            userInfo = userInfos.get(0);
+        }
+        String userPhone = userInfo.getUserPhone();
+        if (!phone.equals(userPhone)){
+            throw new BussinessException("手机号错误.");
+        }
+        return user.getId();
+    }
+
+    /**
+     * @Title passwordSetting
+     * @Description 新密码设置
+     * @Author Lizi
+     * @Date 2018/4/24 15:48
+     * @param userId
+     * @param password
+     * @param newPassword
+     */
+    @Override
+    public String passwordSetting(String userId,String password, String newPassword) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        if (user != null){
+            String salt = user.getSalt();
+            String username= user.getUserName();
+            password = ShiroMD5Util.encode(password, username+salt);
+            if (!password.equals(user.getPassword())){
+                throw new BussinessException("密码错误");
+            }
+            password = ShiroMD5Util.encode(newPassword,username+salt);
+            user.setPassword(password);
+            userMapper.updateByPrimaryKeySelective(user);
+            return userId;
+        }else {
+            throw new BussinessException("用户不存在");
+        }
+    }
 }

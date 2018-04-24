@@ -177,4 +177,44 @@ public class AccountController {
         return "redirect:/home/index";
     }
 
+     /**
+     * @Title erificationUserInfo
+     * @Description 手机号校验
+     * @Author Lizi
+     * @Date 2018/4/24 15:23
+     * @param userName
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "/check/user",method = RequestMethod.GET)
+    public String checkUser(@RequestParam(value = "userName") String userName,
+                                      @RequestParam(value = "phone") String phone,Model model) throws BussinessException{
+        if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(phone)){
+            throw new BussinessException("用户名/手机号不能为空");
+        }
+        String userId = userService.erificationUserInfo(userName,phone);
+        model.addAttribute("userId",userId);
+        return "forgetpwd2";
+    }
+
+    /**
+     * @Title passwordSetting
+     * @Description 设置新密码
+     * @Author Lizi
+     * @Date 2018/4/24 15:43
+     * @param password
+     * @param newPassword
+     * @return
+     */
+    @RequestMapping(value = "/password/setting",method = RequestMethod.GET)
+    public String passwordSetting(@RequestParam(value = "userId") String userId,
+                                     @RequestParam(value = "password") String password,
+                                     @RequestParam(value = "newPassword") String newPassword,Model model){
+        if (StringUtils.isEmpty(password) || StringUtils.isEmpty(userId) || StringUtils.isEmpty(newPassword)){
+            throw new BussinessException("手机号/密码/新密码不能为空");
+        }
+        userId = userService.passwordSetting(userId,password,newPassword);
+        model.addAttribute("userId",userId);
+        return "forgetpwd3";
+    }
 }

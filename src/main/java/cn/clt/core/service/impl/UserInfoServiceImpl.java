@@ -49,6 +49,12 @@ public class UserInfoServiceImpl implements UserInfoService {
             if (!StringUtils.isEmpty(originalFileName)) {
                 info.setUserPicture("upload/" + originalFileName);
             }
+            if (!StringUtils.isEmpty(info.getUserPhone())) {
+                List<UserInfo> list = listUserInfoByUserPhone(info.getUserPhone());
+                if (!CollectionUtils.isEmpty(list)){
+                    throw new BussinessException("手机号已存在.");
+                }
+            }
             userInfoMapper.insert(info);
         }else {
             //编辑
@@ -68,12 +74,20 @@ public class UserInfoServiceImpl implements UserInfoService {
                 if (!StringUtils.isEmpty(originalFileName)) {
                     info.setUserPicture("upload/" + originalFileName);
                 }
+                if (!StringUtils.isEmpty(info.getUserPhone())) {
+                    List<UserInfo> list = listUserInfoByUserPhone(info.getUserPhone());
+                    if (!CollectionUtils.isEmpty(list)){
+                        throw new BussinessException("手机号已存在.");
+                    }
+                }
                 userInfoMapper.updateByPrimaryKeySelective(info);
             }else {
                 throw new BussinessException("用户信息不存在.");
             }
         }
     }
+
+
 
 
     /**
@@ -97,7 +111,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     /**
      * @Title listUserInfoByUsreId
-     * @Description
+     * @Description 通过用户id获取用户信息
      * @Author CLT
      * @Date 2018/4/22 21:48
      * @param userId
@@ -107,6 +121,25 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<UserInfo> listUserInfoByUsreId(String userId) {
         UserInfoExample example = new UserInfoExample();
         example.createCriteria().andUserIdEqualTo(userId);
+        List<UserInfo> userInfoList = userInfoMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(userInfoList)){
+            return userInfoList;
+        }
+        return null;
+    }
+
+    /**
+     * @Title listUserInfoByUserPhone
+     * @Description 通过手机号获取用户信息
+     * @Author Lizi
+     * @Date 2018/4/24 15:51
+     * @param userPhone
+     * @return
+     */
+    @Override
+    public List<UserInfo> listUserInfoByUserPhone(String userPhone) {
+        UserInfoExample example = new UserInfoExample();
+        example.createCriteria().andUserPhoneEqualTo(userPhone);
         List<UserInfo> userInfoList = userInfoMapper.selectByExample(example);
         if (!CollectionUtils.isEmpty(userInfoList)){
             return userInfoList;

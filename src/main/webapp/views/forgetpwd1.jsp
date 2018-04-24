@@ -32,15 +32,15 @@
                 <div class="liutext"><em>3</em><br /><strong>完成</strong></div>
             </div>
         </div><!--for-liucheng/-->
-        <form action="views/forgetpwd2.jsp" method="get" class="forget-pwd">
+        <form name="form1" action="/account/check/user" method="get" class="forget-pwd">
             <dl>
                 <dt>用户名：</dt>
-                <dd><input type="text" /></dd>
+                <dd><input type="text" name="userName"/></dd>
                 <div class="clears"></div>
             </dl>
             <dl>
                 <dt>手机号：</dt>
-                <dd><input type="password" /></dd>
+                <dd><input type="text" name="phone"/></dd>
                 <div class="clears"></div>
             </dl>
             <div class="subtijiao"><input type="submit" value="提交" /></div>

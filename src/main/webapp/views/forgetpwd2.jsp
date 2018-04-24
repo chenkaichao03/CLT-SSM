@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -32,20 +33,20 @@
                 <div class="liutext"><em>3</em><br /><strong>完成</strong></div>
             </div>
         </div><!--for-liucheng/-->
-        <form action="/views/forgetpwd3.jsp" method="get" class="forget-pwd">
+        <form action="/account/password/setting" method="get" class="forget-pwd">
+            <c:if test="${not empty userId}">
             <dl>
-                <dt>手机号：</dt>
-                <dd><input type="text" /></dd>
+                <input type="hidden" name="userId" value="${userId}"/>
+            </dl>
+            </c:if>
+            <dl>
+                <dt>旧密码：</dt>
+                <dd><input type="password" name="password"/></dd>
                 <div class="clears"></div>
             </dl>
             <dl>
                 <dt>新密码：</dt>
-                <dd><input type="password" /></dd>
-                <div class="clears"></div>
-            </dl>
-            <dl>
-                <dt>确认密码：</dt>
-                <dd><input type="password" /></dd>
+                <dd><input type="password" name="newPassword"/></dd>
                 <div class="clears"></div>
             </dl>
             <div class="subtijiao"><input type="submit" value="提交" /></div>

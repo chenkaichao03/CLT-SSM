@@ -41,6 +41,11 @@ public class IndexController {
         //获取用户信息
         ActiveUser activeUser = (ActiveUser) session.getAttribute("activeUser");
         model.addAttribute("activeUser",activeUser);
+        String userId = activeUser.getUserId();
+        List<UserInfo> userInfoList = userInfoService.listUserInfoByUsreId(userId);
+        if (!CollectionUtils.isEmpty(userInfoList)){
+            model.addAttribute("userInfo",userInfoList.get(0));
+        }
         return "home";
     }
 }

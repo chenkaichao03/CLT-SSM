@@ -27,4 +27,24 @@ public interface UserService {
      * @param password
      */
     void insertPrUser(String username, String password);
+
+    /**
+     * @Title erificationUserInfo
+     * @Description 手机号校验
+     * @Author Lizi
+     * @Date 2018/4/24 15:23
+     * @param userName
+     * @param phone
+     */
+    String erificationUserInfo(String userName,String phone);
+
+    /**
+     * @Title passwordSetting
+     * @Description 新密码设置
+     * @Author Lizi
+     * @Date 2018/4/24 15:48
+     * @param password
+     * @param newPassword
+     */
+    String passwordSetting(String userId,String password,String newPassword);
 }

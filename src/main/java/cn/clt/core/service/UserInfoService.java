@@ -18,4 +18,6 @@ public interface UserInfoService {
     List<UserInfo> listUserInfo(String id);
 
     List<UserInfo> listUserInfoByUsreId(String userId);
+
+    List<UserInfo> listUserInfoByUserPhone(String userPhone);
 }
