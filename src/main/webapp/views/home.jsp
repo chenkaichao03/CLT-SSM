@@ -52,14 +52,13 @@
                 <!-- user login dropdown start-->
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <img alt="" src="images/2.png">
-                        <span class="username">Leta Chen</span>
-                        <!--<span class="username">${username}</span>-->
+                        <img  src="${activeUser.userPicture}">
+                        <span class="username">${activeUser.userName}</span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended logout">
                         <li><a href="views/usercenter.jsp"><i class=" fa fa-asterisk"></i>个人主页</a></li>
-                        <li><a href="views/userinfo.jsp"><i class=" fa fa-user"></i>账号信息</a></li>
+                        <li><a href="/account/get/user-info"><i class=" fa fa-user"></i>账号信息</a></li>
                         <li><a href="views/usersetting.jsp"><i class="fa fa-cog"></i>账号设置</a></li>
                         <li><a href="views/login.jsp"><i class="fa fa-power-off"></i>退出登录</a></li>
                     </ul>

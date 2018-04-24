@@ -6,6 +6,8 @@
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="is_login" jdbcType="INTEGER" property="isLogin" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
@@ -69,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_name, password, salt, status, create_date, modify_date
+    id, user_name, password, salt, role, is_login, status, create_date, modify_date
   </sql>
   <select id="selectByExample" parameterType="cn.clt.core.entity.UserExample" resultMap="BaseResultMap">
     select
@@ -86,7 +88,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from user
     where id = #{id,jdbcType=VARCHAR}
@@ -102,12 +104,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.clt.core.entity.User">
-    insert into user (id, user_name, password, 
-      salt, status, create_date, 
-      modify_date)
-    values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{salt,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{modifyDate,jdbcType=TIMESTAMP})
+    insert into user (id, user_name, password,
+    salt, role, is_login,
+    status, create_date, modify_date
+    )
+    values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{salt,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, #{isLogin,jdbcType=INTEGER},
+    #{status,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}
+    )
   </insert>
   <insert id="insertSelective" parameterType="cn.clt.core.entity.User">
     insert into user
@@ -123,6 +127,12 @@
       </if>
       <if test="salt != null">
         salt,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="isLogin != null">
+        is_login,
       </if>
       <if test="status != null">
         status,
@@ -146,6 +156,12 @@
       </if>
       <if test="salt != null">
         #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="isLogin != null">
+        #{isLogin,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -179,6 +195,12 @@
       <if test="record.salt != null">
         salt = #{record.salt,jdbcType=VARCHAR},
       </if>
+      <if test="record.role != null">
+        role = #{record.role,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isLogin != null">
+        is_login = #{record.isLogin,jdbcType=INTEGER},
+      </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
@@ -196,12 +218,14 @@
   <update id="updateByExample" parameterType="map">
     update user
     set id = #{record.id,jdbcType=VARCHAR},
-      user_name = #{record.userName,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      salt = #{record.salt,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=INTEGER},
-      create_date = #{record.createDate,jdbcType=TIMESTAMP},
-      modify_date = #{record.modifyDate,jdbcType=TIMESTAMP}
+    user_name = #{record.userName,jdbcType=VARCHAR},
+    password = #{record.password,jdbcType=VARCHAR},
+    salt = #{record.salt,jdbcType=VARCHAR},
+    role = #{record.role,jdbcType=VARCHAR},
+    is_login = #{record.isLogin,jdbcType=INTEGER},
+    status = #{record.status,jdbcType=INTEGER},
+    create_date = #{record.createDate,jdbcType=TIMESTAMP},
+    modify_date = #{record.modifyDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -218,6 +242,12 @@
       <if test="salt != null">
         salt = #{salt,jdbcType=VARCHAR},
       </if>
+      <if test="role != null">
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="isLogin != null">
+        is_login = #{isLogin,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
@@ -233,11 +263,13 @@
   <update id="updateByPrimaryKey" parameterType="cn.clt.core.entity.User">
     update user
     set user_name = #{userName,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      salt = #{salt,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    password = #{password,jdbcType=VARCHAR},
+    salt = #{salt,jdbcType=VARCHAR},
+    role = #{role,jdbcType=VARCHAR},
+    is_login = #{isLogin,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER},
+    create_date = #{createDate,jdbcType=TIMESTAMP},
+    modify_date = #{modifyDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

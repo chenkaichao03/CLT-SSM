@@ -1,13 +1,20 @@
 package cn.clt.module.bussiness;
 
+import cn.clt.core.entity.UserInfo;
+import cn.clt.core.mapper.UserInfoMapper;
+import cn.clt.core.service.UserInfoService;
 import cn.clt.core.vo.ActiveUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @Description IndexController
@@ -19,7 +26,8 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
-
+    @Autowired
+    private UserInfoService userInfoService;
     /**
      * @Title index
      * @Description 首页

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="dataRecovery:war">
+    <output-path>$PROJECT_DIR$/../最代码/SSM/target</output-path>
+    <root id="archive" name="dataRecovery.war">
+      <element id="artifact" artifact-name="dataRecovery:war exploded" />
+    </root>
+  </artifact>
+</component>

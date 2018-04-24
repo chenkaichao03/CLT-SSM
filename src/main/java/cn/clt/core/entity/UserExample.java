@@ -385,6 +385,136 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andRoleIsNull() {
+            addCriterion("role is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIsNotNull() {
+            addCriterion("role is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleEqualTo(String value) {
+            addCriterion("role =", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleNotEqualTo(String value) {
+            addCriterion("role <>", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleGreaterThan(String value) {
+            addCriterion("role >", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleGreaterThanOrEqualTo(String value) {
+            addCriterion("role >=", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleLessThan(String value) {
+            addCriterion("role <", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleLessThanOrEqualTo(String value) {
+            addCriterion("role <=", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleLike(String value) {
+            addCriterion("role like", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleNotLike(String value) {
+            addCriterion("role not like", value, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIn(List<String> values) {
+            addCriterion("role in", values, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleNotIn(List<String> values) {
+            addCriterion("role not in", values, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleBetween(String value1, String value2) {
+            addCriterion("role between", value1, value2, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleNotBetween(String value1, String value2) {
+            addCriterion("role not between", value1, value2, "role");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginIsNull() {
+            addCriterion("is_login is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginIsNotNull() {
+            addCriterion("is_login is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginEqualTo(Integer value) {
+            addCriterion("is_login =", value, "isLogin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginNotEqualTo(Integer value) {
+            addCriterion("is_login <>", value, "isLogin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginGreaterThan(Integer value) {
+            addCriterion("is_login >", value, "isLogin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginGreaterThanOrEqualTo(Integer value) {
+            addCriterion("is_login >=", value, "isLogin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginLessThan(Integer value) {
+            addCriterion("is_login <", value, "isLogin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginLessThanOrEqualTo(Integer value) {
+            addCriterion("is_login <=", value, "isLogin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginIn(List<Integer> values) {
+            addCriterion("is_login in", values, "isLogin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginNotIn(List<Integer> values) {
+            addCriterion("is_login not in", values, "isLogin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginBetween(Integer value1, Integer value2) {
+            addCriterion("is_login between", value1, value2, "isLogin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsLoginNotBetween(Integer value1, Integer value2) {
+            addCriterion("is_login not between", value1, value2, "isLogin");
+            return (Criteria) this;
+        }
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;

@@ -11,6 +11,10 @@ public class User {
 
     private String salt;
 
+    private String role;
+
+    private Integer isLogin;
+
     private Integer status;
 
     private Date createDate;
@@ -47,6 +51,22 @@ public class User {
 
     public void setSalt(String salt) {
         this.salt = salt == null ? null : salt.trim();
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role == null ? null : role.trim();
+    }
+
+    public Integer getIsLogin() {
+        return isLogin;
+    }
+
+    public void setIsLogin(Integer isLogin) {
+        this.isLogin = isLogin;
     }
 
     public Integer getStatus() {

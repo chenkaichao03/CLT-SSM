@@ -8,6 +8,8 @@ package cn.clt.core.vo;
 public class ActiveUser {
     private String userId;
     private String userName;
+    private String userInfoId;
+    private String userPicture;
 
     public String getUserId() {
         return userId;
@@ -23,5 +25,21 @@ public class ActiveUser {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserInfoId() {
+        return userInfoId;
+    }
+
+    public void setUserInfoId(String userInfoId) {
+        this.userInfoId = userInfoId;
+    }
+
+    public String getUserPicture() {
+        return userPicture;
+    }
+
+    public void setUserPicture(String userPicture) {
+        this.userPicture = userPicture;
     }
 }

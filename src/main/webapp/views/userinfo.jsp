@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
     String path = request.getContextPath();
@@ -28,11 +29,14 @@
     <script src="js/morris.js"></script>
     <link rel="stylesheet" href="css/gonggao.css">
     <link href="css/public.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src = "/js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript">
-        function view(form1)
-        {
-            form1.picture.src=form1.userimage.value;
-            return true;
+        function setImg() {
+            var userimage=document.getElementById("userimage");
+            var picture=document.getElementById("picture");
+            if(userimage.files && userimage.files[0]){
+                picture.src=window.URL.createObjectURL(userimage.files[0]);
+            }
         }
     </script>
 </head>
@@ -60,8 +64,8 @@
                 <!-- user login dropdown start-->
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <img alt="" src="images/2.png">
-                        <span class="username">${username}</span>
+                        <img  src="${userInfo.userPicture}">
+                        <span class="username">${activeUser.userName}</span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended logout">
@@ -184,13 +188,21 @@
                                 <span>个人信息</span>
                             </ul>
                         </div>
-                        <form name="form1" action="">
+                        <form name="form1" action="/account/upload/picture" method="post" enctype="multipart/form-data">
                             <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+                                <tr>
+                                    <input type="hidden" name="userId" value="${activeUser.userId}"/>
+                                </tr>
+                                <c:if test="${not empty userInfo.id}">
+                                <tr>
+                                    <input type="hidden" name="id" value="${userInfo.id}"/>
+                                </tr>
+                                </c:if>
                                 <tr>
                                     <td width="90" align="right">用户名</td>
                                     <td>
                                         <label>
-                                            <input type="text" name="username" value="" size="80" class="inpMain" />
+                                            <input type="text" name="realName" value="${userInfo.realName}" size="80" class="inpMain" />
                                         </label>
                                     </td>
                                 </tr>
@@ -198,7 +210,7 @@
                                     <td width="90" align="right">用户介绍</td>
                                     <td>
                                         <label>
-                                            <input type="text" name="userintro" value="" size="80" class="inpMain" />
+                                            <input type="text" name="userIntroduce" value="${userInfo.userIntroduce}" size="80" class="inpMain" />
                                         </label>
                                     </td>
                                 </tr>
@@ -206,11 +218,11 @@
                                     <td width="90" align="right">用户头像</td>
                                     <td colspan="2">
                                         <div style="float: left;padding-top: 63px" >
-                                            <input type="file" name="userimage" value="image" size="38" class="inpFlie"/>
+                                            <input type="file" name="userimage" value="image" size="38" class="inpFlie" id="userimage" onchange="setImg()"/>
                                         </div>
                                         <div style="float: left;padding-left: 63px">
                                             <input type="button" class="btn"  value="预览" onclick="return view(this)" />
-                                            <img src="" width="150" height="160" id="picture" />
+                                            <img src="${userInfo.userPicture}" width="150" height="160" id="picture" />
                                         </div>
                                     </td>
                                 </tr>
@@ -218,7 +230,7 @@
                                     <td width="90" align="right">用户ID</td>
                                     <td>
                                         <label>
-                                            <input type="text" name="userID" value="" size="80" class="inpMain" />
+                                            <input type="text" name="userNo" value="${userInfo.userNo}" size="80" class="inpMain" />
                                         </label>
                                     </td>
                                 </tr>
@@ -226,7 +238,7 @@
                                     <td width="90" align="right">手机号</td>
                                     <td>
                                         <label>
-                                            <input type="text" name="userID" value="" size="80" class="inpMain" />
+                                            <input type="text" name="userPhone" value="${userInfo.userPhone}" size="80" class="inpMain" />
                                         </label>
                                     </td>
                                 </tr>
@@ -234,16 +246,13 @@
                                     <td width="90" align="right">所在地</td>
                                     <td>
                                         <label>
-                                            <input type="text" name="address" value="" size="80" class="inpMain" />
+                                            <input type="text" name="userAddress" value="${userInfo.userAddress}" size="80" class="inpMain" />
                                         </label>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="hidden" name="token" value="7e4a88fb" />
-                                        <input type="hidden" name="image" value="">
-                                        <input type="hidden" name="id" value="">
                                         <input name="usersubmit" class="btn" type="submit" value="保存" />
                                     </td>
                                 </tr>
@@ -350,6 +359,7 @@
         }
 
     });
+
 </script>
 <!-- //calendar -->
 

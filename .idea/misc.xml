@@ -3,6 +3,7 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
     <file type="web" url="file://$PROJECT_DIR$/../V-Share-Code/Chient" />
+    <file type="web" url="file://$PROJECT_DIR$/../最代码/SSM" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
