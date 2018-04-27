@@ -338,9 +338,19 @@
     modify_date = #{modifyDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-
-  <select id="listArticle" parameterType="map" resultMap="ResultMapWithBLOBs">
-    select * from article where
+  <select id="listArticle" parameterType="map" resultType="cn.clt.core.entity.Article">
+    select
+    id AS id,
+    article_title AS articleTitle,
+    article_type_id AS articleTypeId,
+    article_content AS articleContent,
+    article_picture AS articlePicture,
+    status AS status,
+    create_user_id AS createUserId,
+    create_date AS createDate,
+    modify_user_id AS modifyUserId,
+    modify_date AS modifyDate
+    from article where
     status = 1
     <if test="createUserId != null">
       AND create_user_id = #{createUserId,jdbcType=VARCHAR}

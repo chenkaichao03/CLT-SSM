@@ -163,7 +163,7 @@ public class ArticleController {
             //获取用户信息
             ActiveUser activeUser = (ActiveUser) session.getAttribute("activeUser");
             String userId = activeUser.getUserId();
-            Article article = articleService.getArticleByIdAndUserId(id,userId);
+            Article article = articleService.getArticleById(id);
             model.addAttribute("article",article);
             //文章类型信息
             List<ArticleType> articleTypeList = articleTypeService.listArticleType();

@@ -86,18 +86,11 @@ public class ArticleServiceImpl implements ArticleService{
      * @Author CLT
      * @Date 2018/4/26 10:35
      * @param id
-     * @param userId
      * @return
      */
     @Override
-    public Article getArticleByIdAndUserId(String id, String userId) {
-        ArticleExample example = new ArticleExample();
-        example.createCriteria().andIdEqualTo(id).andCreateUserIdEqualTo(userId).andStatusEqualTo(1);
-        List<Article> articleList = articleMapper.selectByExample(example);
-        if (!CollectionUtils.isEmpty(articleList)){
-            return articleList.get(0);
-        }
-        return null;
+    public Article getArticleById(String id) {
+        return articleMapper.selectByPrimaryKey(id);
     }
 
     /**
@@ -111,7 +104,7 @@ public class ArticleServiceImpl implements ArticleService{
      */
     @Override
     public int deleteArticle(String id, String userId) {
-        Article article = getArticleByIdAndUserId(id,userId);
+        Article article = getArticleById(id);
         if (article != null){
             article.setStatus(0);
             return articleMapper.updateByPrimaryKeySelective(article);

@@ -2,10 +2,10 @@ package cn.clt.core.mapper;
 
 import cn.clt.core.entity.Article;
 import cn.clt.core.entity.ArticleExample;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface ArticleMapper {
     long countByExample(ArticleExample example);
@@ -36,7 +36,7 @@ public interface ArticleMapper {
 
     int updateByPrimaryKey(Article record);
 
-    List<Article> listArticle(Map<String,Object> params);
+    List<Article> listArticle(Map<String,Object> param);
 
-    Long countArticle(Map<String,Object> params);
+    Long countArticle(Map<String,Object> param);
 }
