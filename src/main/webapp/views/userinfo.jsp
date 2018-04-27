@@ -191,7 +191,7 @@
                         <form name="form1" action="/account/upload/picture" method="post" enctype="multipart/form-data">
                             <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
                                 <tr>
-                                    <input type="hidden" name="userId" value="${userInfo.userId}"/>
+                                    <input type="hidden" name="userId" value="${activeUser.userId}"/>
                                 </tr>
                                 <c:if test="${not empty userInfo.id}">
                                 <tr>

@@ -27,7 +27,7 @@
                     <span class="username">Leta Chen</span>
                     <!--<span class="username">${username}</span>-->
                 </a>
-                <a href="views/article.jsp" class="fw2">发文</a>
+                <a href="views/home.jsp" class="fw2">发文</a>
             </td>
         </tr>
     </table>

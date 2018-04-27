@@ -166,7 +166,7 @@
                         </a>
                         <ul class="sub">
                             <li><a class="active" href="views/face.jsp">发布公告</a></li>
-                            <li><a href="views/face.jsp">结算中心</a></li>
+                            <li><a href="views/face.jsp">发布活动</a></li>
                         </ul>
                     </li>
 
