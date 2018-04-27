@@ -29,152 +29,14 @@
     <script src="js/morris.js"></script>
     <link rel="stylesheet" href="css/gonggao.css">
     <link href="css/public.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src = "/js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript">
-        function setImg() {
-            var userimage=document.getElementById("userimage");
-            var picture=document.getElementById("picture");
-            if(userimage.files && userimage.files[0]){
-                picture.src=window.URL.createObjectURL(userimage.files[0]);
-            }
-        }
-    </script>
 </head>
 <body>
 <section id="container">
     <!--header start-->
-    <header class="header fixed-top clearfix">
-        <!--logo start-->
-        <div class="brand">
-            <a href="views/show.jsp" class="logo">
-                &nbsp;&nbsp;&nbsp;&nbsp;CRP
-            </a>
-            <div class="sidebar-toggle-box">
-                <div class="fa fa-bars"></div>
-            </div>
-        </div>
-        <!--logo end-->
-
-        <div class="top-nav clearfix">
-            <!--search & user info start-->
-            <ul class="nav pull-right top-menu">
-                <li>
-                    <input type="text" class="form-control search" placeholder=" Search">
-                </li>
-                <!-- user login dropdown start-->
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <img  src="${userInfo.userPicture}">
-                        <span class="username">${activeUser.userName}</span>
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu extended logout">
-                        <li><a href="views/userinfo.jsp"><i class=" fa fa-user"></i>账号信息</a></li>
-                        <li><a href="views/usersetting.jsp"><i class="fa fa-cog"></i>账号设置</a></li>
-                        <li><a href="views/login.jsp"><i class="fa fa-power-off"></i>退出登录</a></li>
-                    </ul>
-                </li>
-                <!-- user login dropdown end -->
-
-            </ul>
-            <!--search & user info end-->
-        </div>
-    </header>
+    <jsp:include page="head.jsp"></jsp:include>
     <!--header end-->
     <!--sidebar start-->
-    <aside>
-        <div id="sidebar" class="nav-collapse">
-            <!-- sidebar menu start-->
-            <div class="leftside-navigation">
-                <ul class="sidebar-menu" id="nav-accordion">
-                    <li>
-                        <a href="views/home.jsp">
-                            <i class="fa fa-home"></i>
-                            <span>主页</span>
-                        </a>
-                    </li>
-
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-pencil"></i>
-                            <span>发表</span>
-                        </a>
-                        <ul class="sub">
-                            <li class="sub-menu">
-                                <a href="views/video.jsp">
-                                    <i class="fa fa-video-camera"></i>
-                                    <span>视频</span>
-                                </a>
-                                <ul class="sub">
-                                    <li><a href="views/video.jsp">发表视频</a></li>
-                                    <li><a href="views/vediolist.jsp">内容管理</a></li>
-                                </ul>
-                            </li>
-                            <li class="sub-menu">
-                                <a href="views/article.jsp">
-                                    <i class="fa fa-book"></i>
-                                    <span>图文</span>
-                                </a>
-                                <ul class="sub">
-                                    <li><a href="views/article.jsp">发表图文</a></li>
-                                    <li><a href="views/articlelist.jsp">内容管理</a></li>
-                                </ul>
-                            </li>
-                            <!--<li><a href="views/video.jsp">视频</a></li>
-                            <li><a href="views/article.jsp">文章</a></li>
-                            <li><a href="views/atlas.jsp">图集</a></li>-->
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="views/notice.jsp">
-                            <i class="fa fa-envelope"></i>
-                            <span>通知</span>
-                        </a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="views/comment.jsp">
-                            <i class="fa fa-comments"></i>
-                            <span>评论管理</span>
-                        </a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-users"></i>
-                            <span>粉丝管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="views/face.jsp">粉丝概况</a></li>
-                            <li><a href="views/face.jsp">粉丝画像</a></li>
-                            <li><a href="views/face.jsp">粉丝列表</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class=" fa fa-bar-chart-o"></i>
-                            <span>数据分析</span>
-                        </a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class=" fa fa-yen"></i>
-                            <span>收益结算</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="views/face.jsp">我的收益</a></li>
-                            <li><a href="views/face.jsp">结算中心</a></li>
-                        </ul>
-
-                    <li>
-                        <a href="views/activity.jsp">
-                            <i class="fa fa-gift"></i>
-                            <span>活动</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- sidebar menu end-->
-        </div>
-    </aside>
+    <jsp:include page="navigation.jsp"></jsp:include>
     <!--sidebar end-->
     <!--main content start-->
     <section id="main-content">
@@ -188,11 +50,8 @@
                                 <span>个人信息</span>
                             </ul>
                         </div>
-                        <form name="form1" action="/account/upload/picture" method="post" enctype="multipart/form-data">
+                        <form name="form1" action="/account/user-info/setting" method="get">
                             <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
-                                <tr>
-                                    <input type="hidden" name="userId" value="${userInfo.userId}"/>
-                                </tr>
                                 <c:if test="${not empty userInfo.id}">
                                 <tr>
                                     <input type="hidden" name="id" value="${userInfo.id}"/>
@@ -212,18 +71,6 @@
                                         <label>
                                             <input type="text" name="userIntroduce" value="${userInfo.userIntroduce}" size="80" class="inpMain" />
                                         </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="90" align="right">用户头像</td>
-                                    <td colspan="2">
-                                        <div style="float: left;padding-top: 63px" >
-                                            <input type="file" name="userimage" value="image" size="38" class="inpFlie" id="userimage" onchange="setImg()"/>
-                                        </div>
-                                        <div style="float: left;padding-left: 63px">
-                                            <input type="button" class="btn"  value="预览" onclick="return view(this)" />
-                                            <img src="${userInfo.userPicture}" width="150" height="160" id="picture" />
-                                        </div>
                                     </td>
                                 </tr>
                                 <tr>

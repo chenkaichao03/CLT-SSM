@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @Description 账户
+ * @Description 账户管理
  * @Aouthor CLT
  * @Date 2018/04/06 17:56
  */
@@ -133,6 +133,29 @@ public class AccountController {
     }
 
     /**
+     * @Title getUserPicture
+     * @Description 获取用户头像
+     * @Author CLT
+     * @Date 2018/4/25 10:13
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/get/picture")
+    public String getUserPicture(HttpSession session,Model model){
+        //获取用户信息
+        ActiveUser activeUser = (ActiveUser) session.getAttribute("activeUser");
+        String userId = activeUser.getUserId();
+        List<UserInfo> userInfoList = userInfoService.listUserInfoByUsreId(userId);
+        UserInfo userInfo = null;
+        if (!CollectionUtils.isEmpty(userInfoList)){
+            userInfo = userInfoList.get(0);
+        }
+        model.addAttribute("userInfo",userInfo);
+        return "usersetting";
+    }
+
+    /**
      * @Title uploadPicture
      * @Description 上传图片
      * @Author CLT
@@ -143,33 +166,15 @@ public class AccountController {
      */
     @RequestMapping(value = "/upload/picture",method = RequestMethod.POST)
     public String uploadPicture(@RequestParam(value = "userimage",required = false) MultipartFile file,
-                                UserInfo userInfo,HttpServletRequest request)throws Exception{
+                                HttpServletRequest request,HttpSession session)throws Exception{
         try {
-            //获取上传图片全称
-            String originalFileName = file.getOriginalFilename();
-            if (!StringUtils.isEmpty(file)){
-                //文件存储位置
-                String path = request.getSession().getServletContext().getRealPath("upload"); //文件存储位置
-                //获取图片格式
-                String pictureFormat = originalFileName.substring(originalFileName.lastIndexOf("."),originalFileName.length());
-                //随机数
-                String pictureRandom = new Date().getTime()+"_"+new Random().nextInt(1000);
-                //组装新的图片全称
-                originalFileName=pictureRandom+pictureFormat;//新的文件名
-                //判断文件夹是否存在
-                File pathFile = new File(path);
-                if (!pathFile.getParentFile().exists()){
-                    pathFile.getParentFile().mkdir();
-                }
-                File targetFile = new File(pathFile, originalFileName);
-                //写入到服务器上
-                file.transferTo(targetFile);
-                //写入数据
-                userInfoService.insertUserInfo(userInfo,originalFileName,pathFile);
-            }
+            //获取用户信息
+            ActiveUser activeUser = (ActiveUser) session.getAttribute("activeUser");
+            String path = request.getSession().getServletContext().getRealPath("upload"); //文件存储位置
+            //用户头像设置
+            userInfoService.userPictureSetting(activeUser.getUserId(),file,path);
         } catch (BussinessException e){
-            logger.error(e.getMessage());
-            throw new BussinessException("上传图片失败.");
+            throw new BussinessException(e.getMessage());
         } catch (Exception e){
             e.printStackTrace();
             logger.error("上传图片失败.",e.getMessage());
@@ -177,10 +182,37 @@ public class AccountController {
         return "redirect:/home/index";
     }
 
+    /**
+     * @Title userInfoSetting
+     * @Description 用户信息设置
+     * @Author CLT
+     * @Date 2018/4/25 11:25
+     * @param userInfo
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/user-info/setting")
+    public String userInfoSetting(UserInfo userInfo,HttpSession session,Model model) throws Exception{
+        try{
+            //获取用户信息
+            ActiveUser activeUser = (ActiveUser) session.getAttribute("activeUser");
+            String userId = activeUser.getUserId();
+            //用户信息设置
+            userInfoService.insertUserInfo(userInfo,userId);
+        }catch (BussinessException e){
+            throw new BussinessException(e.getMessage());
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("用户信息设置失败.",e.getMessage());
+        }
+        return "redirect:/home/index";
+    }
+
      /**
      * @Title erificationUserInfo
      * @Description 手机号校验
-     * @Author Lizi
+     * @Author CLT
      * @Date 2018/4/24 15:23
      * @param userName
      * @param phone
@@ -200,7 +232,7 @@ public class AccountController {
     /**
      * @Title passwordSetting
      * @Description 设置新密码
-     * @Author Lizi
+     * @Author CLT
      * @Date 2018/4/24 15:43
      * @param password
      * @param newPassword

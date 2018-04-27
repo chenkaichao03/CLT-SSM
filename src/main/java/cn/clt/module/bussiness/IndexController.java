@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * @Description IndexController
+ * @Description 首页管理
  * @Aouthor CLT
  * @Date 2018/04/13 16:14
  */
@@ -30,7 +30,7 @@ public class IndexController {
     private UserInfoService userInfoService;
     /**
      * @Title index
-     * @Description 首页
+     * @Description 后台首页
      * @Author CLT
      * @Date 2018/4/13 16:18
      * @param model
