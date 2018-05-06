@@ -1,3 +1,5 @@
+<%@ taglib uri="/WEB-INF/tlds/c.tld" prefix="c"%>
+<%@ taglib uri="/WEB-INF/tlds/fmt.tld" prefix="fmt"%>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
     String path = request.getContextPath();
@@ -28,142 +30,26 @@
     <script src="js/morris.js"></script>
     <link rel="stylesheet" href="css/gonggao.css">
     <link href="css/public.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript">
+/*        $(function () {
+            $(".listbtn").click(function () {
+                var articleId = $(this).parent().prevAll("input").val();
+                //发送ajax请求
+                $.ajax({
+                    url:
+                });
+            });
+        });*/
+    </script>
 </head>
 <body>
 <section id="container">
     <!--header start-->
-    <header class="header fixed-top clearfix">
-        <!--logo start-->
-        <div class="brand">
-            <a href="views/show.jsp" class="logo">
-                &nbsp;&nbsp;&nbsp;&nbsp;CRP
-            </a>
-            <div class="sidebar-toggle-box">
-                <div class="fa fa-bars"></div>
-            </div>
-        </div>
-        <!--logo end-->
-
-        <div class="top-nav clearfix">
-            <!--search & user info start-->
-            <ul class="nav pull-right top-menu">
-                <li>
-                    <input type="text" class="form-control search" placeholder=" Search">
-                </li>
-                <!-- user login dropdown start-->
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <img alt="" src="images/2.png">
-                        <span class="username">${username}</span>
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu extended logout">
-                        <li><a href="views/userinfo.jsp"><i class=" fa fa-user"></i>账号信息</a></li>
-                        <li><a href="views/usersetting.jsp"><i class="fa fa-cog"></i>账号设置</a></li>
-                        <li><a href="views/login.jsp"><i class="fa fa-power-off"></i>退出登录</a></li>
-                    </ul>
-                </li>
-                <!-- user login dropdown end -->
-
-            </ul>
-            <!--search & user info end-->
-        </div>
-    </header>
+    <jsp:include page="head.jsp"></jsp:include>
     <!--header end-->
     <!--sidebar start-->
-    <aside>
-        <div id="sidebar" class="nav-collapse">
-            <!-- sidebar menu start-->
-            <div class="leftside-navigation">
-                <ul class="sidebar-menu" id="nav-accordion">
-                    <li>
-                        <a  href="views/home.jsp">
-                            <i class="fa fa-home"></i>
-                            <span>主页</span>
-                        </a>
-                    </li>
-
-                    <li class="sub-menu">
-                        <a class="active" href="javascript:;">
-                            <i class="fa fa-pencil"></i>
-                            <span>发表</span>
-                        </a>
-                        <ul class="sub-menu">
-                            <li class="sub-menu">
-                                <a href="javascript:;">
-                                    <i class="fa fa-video-camera"></i>
-                                    <span>视频</span>
-                                </a>
-                                <ul class="sub">
-                                    <li><a href="views/video.jsp">发表视频</a></li>
-                                    <li><a href="views/video.jsp">内容管理</a></li>
-                                </ul>
-                            </li>
-                            <li class="sub-menu">
-                                <a class="active" href="javascript:;">
-                                    <i class="fa fa-book"></i>
-                                    <span>图文</span>
-                                </a>
-                                <ul class="sub">
-                                    <li><a href="views/article.jsp">发表图文</a></li>
-                                    <li><a class="active" href="views/articlelist.jsp">内容管理</a></li>
-                                </ul>
-                            </li>
-                            <!--<li><a href="views/video.jsp">视频</a></li>
-                            <li><a href="views/article.jsp">文章</a></li>
-                            <li><a href="views/atlas.jsp">图集</a></li>-->
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="views/notice.jsp">
-                            <i class="fa fa-envelope"></i>
-                            <span>通知</span>
-                        </a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="views/comment.jsp">
-                            <i class="fa fa-comments"></i>
-                            <span>评论管理</span>
-                        </a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-users"></i>
-                            <span>粉丝管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="views/face.jsp">粉丝概况</a></li>
-                            <li><a href="views/face.jsp">粉丝画像</a></li>
-                            <li><a href="views/face.jsp">粉丝列表</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class=" fa fa-bar-chart-o"></i>
-                            <span>数据分析</span>
-                        </a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class=" fa fa-yen"></i>
-                            <span>收益结算</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="views/face.jsp">我的收益</a></li>
-                            <li><a href="views/face.jsp">结算中心</a></li>
-                        </ul>
-
-                    <li>
-                        <a href="views/activity.jsp">
-                            <i class="fa fa-gift"></i>
-                            <span>活动</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- sidebar menu end-->
-        </div>
-    </aside>
+    <jsp:include page="navigation.jsp"></jsp:include>
     <!--sidebar end-->
     <!--main content start-->
     <section id="main-content">
@@ -182,29 +68,32 @@
                         <form name="form1" action="" method="post" enctype="multipart/form-data">
                             <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
                                 <tr>
-                                    <td align="center" width="100px">图文编号</td>
-                                    <td align="center" >图文标题</td>
+                                    <td align="center">图文序号</td>
+                                    <td align="center">图文标题</td>
                                     <td align="center" width="150px">发表时间</td>
                                     <td align="center" width="200px">操作</td>
                                 </tr>
+                                <c:forEach items="${pageResult.articleList}" var="article" varStatus="status">
                                 <tr align="center">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <c:if test="${not empty article.id}">
+                                        <input type="hidden" id="articleId" value="${article.id}">
+                                    </c:if>
+                                    <td>${status.index+1+(pageResult.pageSize*pageResult.pageNo)}</td>
+                                    <td>${article.articleTitle}</td>
+                                    <td><fmt:formatDate value="${article.createDate}" type="both" pattern="MM-dd HH:mm"/></td>
                                     <td>
-                                        <input type="button" class="listbtn" value="查看" name="add" onclick="">
-                                        <input type="button" class="listbtn" value="修改" name="update" onclick="">
-                                        <input type="button" class="listbtn" value="删除" name="delete"  onclick="">
+                                        <a href=""><input type="button" class="listbtn" value="查看" name="add" ></a>
+                                        <a href="/article/show?id=${article.id}"><input type="button" class="listbtn" value="修改 " name="update" ></a>
+                                        <a href="/article/delete?id=${article.id}"><input type="button" class="listbtn" value="删除" name="delete" ></a>
                                     </td>
                                 </tr>
-
+                                </c:forEach>
                             </table>
                         </form>
                     </div>
                 </div>
             </div>
         </section>
-
     </section>
     <!--main content end-->
 </section>

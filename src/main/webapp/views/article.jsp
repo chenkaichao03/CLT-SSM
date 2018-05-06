@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
     String path = request.getContextPath();
@@ -36,138 +37,10 @@
 <body>
 <section id="container">
     <!--header start-->
-    <header class="header fixed-top clearfix">
-        <!--logo start-->
-        <div class="brand">
-            <a href="views/show.jsp" class="logo">
-                &nbsp;&nbsp;&nbsp;&nbsp;CRP
-            </a>
-            <div class="sidebar-toggle-box">
-                <div class="fa fa-bars"></div>
-            </div>
-        </div>
-        <!--logo end-->
-
-        <div class="top-nav clearfix">
-            <!--search & user info start-->
-            <ul class="nav pull-right top-menu">
-                <li>
-                    <input type="text" class="form-control search" placeholder=" Search">
-                </li>
-                <!-- user login dropdown start-->
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <img alt="" src="images/2.png">
-                        <span class="username">${username}</span>
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu extended logout">
-                        <li><a href="views/userinfo.jsp"><i class=" fa fa-user"></i>账号信息</a></li>
-                        <li><a href="views/usersetting.jsp"><i class="fa fa-cog"></i>账号设置</a></li>
-                        <li><a href="views/login.jsp"><i class="fa fa-power-off"></i>退出登录</a></li>
-                    </ul>
-                </li>
-                <!-- user login dropdown end -->
-
-            </ul>
-            <!--search & user info end-->
-        </div>
-    </header>
+    <jsp:include page="head.jsp"></jsp:include>
     <!--header end-->
     <!--sidebar start-->
-    <aside>
-        <div id="sidebar" class="nav-collapse">
-            <!-- sidebar menu start-->
-            <div class="leftside-navigation">
-                <ul class="sidebar-menu" id="nav-accordion">
-                    <li>
-                        <a  href="views/home.jsp">
-                            <i class="fa fa-home"></i>
-                            <span>主页</span>
-                        </a>
-                    </li>
-
-                    <li class="sub-menu">
-                        <a class="active" href="javascript:;">
-                            <i class="fa fa-pencil"></i>
-                            <span>发表</span>
-                        </a>
-                        <ul class="sub">
-                            <li class="sub-menu">
-                                <a href="javascript:">
-                                    <i class="fa fa-video-camera"></i>
-                                    <span>视频</span>
-                                </a>
-                                <ul class="sub">
-                                    <li><a href="views/video.jsp">发表视频</a></li>
-                                    <li><a href="views/vediolist.jsp">内容管理</a></li>
-                                </ul>
-                            </li>
-                            <li class="sub-menu">
-                                <a class="active" href="views/article.jsp">
-                                    <i class="fa fa-book"></i>
-                                    <span>图文</span>
-                                </a>
-                                <ul class="sub">
-                                    <li><a class="active" href="views/article.jsp">发表图文</a></li>
-                                    <li><a href="views/articlelist.jsp">内容管理</a></li>
-                                </ul>
-                            </li>
-                            <!--<li><a href="views/video.jsp">视频</a></li>
-                            <li><a href="views/article.jsp">文章</a></li>
-                            <li><a href="views/atlas.jsp">图集</a></li>-->
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="views/notice.jsp">
-                            <i class="fa fa-envelope"></i>
-                            <span>通知</span>
-                        </a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="views/comment.jsp">
-                            <i class="fa fa-comments"></i>
-                            <span>评论管理</span>
-                        </a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-users"></i>
-                            <span>粉丝管理</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="views/face.jsp">粉丝概况</a></li>
-                            <li><a href="views/face.jsp">粉丝画像</a></li>
-                            <li><a href="views/face.jsp">粉丝列表</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class=" fa fa-bar-chart-o"></i>
-                            <span>数据分析</span>
-                        </a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class=" fa fa-yen"></i>
-                            <span>收益结算</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="views/face.jsp">我的收益</a></li>
-                            <li><a href="views/face.jsp">结算中心</a></li>
-                        </ul>
-
-                    <li>
-                        <a href="views/activity.jsp">
-                            <i class="fa fa-gift"></i>
-                            <span>活动</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- sidebar menu end-->
-        </div>
-    </aside>
+    <jsp:include page="navigation.jsp"></jsp:include>
     <!--sidebar end-->
     <!--main content start-->
     <section id="main-content">
@@ -180,23 +53,29 @@
                             <span>发表文章</span>
                         </ul>
                     </div>
-                    <form name="form1" action="" method="post" enctype="multipart/form-data">
+                    <form name="form1" action="/article/add" method="post" enctype="multipart/form-data">
                         <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+                            <c:if test="${not empty article.id}">
+                            <tr>
+                                <input type="hidden" name="id" value="${article.id}">
+                            </tr>
+                            </c:if>
                             <tr>
                                 <td width="90" align="right">文章名称</td>
                                 <td>
                                     <label>
-                                        <input type="text" name="title" value="" size="80" class="inpMain" />
+                                        <input type="text" name="articleTitle" value="${article.articleTitle}" size="80" class="inpMain" />
                                     </label>
                                 </td>
                             </tr>
                             <tr>
                                 <td align="right">文章分类</td>
                                 <td>
-                                    <select name="cat_id">
-                                        <option value="0" selected="selected">--未分类--</option>
-                                        <option value="1"> 娱乐</option>
-                                        <option value="2"> 新闻</option>
+                                    <select name="articleTypeId">
+                                        <option value="" selected="selected">--未分类--</option>
+                                        <c:forEach var="articleType" items="${articleTypeList}">
+                                            <option value="${articleType.id}"<c:out value="${article.articleTypeId==articleType.id?'selected=selected':''}"></c:out>>${articleType.articleTypeName}</option>
+                                        </c:forEach>
                                     </select>
                                 </td>
                             </tr>
@@ -211,7 +90,7 @@
                                     <script charset="utf-8" src="js/kindeditor/plugins/code/prettify.js"></script>
                                     <script>
                                         KindEditor.ready(function(K) {
-                                            var editor1 = K.create('textarea[name="content"]', {
+                                            var editor1 = K.create('textarea[name="articleContent"]', {
                                                 cssPath : '../plugins/code/prettify.css',
                                                 uploadJson : '../jsp/upload_json.jsp',
                                                 fileManagerJson : '../jsp/file_manager_json.jsp',
@@ -234,21 +113,18 @@
                                         });
                                     </script>
                                     <!-- /KindEditor -->
-                                    <textarea id="content" name="content" style="width:780px;height:400px;" class="textArea"></textarea>
+                                    <textarea id="content"  name="articleContent" style="width:780px;height:400px;" class="textArea">${article.articleContent}</textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <td align="right">上传图片</td>
                                 <td>
-                                    <input type="file" name="image" size="38" class="inpFlie" />
+                                    <input type="file" name="articleFile" size="38" class="inpFlie" />
                                 </td>>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>
-                                    <input type="hidden" name="token" value="7e4a88fb" />
-                                    <input type="hidden" name="image" value="">
-                                    <input type="hidden" name="id" value="">
                                     <input name="submit" class="btn" type="submit" value="发表" />
                                 </td>
                             </tr>

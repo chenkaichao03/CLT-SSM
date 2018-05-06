@@ -12,9 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @Description UserInfoServiceImpl
@@ -29,61 +33,25 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     /**
      * @Title insertUserInfo
-     * @Description 添加用户
+     * @Description 用户信息设置
      * @Author CLT
      * @Date 2018/4/22 21:24
      * @param info
-     * @param originalFileName
-     * @param pathFile
+     * @param userId
      */
     @Override
-    public void insertUserInfo(UserInfo info, String originalFileName, File pathFile) {
-        String userId = info.getUserId();
+    public void insertUserInfo(UserInfo info, String userId) {
         String id = info.getId();
+        //新增
         if (StringUtils.isEmpty(id)){
-            if (StringUtils.isEmpty(userId)){
-                throw new BussinessException("用户id不能为空.");
-            }
-            //新增
             info.setId(GuidUtil.newGuid());
-            if (!StringUtils.isEmpty(originalFileName)) {
-                info.setUserPicture("upload/" + originalFileName);
-            }
-            if (!StringUtils.isEmpty(info.getUserPhone())) {
-                List<UserInfo> list = listUserInfoByUserPhone(info.getUserPhone());
-                if (!CollectionUtils.isEmpty(list)){
-                    throw new BussinessException("手机号已存在.");
-                }
+            if (!StringUtils.isEmpty(userId)) {
+                info.setUserId(userId);
             }
             userInfoMapper.insert(info);
         }else {
-            //编辑
-            List<UserInfo> userInfoList = listUserInfo(id);
-            if (!CollectionUtils.isEmpty(userInfoList)){
-                //更新
-                UserInfo userInfo = userInfoList.get(0);
-                //删除之前的图片
-                String userPicture = userInfo.getUserPicture();
-                if (!StringUtils.isEmpty(userPicture)){
-                    userPicture = userPicture.substring(userPicture.lastIndexOf("/"),userPicture.length());
-                    File file = new File(pathFile,userPicture);
-                    if (file.exists()){
-                        file.delete();
-                    }
-                }
-                if (!StringUtils.isEmpty(originalFileName)) {
-                    info.setUserPicture("upload/" + originalFileName);
-                }
-                if (!StringUtils.isEmpty(info.getUserPhone())) {
-                    List<UserInfo> list = listUserInfoByUserPhone(info.getUserPhone());
-                    if (!CollectionUtils.isEmpty(list)){
-                        throw new BussinessException("手机号已存在.");
-                    }
-                }
-                userInfoMapper.updateByPrimaryKeySelective(info);
-            }else {
-                throw new BussinessException("用户信息不存在.");
-            }
+            //更新
+            userInfoMapper.updateByPrimaryKeySelective(info);
         }
     }
 
@@ -145,5 +113,68 @@ public class UserInfoServiceImpl implements UserInfoService {
             return userInfoList;
         }
         return null;
+    }
+
+    /**
+     * @Title userPictureSetting
+     * @Description 用户头像设置
+     * @Author Lizi
+     * @Date 2018/4/25 10:50
+     * @param userId
+     * @param file
+     */
+    @Override
+    public void userPictureSetting(String userId, MultipartFile file, String path) {
+        try {
+            //获取用户信息
+            List<UserInfo> userInfoList = listUserInfoByUsreId(userId);
+            UserInfo userInfo = null;
+            //头像上传
+            if (file != null) {
+                //获取上传图片全称
+                String originalFileName = file.getOriginalFilename();
+                if (StringUtils.isEmpty(originalFileName)){
+                    return;
+                }
+                //获取图片格式
+                String pictureFormat = originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length());
+                //随机数
+                String pictureRandom = new Date().getTime() + "_" + new Random().nextInt(1000);
+                //组装新的图片全称
+                originalFileName = pictureRandom + pictureFormat;//新的文件名
+                //判断文件夹是否存在
+                File pathFile = new File(path);
+                if (!pathFile.getParentFile().exists()) {
+                    pathFile.getParentFile().mkdir();
+                }
+                File targetFile = new File(pathFile, originalFileName);
+                //写入到服务器上
+                file.transferTo(targetFile);
+                //更新
+                if (!CollectionUtils.isEmpty(userInfoList)){
+                    userInfo = userInfoList.get(0);
+                    String userPicture = userInfo.getUserPicture();
+                    userPicture = userPicture.substring(userPicture.lastIndexOf("/"),userPicture.length());
+                    File pictureFile = new File(pathFile,userPicture);
+                    if (pictureFile.exists()){
+                        pictureFile.delete();
+                    }
+                    userInfo.setUserPicture("upload/" + originalFileName);
+                    userInfoMapper.updateByPrimaryKeySelective(userInfo);
+                }else {
+                    //新增
+                    userInfo = new UserInfo();
+                    userInfo.setId(GuidUtil.newGuid());
+                    userInfo.setUserId(userId);
+                    userInfo.setUserPicture("upload/" + originalFileName);
+                    userInfoMapper.insert(userInfo);
+                }
+            }else {
+                return;
+            }
+        }catch (Exception e){
+            logger.error("写入图片异常",e.getMessage());
+            throw new BussinessException("上传图片异常.");
+        }
     }
 }

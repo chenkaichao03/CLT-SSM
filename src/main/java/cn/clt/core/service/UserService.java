@@ -47,4 +47,5 @@ public interface UserService {
      * @param newPassword
      */
     String passwordSetting(String userId,String password,String newPassword);
+
 }
