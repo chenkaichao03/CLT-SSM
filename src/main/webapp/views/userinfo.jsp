@@ -52,9 +52,6 @@
                         </div>
                         <form name="form1" action="/account/user-info/setting" method="get">
                             <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
-                                <tr>
-                                    <input type="hidden" name="userId" value="${activeUser.userId}"/>
-                                </tr>
                                 <c:if test="${not empty userInfo.id}">
                                 <tr>
                                     <input type="hidden" name="id" value="${userInfo.id}"/>
@@ -74,18 +71,6 @@
                                         <label>
                                             <input type="text" name="userIntroduce" value="${userInfo.userIntroduce}" size="80" class="inpMain" />
                                         </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="90" align="right">用户头像</td>
-                                    <td colspan="2">
-                                        <div style="float: left;padding-top: 63px" >
-                                            <input type="file" name="userimage" value="image" size="38" class="inpFlie" id="userimage" onchange="setImg()"/>
-                                        </div>
-                                        <div style="float: left;padding-left: 63px">
-                                            <input type="button" class="btn"  value="预览" onclick="return view(this)" />
-                                            <img src="${userInfo.userPicture}" width="150" height="160" id="picture" />
-                                        </div>
                                     </td>
                                 </tr>
                                 <tr>

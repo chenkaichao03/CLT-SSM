@@ -54,6 +54,10 @@ public interface ArticleService {
      * @Author CLT
      * @Date 2018/4/26 10:35
      * @param id
+     * @param userId
+     * @return
+     */
+    Article getArticleByIdAndUserId(String id,String userId);
      * @return
      */
     Article getArticleById(String id);

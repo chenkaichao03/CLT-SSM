@@ -67,15 +67,22 @@
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-users"></i>
+                    <a href="views/followuser.jsp">
+                        <i class="fa fa-user-plus"></i>
+                        <span>关注管理</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="views/fans.jsp">
+                        <i class="fa fa-user-md"></i>
                         <span>粉丝管理</span>
                     </a>
-                    <ul class="sub">
-                        <li><a href="views/face.jsp">粉丝概况</a></li>
-                        <li><a href="views/face.jsp">粉丝画像</a></li>
-                        <li><a href="views/face.jsp">粉丝列表</a></li>
-                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="views/umanage.jsp">
+                        <i class="fa fa-users"></i>
+                        <span>用户管理</span>
+                    </a>
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
@@ -89,8 +96,8 @@
                         <span>收益结算</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="views/face.jsp">我的收益</a></li>
-                        <li><a href="views/face.jsp">结算中心</a></li>
+                        <li><a href="views/myprofit.jsp">我的收益</a></li>
+                        <li><a href="views/profitcenter.jsp">兑换中心</a></li>
                     </ul>
                 </li>
                 <li>

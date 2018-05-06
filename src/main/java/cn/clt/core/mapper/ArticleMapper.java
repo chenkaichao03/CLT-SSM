@@ -39,4 +39,7 @@ public interface ArticleMapper {
     List<Article> listArticle(Map<String,Object> param);
 
     Long countArticle(Map<String,Object> param);
+    List<Article> listArticle(Map<String,Object> params);
+
+    Long countArticle(Map<String,Object> params);
 }
