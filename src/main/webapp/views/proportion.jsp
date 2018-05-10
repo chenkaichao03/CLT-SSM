@@ -33,24 +33,8 @@
     <script src="js/jquery2.0.3.min.js"></script>
     <script src="js/raphael-min.js"></script>
     <script src="js/morris.js"></script>
-    <script type="text/javascript" src="js/spinner/jquery.min.js"></script>
-    <script type="text/javascript" src="js/spinner/jquery.Spinner.js"></script>
 
     <style type="text/css">
-        body{background:#f0fdf0;}
-        .Spinner{display:block;overflow:hidden;width:300px;}
-        #left1{margin:-20px auto 25px 118px;}
-        #right1{margin:-50px auto 25px 245px;}
-        #left2{margin:-20px auto 25px 118px;}
-        #right2{margin:-50px auto 25px 245px;}
-        .Spinner .Amount{width:40px;height:25px;padding:4px 5px;line-height:17px;border-width:1px 0;border-style:solid;border-color:#d9d9d9;float:left;text-align:center;color:#565656;outline:0;}
-        .Spinner a{display:inline-block;width:25px;height:25px;border:1px solid #d9d9d9;background-color:#f7f7f7;float:left;cursor:pointer;outline:0;}
-        .Spinner a i{font-style:normal;background:url(images/BuynBtn.png) no-repeat;display:block;width:9px;height:9px;margin:8px;text-indent:999999%;overflow:hidden;}
-        .Spinner .Decrease i{background-position:-9px -9px;}
-        .Spinner .Increase i{background-position:-9px -0px;}
-        .Spinner .DisDe i{background-position:-0px -9px;}
-        .Spinner .DisIn i{background-position:-0px -0px;}
-
         .btn {
             display: inline-block;
             background-color: #0072C6;
@@ -63,19 +47,9 @@
             text-transform: capitalize;
             cursor: pointer;
             -webkit-appearance: none;
-            margin:-54px 0 0 40px;
+            margin-left: 20px;
         }
-
     </style>
-
-    <script type="text/javascript">
-        $(function(){
-            $("#left1").Spinner({value:0, min:0, len:4, max:1000});
-            $("#right1").Spinner({value:0, min:0, len:3, max:100});
-            $("#left2").Spinner({value:0, min:0, len:4, max:1000});
-            $("#right2").Spinner({value:0, min:0, len:3, max:100});
-        });
-    </script>
 </head>
 <body>
 <section id="container">
@@ -101,28 +75,26 @@
                         </div>
                         <div style="margin: 20px 0 0 50px;">
                             <form  name="form1" action="" method="post" enctype="multipart/form-data">
-                                <table style="width: 800px;border:10px solid #707682"  cellpadding="0" cellspacing="0" class="">
+                                <table style="width: 800px;border:10px solid #707682;text-align: center"  cellpadding="0" cellspacing="0" class="">
                                     <tr>
                                         <td><br/><br/>
-                                            <div style="margin-left: 170px;">
-                                                <span>粉丝数兑换： </span>
-                                                <span id="left1" class="Spinner">&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-                                                <span id="right1" class="Spinner">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                                <div style="margin-left: 350px">
-                                                    <input name="submit" style="height: 32px" class="btn" type="submit" value="保存">
-                                                </div>
+                                            <div style="">
+                                                <span>粉丝数兑换：设置 </span>
+                                                <input type="number" style="width:90px;color: red;text-align: center"/>
+                                                <span>个粉丝，兑换</span>
+                                                <span style="color: red">1</span>
+                                                <span>元钱；</span>
+                                                <input name="submit" style="height: 32px" class="btn" type="submit" value="保存">
                                             </div>
-                                            <span style="color: red;margin-left: 326px">（粉丝数 ：金额 ¥）</span>
                                             <br/><br/>
-                                            <div style="margin-left: 170px;">
-                                                <span>点击量兑换：</span>
-                                                <span id="left2" class="Spinner">&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-                                                <span id="right2" class="Spinner">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                                <div style="margin-left: 350px">
-                                                    <input name="submit" style="height: 32px" class="btn" type="submit" value="保存">
-                                                </div>
+                                            <div style="">
+                                                <span>点击量兑换：设置 </span>
+                                                <input type="number" style="width:90px;color: red;text-align: center"/>
+                                                <span>点击量，兑换</span>
+                                                <span style="color: red">1</span>
+                                                <span>元钱；</span>
+                                                <input name="submit" style="height: 32px" class="btn" type="submit" value="保存">
                                             </div>
-                                            <span style="color: red;margin-left: 326px">（点击量 ：金额 ¥）</span>
                                             <br/><br/><br/>
                                         </td>
                                     </tr>
