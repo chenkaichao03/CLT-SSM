@@ -2,7 +2,6 @@ package cn.clt.core.service;
 
 import cn.clt.core.entity.Article;
 import cn.clt.core.params.ManagementPageData;
-import com.github.pagehelper.PageInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -58,8 +57,7 @@ public interface ArticleService {
      * @return
      */
     Article getArticleByIdAndUserId(String id,String userId);
-     * @return
-     */
+
     Article getArticleById(String id);
 
     /**

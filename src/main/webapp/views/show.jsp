@@ -25,10 +25,14 @@
     <script language="javascript" type="text/javascript" src="js/firstjs/main.js"></script>
     <script language="javascript" type="text/javascript" src="js/firstjs/popwin.js"></script>
     <link rel="stylesheet" type="text/css" href="css/firstcss/nanoscroller.css">
+    <style>
+        .moder-project-list ul li{
+            min-height:65px;
+        }
+    </style>
 </head>
 
 <body>
-
 <header id="top" role="banner" class="transition">
     <!--搜索弹窗 开始-->
     <div class="box">
@@ -83,46 +87,64 @@
     </script>
     <div class="container">
         <div class="navbar-header transition">
-            <a href="#" title="首页"><img src="images/logo.png" alt="虎嗅网" title="首页" /></a>
+            <a href="#" title="首页"><img src="images/logo.png" alt="创作收益平台" title="创作收益平台" /></a>
         </div>
         <ul class="nav navbar-nav navbar-left" id="jsddm" style="margin-top: 21px;">
-            <li class="nav-news js-show-menu">
-                <a href="#">资讯 <span class="caret"></span></a>
-                <ul style="visibility: hidden;">
-                    <li><a href="#" target="_blank">电商消费</a></li>
-                    <li><a href="#" target="_blank">娱乐淘金</a></li>
-                    <li><a href="#" target="_blank">雪花一代</a></li>
-                    <li><a href="#" target="_blank">人工智能</a></li>
-                    <li><a href="#" target="_blank">车与出行</a></li>
-                    <li><a href="#" target="_blank">智能终端</a></li>
-                    <li><a href="#" target="_blank">医疗健康</a></li>
-                    <li><a href="#" target="_blank">金融地产</a></li>
-                    <li><a href="#" target="_blank">企业服务</a></li>
-                    <li><a href="#" target="_blank">创业维艰</a></li>
-                    <li><a href="#" target="_blank">社交通讯</a></li>
-                    <li><a href="#" target="_blank">全球热点</a></li>
-                    <li><a href="#" target="_blank">生活腔调</a></li>
-                </ul>
+            <li class="nav-news">
+                <p style="font-size:20px;color: red;margin-top: -23px">
+                    <strong>Pluralization &nbsp;&nbsp;&nbsp;&nbsp; High Quality &nbsp;&nbsp;&nbsp;&nbsp; Earnings</strong>
+                </p>
             </li>
-            <style>
-                #jsddm ul{position: absolute; visibility: hidden; background:#fff; width:250px;  top:60px; left:-50px; z-index:9999; box-shadow:0 1px 15px rgba(18,21,21,.2);padding:10px 5px;}
-                #jsddm ul li{ float:left; width:105px; padding-left:20px; line-height:40px;}
-            </style>
-            <li class="nav-news"><a href="#" target="_blank">热议<span class="nums-prompt nums-prompt-topic"></span></a></li>
-            <li class="nav-news"><a href="#" target="_blank">活动</a></li>
-            <li class="nav-news"><a href="#" target="_blank">创业白板<span class="nums-prompt"></span></a></li>
-            <li class="nav-news"><a href="#" target="_blank">会员专享<em class="nums-prompt"></em></a></li>
-            <li class="nav-news"><a href="#" target="_blank">官方Blog</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right transition  xiala main_nav">
 
             <li class="search-li js-show-search-box"><a><i class="icon icon-search "></i></a><span>搜索</span></li>
-            <li class="login-link-box" ><a href="views/login.jsp" class="cd-signin" style="margin-top: 21px;">登录</a></li>
-            <li><a href="views/register.jsp"class="cd-signup" style="margin-top: 21px;">注册</a></li>
+            <li class="login-link-box" ><a class="cd-signin" style="margin-top: 21px;">登录</a></li>
+            <li><a class="cd-signup" style="margin-top: 21px;">注册</a></li>
             <li><a href="views/home.jsp" class="cd-tougao">发表</a></li>
         </ul>
     </div>
-
+    <div class="cd-user-modal">
+        <div class="cd-user-modal-container">
+            <div id="cd-login"> <!-- 登录表单 -->
+                <div class="modal-alert-title" style="text-align: center">登录</div>
+                <div class="register" >
+                    <div class="register-top" id="reg-top"><i><a id="qrcode" href="#"></a></i></div>
+                    <div class="register-con" id="rc">
+                        <div class="login-form username-box " style="margin-top:52px;">
+                            <label class="login-label transition" style="margin-bottom: 15px">
+                                <input id="login_username" class="login-input" placeholder="用户名登录">
+                            </label>
+                            <label class="login-label">
+                                <input id="login_password" class="login-input password" type="password" placeholder="请输入6～15位密码">
+                            </label>
+                            <div class="login-operation">
+                                <label><input id="autologin" type="checkbox">&nbsp;2周内自动登录</label>
+                                <a href="/user/reset_password" class="js-forget-passward pull-right">忘记密码</a>
+                            </div>
+                            <button class="js-btn-login btn-login">登&nbsp;录</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="cd-signup"> <!-- 注册表单 -->
+                <div class="modal-alert-title" style="text-align: center">注册</div>
+                <div class="user-register-box">
+                    <div class="login-form sms-box" style="margin-top:52px;">
+                        <label class="login-label transition" style="margin-bottom: 15px">
+                            <input id="login_username" class="login-input" placeholder="请输入用户名">
+                        </label><br/>
+                        <label class="login-label">
+                            <input id="login_password" class="login-input password" type="password" placeholder="请输入6～15位密码">
+                        </label>
+                        <button class="js-btn-sms-login btn-login">注&nbsp;册</button>
+                    </div>
+                <div class="js-user-login register-text">已有账号，立即登录</div></div>
+            </div>
+            <a href="#0" class="cd-close-form ">关闭</a>
+        </div>
+    </div>
+    <script src="js/firstjs/d-login.js"></script>
 </header>
 
 <div class="placeholder-height"></div>
@@ -167,9 +189,6 @@
                         <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
                     </a>
                 </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
                 <div class="mob-ctt">
                     <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
                     <div class="mob-author">
@@ -179,10 +198,8 @@
                         <a href="#" target="_blank">
                             <span class="author-name ">量子位</span>
                         </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
                         <span class="time">1小时前</span>
                         <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
                     </div>
                     <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
                 </div>
@@ -193,9 +210,6 @@
                         <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
                     </a>
                 </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
                 <div class="mob-ctt">
                     <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
                     <div class="mob-author">
@@ -205,10 +219,8 @@
                         <a href="#" target="_blank">
                             <span class="author-name ">量子位</span>
                         </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
                         <span class="time">1小时前</span>
                         <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
                     </div>
                     <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
                 </div>
@@ -220,9 +232,6 @@
                         <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
                     </a>
                 </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
                 <div class="mob-ctt">
                     <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
                     <div class="mob-author">
@@ -232,74 +241,8 @@
                         <a href="#" target="_blank">
                             <span class="author-name ">量子位</span>
                         </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
                         <span class="time">1小时前</span>
                         <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
-                    </div>
-                    <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
-                </div>
-            </div>
-            <div class="mod-b mod-art mod-b-push ">
-                <a class="transition" href="#" target="_blank" title="弯道超车的大业，怎么能靠政策呢？">
-                    <div class="mod-thumb ">
-                        <img class="lazy" src="../../images/sy-img/104239030071.jpg" alt="弯道超车的大业，怎么能靠政策呢？">
-                    </div>
-                </a>
-                <div class="column-link-box column-link-big-box">
-                    <a href="#" class="column-link" target="_blank">车与出行</a>
-                </div>
-                <div class="mob-ctt">
-                    <h2><a href="#" class="transition msubstr-row5" target="_blank">弯道超车的大业，怎么能靠政策呢？</a></h2>
-                    <div class="mob-author">
-                        <div class="author-face">
-                            <a href="#" target="_blank"><img class="lazy" src="../../images/sy-img/default.jpg"></a>
-                        </div>
-                        <a href="#" target="_blank">
-                            <span class="author-name">autocarweekly</span>
-                        </a>
-                        <a href="#" target="_blank"></a>
-                        <span class="time">5小时前</span>
-                    </div>
-                    <div class="mob-sub">希望变失望、机会变门槛、黄金变铁皮</div>
-                </div>
-            </div>
-            <div class="mod-b mod-art promote">
-                <a href="#" target="_blank" title="">
-                    <div class="mod-thumb">
-                        <img class="lazy" src="../../images/sy-img/233950517521.jpg">
-                    </div>
-                </a>
-                <div class="mob-ctt">
-                    <a href="#" target="_blank">实体商业转型</a>
-                    <span class="point">&bull;</span>
-                    <a href="#" target="_blank">实体空间在召唤，他们押宝了零售业态转型升级</a>
-                    <span class="span-mark-pro">推广</span>
-                </div>
-            </div>
-            <div class="mod-b mod-art" data-aid="213665">
-                <div class="mod-angle">热</div>
-                <div class="mod-thumb ">
-                    <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
-                        <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
-                    </a>
-                </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
-                <div class="mob-ctt">
-                    <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
-                    <div class="mob-author">
-                        <div class="author-face">
-                            <a href="#" target="_blank"><img src="../../images/sy-img/59_1502432173.jpg"></a>
-                        </div>
-                        <a href="#" target="_blank">
-                            <span class="author-name ">量子位</span>
-                        </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
-                        <span class="time">1小时前</span>
-                        <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
                     </div>
                     <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
                 </div>
@@ -310,9 +253,6 @@
                         <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
                     </a>
                 </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
                 <div class="mob-ctt">
                     <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
                     <div class="mob-author">
@@ -322,164 +262,8 @@
                         <a href="#" target="_blank">
                             <span class="author-name ">量子位</span>
                         </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
                         <span class="time">1小时前</span>
                         <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
-                    </div>
-                    <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
-                </div>
-            </div>
-            <div class="mod-b mod-art mod-b-push ">
-                <a class="transition" href="#" target="_blank" title="弯道超车的大业，怎么能靠政策呢？">
-                    <div class="mod-thumb ">
-                        <img class="lazy" src="../../images/sy-img/104239030071.jpg" alt="弯道超车的大业，怎么能靠政策呢？">
-                    </div>
-                </a>
-                <div class="column-link-box column-link-big-box">
-                    <a href="#" class="column-link" target="_blank">车与出行</a>
-                </div>
-                <div class="mob-ctt">
-                    <h2><a href="#" class="transition msubstr-row5" target="_blank">弯道超车的大业，怎么能靠政策呢？</a></h2>
-                    <div class="mob-author">
-                        <div class="author-face">
-                            <a href="#" target="_blank"><img class="lazy" src="../../images/sy-img/default.jpg"></a>
-                        </div>
-                        <a href="#" target="_blank">
-                            <span class="author-name">autocarweekly</span>
-                        </a>
-                        <a href="#" target="_blank"></a>
-                        <span class="time">5小时前</span>
-                    </div>
-                    <div class="mob-sub">希望变失望、机会变门槛、黄金变铁皮</div>
-                </div>
-            </div>
-            <div class="mod-b mod-art" data-aid="213665">
-                <div class="mod-angle">热</div>
-                <div class="mod-thumb ">
-                    <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
-                        <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
-                    </a>
-                </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
-                <div class="mob-ctt">
-                    <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
-                    <div class="mob-author">
-                        <div class="author-face">
-                            <a href="#" target="_blank"><img src="../../images/sy-img/59_1502432173.jpg"></a>
-                        </div>
-                        <a href="#" target="_blank">
-                            <span class="author-name ">量子位</span>
-                        </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
-                        <span class="time">1小时前</span>
-                        <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
-                    </div>
-                    <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
-                </div>
-            </div>
-            <div class="mod-b mod-art" data-aid="213665">
-                <div class="mod-thumb ">
-                    <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
-                        <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
-                    </a>
-                </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
-                <div class="mob-ctt">
-                    <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
-                    <div class="mob-author">
-                        <div class="author-face">
-                            <a href="#" target="_blank"><img src="../../images/sy-img/59_1502432173.jpg"></a>
-                        </div>
-                        <a href="#" target="_blank">
-                            <span class="author-name ">量子位</span>
-                        </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
-                        <span class="time">1小时前</span>
-                        <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
-                    </div>
-                    <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
-                </div>
-            </div>
-            <div class="mod-b mod-art" data-aid="213665">
-                <div class="mod-thumb ">
-                    <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
-                        <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
-                    </a>
-                </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
-                <div class="mob-ctt">
-                    <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
-                    <div class="mob-author">
-                        <div class="author-face">
-                            <a href="#" target="_blank"><img src="../../images/sy-img/59_1502432173.jpg"></a>
-                        </div>
-                        <a href="#" target="_blank">
-                            <span class="author-name ">量子位</span>
-                        </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
-                        <span class="time">1小时前</span>
-                        <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
-                    </div>
-                    <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
-                </div>
-            </div>
-            <div class="mod-b mod-art mod-b-push ">
-                <a class="transition" href="#" target="_blank" title="弯道超车的大业，怎么能靠政策呢？">
-                    <div class="mod-thumb ">
-                        <img class="lazy" src="../../images/sy-img/104239030071.jpg" alt="弯道超车的大业，怎么能靠政策呢？">
-                    </div>
-                </a>
-                <div class="column-link-box column-link-big-box">
-                    <a href="#" class="column-link" target="_blank">车与出行</a>
-                </div>
-                <div class="mob-ctt">
-                    <h2><a href="#" class="transition msubstr-row5" target="_blank">弯道超车的大业，怎么能靠政策呢？</a></h2>
-                    <div class="mob-author">
-                        <div class="author-face">
-                            <a href="#" target="_blank"><img class="lazy" src="../../images/sy-img/default.jpg"></a>
-                        </div>
-                        <a href="#" target="_blank">
-                            <span class="author-name">autocarweekly</span>
-                        </a>
-                        <a href="#" target="_blank"></a>
-                        <span class="time">5小时前</span>
-                    </div>
-                    <div class="mob-sub">希望变失望、机会变门槛、黄金变铁皮</div>
-                </div>
-            </div>
-            <div class="mod-b mod-art" data-aid="213665">
-                <div class="mod-angle">热</div>
-                <div class="mod-thumb ">
-                    <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
-                        <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
-                    </a>
-                </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
-                <div class="mob-ctt">
-                    <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
-                    <div class="mob-author">
-                        <div class="author-face">
-                            <a href="#" target="_blank"><img src="../../images/sy-img/59_1502432173.jpg"></a>
-                        </div>
-                        <a href="#" target="_blank">
-                            <span class="author-name ">量子位</span>
-                        </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
-                        <span class="time">1小时前</span>
-                        <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
                     </div>
                     <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
                 </div>
@@ -491,9 +275,6 @@
                         <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
                     </a>
                 </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
                 <div class="mob-ctt">
                     <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
                     <div class="mob-author">
@@ -503,10 +284,8 @@
                         <a href="#" target="_blank">
                             <span class="author-name ">量子位</span>
                         </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
                         <span class="time">1小时前</span>
                         <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
                     </div>
                     <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
                 </div>
@@ -517,9 +296,6 @@
                         <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
                     </a>
                 </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
                 <div class="mob-ctt">
                     <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
                     <div class="mob-author">
@@ -529,10 +305,8 @@
                         <a href="#" target="_blank">
                             <span class="author-name ">量子位</span>
                         </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
                         <span class="time">1小时前</span>
                         <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
                     </div>
                     <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
                 </div>
@@ -544,9 +318,6 @@
                         <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
                     </a>
                 </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
                 <div class="mob-ctt">
                     <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
                     <div class="mob-author">
@@ -556,10 +327,8 @@
                         <a href="#" target="_blank">
                             <span class="author-name ">量子位</span>
                         </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
                         <span class="time">1小时前</span>
                         <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
                     </div>
                     <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
                 </div>
@@ -571,8 +340,27 @@
                         <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
                     </a>
                 </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
+                <div class="mob-ctt">
+                    <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
+                    <div class="mob-author">
+                        <div class="author-face">
+                            <a href="#" target="_blank"><img src="../../images/sy-img/59_1502432173.jpg"></a>
+                        </div>
+                        <a href="#" target="_blank">
+                            <span class="author-name ">量子位</span>
+                        </a>
+                        <span class="time">1小时前</span>
+                        <i class="icon icon-cmt"></i><em>0</em>
+                    </div>
+                    <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
+                </div>
+            </div>
+            <div class="mod-b mod-art" data-aid="213665">
+                <div class="mod-angle">热</div>
+                <div class="mod-thumb ">
+                    <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
+                        <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
+                    </a>
                 </div>
                 <div class="mob-ctt">
                     <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
@@ -583,10 +371,8 @@
                         <a href="#" target="_blank">
                             <span class="author-name ">量子位</span>
                         </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
                         <span class="time">1小时前</span>
                         <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
                     </div>
                     <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
                 </div>
@@ -597,9 +383,6 @@
                         <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
                     </a>
                 </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
                 <div class="mob-ctt">
                     <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
                     <div class="mob-author">
@@ -609,10 +392,8 @@
                         <a href="#" target="_blank">
                             <span class="author-name ">量子位</span>
                         </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
                         <span class="time">1小时前</span>
                         <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
                     </div>
                     <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
                 </div>
@@ -623,9 +404,6 @@
                         <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
                     </a>
                 </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
                 <div class="mob-ctt">
                     <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
                     <div class="mob-author">
@@ -635,10 +413,8 @@
                         <a href="#" target="_blank">
                             <span class="author-name ">量子位</span>
                         </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
                         <span class="time">1小时前</span>
                         <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
                     </div>
                     <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
                 </div>
@@ -649,9 +425,6 @@
                         <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
                     </a>
                 </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
                 <div class="mob-ctt">
                     <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
                     <div class="mob-author">
@@ -661,62 +434,8 @@
                         <a href="#" target="_blank">
                             <span class="author-name ">量子位</span>
                         </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
                         <span class="time">1小时前</span>
                         <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
-                    </div>
-                    <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
-                </div>
-            </div>
-            <div class="mod-b mod-art" data-aid="213665">
-                <div class="mod-thumb ">
-                    <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
-                        <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
-                    </a>
-                </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
-                <div class="mob-ctt">
-                    <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
-                    <div class="mob-author">
-                        <div class="author-face">
-                            <a href="#" target="_blank"><img src="../../images/sy-img/59_1502432173.jpg"></a>
-                        </div>
-                        <a href="#" target="_blank">
-                            <span class="author-name ">量子位</span>
-                        </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
-                        <span class="time">1小时前</span>
-                        <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
-                    </div>
-                    <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
-                </div>
-            </div>
-            <div class="mod-b mod-art" data-aid="213665">
-                <div class="mod-thumb ">
-                    <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
-                        <img class="lazy" src="../../images/sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
-                    </a>
-                </div>
-                <div class="column-link-box">
-                    <a href="#" class="column-link" target="_blank">娱乐淘金</a>
-                </div>
-                <div class="mob-ctt">
-                    <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2>
-                    <div class="mob-author">
-                        <div class="author-face">
-                            <a href="#" target="_blank"><img src="../../images/sy-img/59_1502432173.jpg"></a>
-                        </div>
-                        <a href="#" target="_blank">
-                            <span class="author-name ">量子位</span>
-                        </a>
-                        <a href="#" target="_blank" title="购买VIP会员"></a>
-                        <span class="time">1小时前</span>
-                        <i class="icon icon-cmt"></i><em>0</em>
-                        <i class="icon icon-fvr"></i><em>0</em>
                     </div>
                     <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div>
                 </div>
@@ -731,457 +450,48 @@
 
         <link rel="stylesheet" type="text/css" href="https://static.huxiucdn.com/www/css/moment.css">
         <div id="moment"></div>
-        <div class="box-moder moder-story-list">
-            <h3>24小时</h3>
-            <span class="pull-right project-more story-more"><a href="#" class="transition index-24-right js-index-24-right" target="_blank">查看全部</a></span>
+        <div class="box-moder moder-project-list">
+            <h3>公告</h3>
+            <span class="pull-right project-more"><a href="#" class="transition" target="_blank">更多>></a></span>
             <span class="span-mark"></span>
-            <div class="story-box-warp hour-box-warp">
-                <div class="nano">
-                    <div class="overthrow nano-content description" tabindex="0">
-                        <ul class="box-list mt-box-list">
-                            <!--公共24小时列表部分-->
-                            <li>
-                                <div class="story-content">
-                                    <div class="mt-story-title js-story-title" story-data-show="true">
-                                        <p class="transition hour-arrow">
-                                            <span class="icon icon-caret js-mt-index-icon"></span>
-                                        </p>
-                                        <ul class="hour-head">
-                                            <li><img class="hour-tx" src="../../images/sy-img/touxiang.jpg" alt="头像"></li>
-                                            <li>
-                                                <p>果然黑</p>
-                                                <p>3分钟前</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-index-info-parent">
-                                        <div class="story-info mt-story-info">
-                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">#苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。<a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp]</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="story-content">
-                                    <div class="mt-story-title js-story-title" story-data-show="true">
-                                        <p class="transition hour-arrow">
-                                            <span class="icon icon-caret js-mt-index-icon"></span>
-                                        </p>
-                                        <ul class="hour-head">
-                                            <li><img class="hour-tx" src="../../images/sy-img/touxiang.jpg" alt="头像"></li>
-                                            <li>
-                                                <p>果然黑</p>
-                                                <p>3分钟前</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-index-info-parent">
-                                        <div class="story-info mt-story-info">
-                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">#苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。                                                            <a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp] </a>
-                                            </p>
-                                            <div class="mt-index-end">
-                                                <div class="mt-index-realend">...</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="story-content">
-                                    <div class="mt-story-title js-story-title" story-data-show="true">
-                                        <p class="transition hour-arrow">
-                                            <span class="icon icon-caret js-mt-index-icon"></span>
-                                        </p>
-                                        <ul class="hour-head">
-                                            <li><img class="hour-tx" src="../../images/sy-img/touxiang.jpg" alt="头像"></li>
-                                            <li>
-                                                <p>果然黑</p>
-                                                <p>3分钟前</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-index-info-parent">
-                                        <div class="story-info mt-story-info">
-                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">#苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。 <a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp]</a>
-                                            </p>
-                                            <div class="mt-index-end">
-                                                <div class="mt-index-realend">...</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="story-content">
-                                    <div class="mt-story-title js-story-title" story-data-show="true">
-                                        <p class="transition hour-arrow">
-                                            <span class="icon icon-caret js-mt-index-icon"></span>
-                                        </p>
-                                        <ul class="hour-head">
-                                            <li><img class="hour-tx" src="../../images/sy-img/touxiang.jpg" alt="头像"></li>
-                                            <li>
-                                                <p>果然黑</p>
-                                                <p>3分钟前</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-index-info-parent">
-                                        <div class="story-info mt-story-info">
-                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">#苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。<a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp]</a>
-                                            </p>
-                                            <div class="mt-index-end">
-                                                <div class="mt-index-realend">...</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="story-content">
-                                    <div class="mt-story-title js-story-title" story-data-show="true">
-                                        <p class="transition hour-arrow">
-                                            <span class="icon icon-caret js-mt-index-icon"></span>
-                                        </p>
-                                        <ul class="hour-head">
-                                            <li><img class="hour-tx" src="../../images/sy-img/touxiang.jpg" alt="头像"></li>
-                                            <li>
-                                                <p>果然黑</p>
-                                                <p>3分钟前</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-index-info-parent">
-                                        <div class="story-info mt-story-info">
-                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">#苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。<a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp]</a>
-                                            </p>
-                                            <div class="mt-index-end">
-                                                <div class="mt-index-realend">...</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="story-content">
-                                    <div class="mt-story-title js-story-title" story-data-show="true">
-                                        <p class="transition hour-arrow">
-                                            <span class="icon icon-caret js-mt-index-icon"></span>
-                                        </p>
-                                        <ul class="hour-head">
-                                            <li><img class="hour-tx" src="../../images/sy-img/touxiang.jpg" alt="头像"></li>
-                                            <li>
-                                                <p>果然黑</p>
-                                                <p>3分钟前</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-index-info-parent">
-                                        <div class="story-info mt-story-info">
-                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">#苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。<a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp]</a>
-                                            </p>
-                                            <div class="mt-index-end">
-                                                <div class="mt-index-realend">...</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="story-content">
-                                    <div class="mt-story-title js-story-title" story-data-show="true">
-                                        <p class="transition hour-arrow">
-                                            <span class="icon icon-caret js-mt-index-icon"></span>
-                                        </p>
-                                        <ul class="hour-head">
-                                            <li><img class="hour-tx" src="../../images/sy-img/touxiang.jpg" alt="头像"></li>
-                                            <li>
-                                                <p>果然黑</p>
-                                                <p>3分钟前</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-index-info-parent">
-                                        <div class="story-info mt-story-info">
-                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">#苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。<a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp]</a>
-                                            </p>
-                                            <div class="mt-index-end">
-                                                <div class="mt-index-realend">...</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="story-content">
-                                    <div class="mt-story-title js-story-title" story-data-show="true">
-                                        <p class="transition hour-arrow">
-                                            <span class="icon icon-caret js-mt-index-icon"></span>
-                                        </p>
-                                        <ul class="hour-head">
-                                            <li><img class="hour-tx" src="../../images/sy-img/touxiang.jpg" alt="头像"></li>
-                                            <li>
-                                                <p>果然黑</p>
-                                                <p>3分钟前</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-index-info-parent">
-                                        <div class="story-info mt-story-info">
-                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">#苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。 <a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp]</a>
-                                            </p>
-                                            <div class="mt-index-end">
-                                                <div class="mt-index-realend">...</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="story-content">
-                                    <div class="mt-story-title js-story-title" story-data-show="true">
-                                        <p class="transition hour-arrow">
-                                            <span class="icon icon-caret js-mt-index-icon"></span>
-                                        </p>
-                                        <ul class="hour-head">
-                                            <li><img class="hour-tx" src="../../images/sy-img/touxiang.jpg" alt="头像"></li>
-                                            <li>
-                                                <p>果然黑</p>
-                                                <p>3分钟前</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-index-info-parent">
-                                        <div class="story-info mt-story-info">
-                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">#苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。<a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp]</a>
-                                            </p>
-                                            <div class="mt-index-end">
-                                                <div class="mt-index-realend">...</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="story-content">
-                                    <div class="mt-story-title js-story-title" story-data-show="true">
-                                        <p class="transition hour-arrow">
-                                            <span class="icon icon-caret js-mt-index-icon"></span>
-                                        </p>
-                                        <ul class="hour-head">
-                                            <li><img class="hour-tx" src="../../images/sy-img/touxiang.jpg" alt="头像"></li>
-                                            <li>
-                                                <p>果然黑</p>
-                                                <p>3分钟前</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="mt-index-info-parent">
-                                        <div class="story-info mt-story-info">
-                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">#苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。<a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp]</a>
-                                            </p>
-                                            <div class="mt-index-end">
-                                                <div class="mt-index-realend">...</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="nano-pane">
-                        <div class="nano-slider" style="height: 179px; transform: translate(0px, 0px);"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="js-more-moment" data-cur_page="0"></div>
-        </div>
-        <div class="placeholder"></div>
-        <!--24小时部分结束1-->
-        <div class="ad-wrap">
-            <div class="ad-title">广告</div>
-        </div>
-        <div class="placeholder"></div>
-        <!--传言-->
-        <!--传言部分开始-->
-        <div id="rumor_center"></div>
-        <div class="box-moder moder-rumors-list">
-            <h3>传言</h3>
-            <span class="span-mark"></span>
-            <div class="big2-pic pull-right">
-                <a href="#" class="back-img" target="_blank">
-                    <img class="lazy" src="../../images/sy-img/105108838520.jpg" alt="">
-                </a>
-                <a href="https://chuanyan.huxiu.com/rumor/detail/684.html" target="_blank">
-                    <div class="big2-pic-content">
-                        <h2 class="t-h1">传苹果和亚马逊正在竞购“007”品牌特许经营权</h2>
-                    </div>
-                    <div class="clear"></div>
-                </a>
-            </div>
-            <div class="clear"></div>
-            <ul class="rumorlist">
+            <ul>
+                <li style="min-height:65px;">
+                    <span style="color: red">[2018-04-15]</span> &nbsp;&nbsp;
+                    <span><a href="" style="color: gray;">命名规则修改通知</a>
+                        <span style="color: red;font-style: italic">[new]</span>
+                    </span>
+                </li>
                 <li>
-                    <div class="icon-clock"><img src="../../images/NewModel/clock.jpg"/></div>
-                    <p class="rumor-time">09月07日  08:00</p>
-                    <p class="rumor-detail"><a href="#" target="_blank">美媒报道称，苹果和亚马逊正在竞购“007”詹姆斯·邦德品牌的特...</a></p>
+                    <span style="color: red">[2018-04-15]</span> &nbsp;&nbsp;
+                    <span><a href="" style="color: gray;">命名规则修改通知</a></span>
+                </li>
+                <li>
+                    <span style="color: red">[2018-04-15]</span> &nbsp;&nbsp;
+                    <span><a href="" style="color: gray;">命名规则修改通知</a></span>
                 </li>
             </ul>
-            <div class="rumor-more">
-                <p><a href="#" target="_blank">详情>></a></p>
-            </div>
-            <!--24小时不展示此按钮-->
-            <div class="rumor-brunt-box">
-                <a class="btn btn-blue-cy js-update-cy transition  js-show-bruntback-box1" >我要爆料</a>
-            </div>
-        </div>
-        <div class="placeholder"></div>
-        <!--传言部分结束-->
-        <div class="ad-wrap">
-            <div class="ad-title">广告</div>
         </div>
         <div class="placeholder"></div>
         <div class="box-moder moder-project-list">
-            <h3>创业白板</h3>
-            <span class="pull-right project-more"><a href="#" class="transition" target="_blank">全部</a></span>
+            <h3>活动</h3>
+            <span class="pull-right project-more"><a href="#" class="transition" target="_blank">更多>></a></span>
             <span class="span-mark"></span>
             <ul>
-                <li>
-                    <div class="project-pic">
-                        <img src="../../images/sy-img/1503478306719861.png">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <a href="#" class="transition" target="_blank">车悦宝</a>
-                        </div>
-                        <p>车载综合音频娱乐服务商</p>
-                    </div>
+                <li style="min-height:65px;">
+                    <span style="color: red">[2018-04-15]</span> &nbsp;&nbsp;
+                    <span><a href="" style="color: gray;">「礼遇计划」升级，每月奖励500个帐号，最高2万奖金</a>
+                        <span style="color: red;font-style: italic">[new]</span>
+                    </span>
                 </li>
                 <li>
-                    <div class="project-pic">
-                        <img src="../../images/sy-img/1503478306719861.png">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <a href="#" class="transition" target="_blank">车悦宝</a>
-                        </div>
-                        <p>车载综合音频娱乐服务商</p>
-                    </div>
+                    <span style="color: red">[2018-04-15]</span> &nbsp;&nbsp;
+                    <span><a href="" style="color: gray;">「礼遇计划」升级，每月奖励500个帐号，最高2万奖金</a></span>
                 </li>
                 <li>
-                    <div class="project-pic">
-                        <img src="../../images/sy-img/1503478306719861.png">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <a href="#" class="transition" target="_blank">车悦宝</a>
-                        </div>
-                        <p>车载综合音频娱乐服务商</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="project-pic">
-                        <img src="../../images/sy-img/1503478306719861.png">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <a href="#" class="transition" target="_blank">车悦宝</a>
-                        </div>
-                        <p>车载综合音频娱乐服务商</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="project-pic">
-                        <img src="../../images/sy-img/1503478306719861.png">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <a href="#" class="transition" target="_blank">车悦宝</a>
-                        </div>
-                        <p>车载综合音频娱乐服务商</p>
-                    </div>
+                    <span style="color: red">[2018-04-15]</span> &nbsp;&nbsp;
+                    <span><a href="" style="color: gray;">「礼遇计划」升级，每月奖励500个帐号，最高2万奖金</a></span>
                 </li>
             </ul>
-            <div class="project-btn-box">
-                <a class="js-open-cy btn btn-blue-cy transition">立即报名，获得曝光机会！</a>
-            </div>
-            <ul class="project-info">
-                <li>创业公司立即报名提交信息的好处：</li>
-                <li>1.优质的展示和访谈机会</li>
-                <li>2.获得投资人的关注</li>
-                <li>3.虎嗅提供的创业支持服务</li>
-            </ul>
-        </div>
-        <div class="placeholder"></div>
-        <div class="box-moder moder-project-list promote-box">
-            <h3>赞助内容</h3>
-            <span class="span-mark"></span>
-            <ul>
-                <li>
-                    <div class="mod-thumb">
-                        <a href="#" target="_blank">
-                            <img src="../../images/sy-img/233950517521.jpg">
-                        </a>
-                    </div>
-                    <div class="project-content">
-                        <a href="#" class="c2" target="_blank">实体商业转型</a>
-                        <span class="point">&bull;</span>
-                        <a href="#" target="_blank">实体空间在召唤，他们押宝了零售业态转型升级</a>
-                    </div>
-                </li>
-                <li>
-                    <div class="mod-thumb">
-                        <a href="#" target="_blank">
-                            <img src="../../images/sy-img/233950517521.jpg">
-                        </a>
-                    </div>
-                    <div class="project-content">
-                        <a href="#" class="c2" target="_blank">实体商业转型</a>
-                        <span class="point">&bull;</span>
-                        <a href="#" target="_blank">实体空间在召唤，他们押宝了零售业态转型升级</a>
-                    </div>
-                </li>
-                <li>
-                    <div class="mod-thumb">
-                        <a href="#" target="_blank">
-                            <img src="../../images/sy-img/233950517521.jpg">
-                        </a>
-                    </div>
-                    <div class="project-content">
-                        <a href="#" class="c2" target="_blank">实体商业转型</a>
-                        <span class="point">&bull;</span>
-                        <a href="#" target="_blank">实体空间在召唤，他们押宝了零售业态转型升级</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="placeholder"></div>
-
-
-        <!--研究报告部分开始-->
-        <div class="box-moder hot-article">
-            <h3>创新案例</h3>
-            <span class="pull-right project-more story-more">
-            <a href="#" class="transition" target="_blank">全部</a></span>
-            <span class="span-mark"></span>
-            <ul>
-                <li>
-                    <div class="hot-article-img">
-                        <a href="#" target="_blank">
-                            <img src="../../images/sy-img/105108838520.jpg">
-                        </a>
-                    </div>
-                    <a href="#" class="transition" target="_blank">【经济学人】比特币内战打响，加密货币走到分岔路口</a>
-                    <div class="report-author-info" style="margin-left:0px;margin-top:0px;">
-                	<span class="author-face">
-                    	<img src="../../images/sy-img/97.jpg">
-                	</span>
-                        <span>虎嗅会员小秘书</span>
-                        <div style="margin-left: 40px;margin-top: 5px;">微信号：huxiuvip302</div>
-                    </div>
-                </li>
-            </ul>
-            <div class="report-explain">全年30+篇 案例分析，复盘有代表性的创新公司，还原商业成功背后的魔鬼细节。</div>
         </div>
         <div class="placeholder"></div>
         <div class="box-moder hot-article">
@@ -1246,8 +556,7 @@
 <footer class="footer">
     <div class="modal-backdrop fade in js-modal-backdrop"></div>
     <div class="container copy-right" align="center">
-        <span>Copyright © <a href="#">创作收益平台</a> <a href="#" target="_blank">闽ICP备163140814号-1</a>
-            &nbsp;<a href="#" target="_blank"><i class="i-wj"></i>闽公网安备 11010102001402号</a>&nbsp;&nbsp;&nbsp;
+        <span>Copyright © <a href="views/show.jsp">创作收益平台 chenliting</a>
         </span>
     </div>
 

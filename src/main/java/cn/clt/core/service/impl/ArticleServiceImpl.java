@@ -8,8 +8,6 @@ import cn.clt.core.params.ManagementPageData;
 import cn.clt.core.params.Pagination;
 import cn.clt.core.service.ArticleService;
 import cn.clt.core.utils.GuidUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,12 +92,12 @@ public class ArticleServiceImpl implements ArticleService{
         ArticleExample example = new ArticleExample();
         example.createCriteria().andIdEqualTo(id).andCreateUserIdEqualTo(userId).andStatusEqualTo(1);
         List<Article> articleList = articleMapper.selectByExample(example);
-        if (!CollectionUtils.isEmpty(articleList)){
+        if (!CollectionUtils.isEmpty(articleList)) {
             return articleList.get(0);
         }
         return null;
-     * @return
-     */
+    }
+
     @Override
     public Article getArticleById(String id) {
         return articleMapper.selectByPrimaryKey(id);
@@ -117,7 +115,6 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public int deleteArticle(String id, String userId) {
         Article article = getArticleById(id);
-        Article article = getArticleByIdAndUserId(id,userId);
         if (article != null){
             article.setStatus(0);
             return articleMapper.updateByPrimaryKeySelective(article);
