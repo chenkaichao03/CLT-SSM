@@ -199,9 +199,6 @@ header .navbar-left {
 margin-left:50px;
 }
 
-.navbar-nav.navbar-right li {
-width:60px;
-}
 
 .navbar-nav.navbar-right .search-li span {
 margin-left:14px;
@@ -6597,6 +6594,7 @@ margin:0;
 header .navbar-right,.user-head-box .admin-btn-warp a {
 color:#bbb;
 margin-right:10px;
+height: 60px;
 }
 
 .navbar-nav.navbar-right .app-guide {
@@ -6604,8 +6602,9 @@ width:105px;
 color:#333;
 }
 .navbar-nav.navbar-right .search-li {
-width:85px; margin-right:20px;
+margin-right:20px;
 color:#333;
+	height: 60px;
 }
 .app-guide-box img,.promote-warp .qr-box img {
 width:108px;
