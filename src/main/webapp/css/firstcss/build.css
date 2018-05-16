@@ -6842,9 +6842,6 @@ position:relative;
 top:30px;
 }
 
-.pl-box-btm .pl-form-box,.dp-list-box,.user-head-box .user-one:hover .user-one .hide-edit,.acnt-item .under-ul,.radio-inline input[type=radio],#hot {
-display:none;
-}
 
 .more-pl-box-wrap:hover,.more-related-article:hover {
 background-color:#fafafa;
