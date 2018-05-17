@@ -2,11 +2,12 @@ package cn.clt.core.mapper;
 
 import cn.clt.core.entity.Article;
 import cn.clt.core.entity.ArticleExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
-
+@Mapper
 public interface ArticleMapper {
     long countByExample(ArticleExample example);
 
@@ -38,5 +39,9 @@ public interface ArticleMapper {
 
     List<Article> listArticle(Map<String,Object> param);
 
+    List<Article> listAdminArticle(String adminId);
+
     Long countArticle(Map<String,Object> params);
+
+    List<Article> getArticleByArticleCode(Map<String,Object> params);
 }

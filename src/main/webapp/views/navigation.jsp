@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -17,7 +18,7 @@
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a class="active" href="/home/index">
+                    <a class="active" href="/home/backstage/index">
                         <i class="fa fa-home"></i>
                         <span>主页</span>
                     </a>
@@ -29,7 +30,7 @@
                         <span>发表</span>
                     </a>
                     <ul class="sub">
-                        <li class="sub-menu">
+ <%--                       <li class="sub-menu">
                             <a href="views/video.jsp">
                                 <i class="fa fa-video-camera"></i>
                                 <span>视频</span>
@@ -38,7 +39,7 @@
                                 <li><a href="views/video.jsp">发表视频</a></li>
                                 <li><a href="views/vediolist.jsp">内容管理</a></li>
                             </ul>
-                        </li>
+                        </li>--%>
                         <li class="sub-menu">
                             <a href="/article/type/list">
                                 <i class="fa fa-book"></i>
@@ -54,8 +55,9 @@
                         <li><a href="views/atlas.jsp">图集</a></li>-->
                     </ul>
                 </li>
+                <c:if test="${userRole.role=='user'}">
                 <li>
-                    <a href="views/notice.jsp">
+                    <a href="/notice/list">
                         <i class="fa fa-envelope"></i>
                         <span>通知</span>
                     </a>
@@ -67,23 +69,27 @@
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="views/followuser.jsp">
+                    <a href="/concern/list">
                         <i class="fa fa-user-plus"></i>
                         <span>关注管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="views/fans.jsp">
+                    <a href="/fans/list">
                         <i class="fa fa-user-md"></i>
                         <span>粉丝管理</span>
                     </a>
                 </li>
+                </c:if>
+                <c:if test="${userRole.role=='admin'}">
                 <li class="sub-menu">
-                    <a href="views/umanage.jsp">
+                    <a href="/user/manage/list">
                         <i class="fa fa-users"></i>
                         <span>用户管理</span>
                     </a>
                 </li>
+                </c:if>
+                <c:if test="${userRole.role=='user'}">
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class=" fa fa-bar-chart-o"></i>
@@ -96,26 +102,25 @@
                         <span>收益结算</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="views/myprofit.jsp">我的收益</a></li>
-                        <li><a href="views/profitcenter.jsp">兑换中心</a></li>
+                        <li><a href="/exchange/report">我的收益</a></li>
+                        <li><a href="/exchange/center/init">兑换中心</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="views/activity.jsp">
+                    <a href="/activity/list">
                         <i class="fa fa-gift"></i>
                         <span>活动</span>
                     </a>
                 </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
+                </c:if>
+                <c:if test="${userRole.role=='admin'}">
+                <li>
+                    <a href="/exchange/init">
                         <i class=" fa fa-key"></i>
-                        <span>管理员操作</span>
+                        <span>结算设置</span>
                     </a>
-                    <ul class="sub">
-                        <li><a href="views/face.jsp">发布公告</a></li>
-                        <li><a href="views/face.jsp">结算中心</a></li>
-                    </ul>
                 </li>
+                </c:if>
             </ul>
         </div>
         <!-- sidebar menu end-->

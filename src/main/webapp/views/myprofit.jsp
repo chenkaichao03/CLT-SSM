@@ -1,3 +1,5 @@
+<%@ taglib uri="/WEB-INF/tlds/c.tld" prefix="c"%>
+<%@ taglib uri="/WEB-INF/tlds/fmt.tld" prefix="fmt"%>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -59,16 +61,19 @@
                             </ul>
                         </div>
                         <div style="font-size: 15px;padding: 14px 0 55px 0" >
-                            <form style="float: left" action="" method="post">
-                                <select name="articleTypeId">
-                                    <option value="0" selected="selected">--未分类--</option>
-                                    <option value="1"> 粉丝数</option>
-                                    <option value="2"> 点击量</option>
+                            <form style="float: left" action="" method="post" id="form2">
+                                <select name="exchangeType">
+                                    <option value="" selected="selected">--未分类--</option>
+                                    <option value="FANS" <c:out value="${exchangeTypeSearch=='FANS'?'selected=selected':''}"></c:out>>粉丝兑换</option>
+                                    <option value="BROWSE" <c:out value="${exchangeTypeSearch=='BROWSE'?'selected=selected':''}"></c:out>>浏览量兑换</option>
+                                    <option value="COMMENT" <c:out value="${exchangeTypeSearch=='COMMENT'?'selected=selected':''}"></c:out>>评论量兑换</option>
+                                    <option value="INTEGRAL" <c:out value="${exchangeTypeSearch=='INTEGRAL'?'selected=selected':''}"></c:out>>积分兑换</option>
+                                    <option value="EXCHANGE_COUNT" <c:out value="${exchangeTypeSearch=='EXCHANGE_COUNT'?'selected=selected':''}"></c:out>>兑换总次数</option>
                                 </select>
                                 <input name="submit" style="height: 32px" class="btn" type="submit" value="筛选">
                             </form>
-                            <span style="float: right;color: red">¥1.10</span><span style="float: right">累计收益金额：</span>
-                            <span style="float: right;color: red;padding-right: 15px">110.00</span><span style="float: right">累计收益兑换：</span>
+                            <span style="float: right;color: red">${userProfit.totalAmountMomey}</span><span style="float: right">累计收益金额：</span>
+                            <span style="float: right;color: red;padding-right: 15px">${userProfit.totalAmountNumber}</span><span style="float: right">累计兑换数：</span>
                         </div>
                         <form name="form1" action="" method="post" enctype="multipart/form-data">
                             <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
@@ -77,31 +82,32 @@
                                     <td>用户ID</td>
                                     <td>用户名</td>
                                     <td>兑换类型</td>
+                                    <td>兑换数量</td>
                                     <td>兑换金额</td>
                                     <td>兑换比例</td>
                                     <td>操作人</td>
                                     <td>操作时间</td>
-                                    <td>备注</td>
                                 </tr>
-                                <tr align="center">
-                                    <td>1</td>
-                                    <td>4548212</td>
-                                    <td>陈莉婷</td>
-                                    <td>粉丝数兑换</td>
-                                    <td>1.00</td>
-                                    <td>100：1</td>
-                                    <td>陈凯超</td>
-                                    <td>2018-05-05 12:51:59</td>
-                                    <td>哈哈哈</td>
-                                </tr>
-
+                                <c:forEach var="userExchange" items="${pageData.userExchangeList}" varStatus="status">
+                                    <tr align="center">
+                                        <td>${status.index+1+(pageResult.pageSize*(pageResult.pageNo-1))}</td>
+                                        <td>${userExchange.userNo}</td>
+                                        <td>${userExchange.userName}</td>
+                                        <td>${userExchange.exchangeTypeName}</td>
+                                        <td>${userExchange.exchangeAmountNumber}</td>
+                                        <td>${userExchange.exchangeAmountMoney}</td>
+                                        <td>${userExchange.exchangeRateNumber}：${userExchange.exchangeRateMoney}</td>
+                                        <td>${userExchange.userRealName}</td>
+                                        <td><fmt:formatDate value="${userExchange.createTime}" type="both" pattern="MM-dd HH:mm"/></td>
+                                    </tr>
+                                </c:forEach>
                             </table>
                         </form>
                     </div>
                 </div>
             </div>
+            <div class="m-style" style="float: right;margin-right:500px"></div>
         </section>
-
     </section>
     <!--main content end-->
 </section>
@@ -200,6 +206,20 @@
     });
 </script>
 <!-- //calendar -->
-
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/highlight.min.js"></script>
+<script type="text/javascript" src="/js/jquery.pagination.js"></script>
+<script>
+    $('.m-style').pagination({
+        mode: 'fixed',
+        pageCount:${pageData.totalPage},
+        totalData:${pageData.totalCount},
+        showData:${pageData.pageSize},
+        current:${pageData.pageNo},
+        callback:function (api) {
+            window.location="${ctx}/exchange/report?pageNo="+api.getCurrent()+"&exchangeType="+$("#form2 select>option:checked").val();
+        }
+    });
+</script>
 </body>
 </html>

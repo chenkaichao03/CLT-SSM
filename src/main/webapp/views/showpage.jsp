@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -10,6 +11,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
     <base href="<%=basePath%>">
@@ -34,7 +36,6 @@
         }
     </style>
 </head>
-
 <body>
 <header id="top" role="banner" class="transition">
     <!--搜索弹窗 开始-->
@@ -99,12 +100,17 @@
                 </p>
             </li>
         </ul>
+        <ul id="logout" style="float: right;margin-right: 30px">退出</ul>
         <ul class="nav navbar-nav navbar-right transition  xiala main_nav">
-
-            <li class="search-li js-show-search-box"><a><i class="icon icon-search "></i></a><span>搜索</span></li>
-            <li class="login-link-box" ><a class="cd-signin" style="margin-top: 21px;">登录</a></li>
-            <li><a class="cd-signup" style="margin-top: 21px;">注册</a></li>
-            <li><a href="views/home.jsp" class="cd-tougao">发表</a></li>
+            <c:if test="${activeUser.isLogin==0 || empty activeUser.isLogin}">
+                <li class="login-link-box" ><a class="cd-signin" style="margin-top: 21px;margin-right: 10px">登录</a></li>
+                <li><a class="cd-signup" style="margin-top: 21px;margin-right: 10px">注册</a></li>
+            </c:if>
+            <li></li>
+            <li></li>
+            <c:if test="${activeUser.isLogin==1}">
+                <li class="search-li js-show-search-box">欢迎<span style="height: 30px;margin-right: 5px">${activeUser.userName}</span></li>
+            </c:if>
         </ul>
     </div>
     <div class="cd-user-modal">
@@ -122,10 +128,10 @@
                                 <input id="login_password" class="login-input password" type="password" placeholder="请输入6～15位密码">
                             </label>
                             <div class="login-operation">
-                                <label><input id="autologin" type="checkbox">&nbsp;2周内自动登录</label>
+                                <%--<label><input id="autologin" type="checkbox">&nbsp;2周内自动登录</label>--%>
                                 <a href="/user/reset_password" class="js-forget-passward pull-right">忘记密码</a>
                             </div>
-                            <button class="js-btn-login btn-login">登&nbsp;录</button>
+                            <button id="button1" class="js-btn-login btn-login">登&nbsp;录</button>
                         </div>
                     </div>
                 </div>
@@ -135,19 +141,19 @@
                 <div class="user-register-box">
                     <div class="login-form sms-box" style="margin-top:52px;">
                         <label class="login-label transition" style="margin-bottom: 15px">
-                            <input id="login_username" class="login-input" placeholder="请输入用户名">
+                            <input id="register_username" class="login-input" placeholder="请输入用户名">
                         </label><br/>
                         <label class="login-label">
-                            <input id="login_password" class="login-input password" type="password" placeholder="请输入6～15位密码">
+                            <input id="register_password" class="login-input password" type="password" placeholder="请输入6～15位密码">
                         </label>
-                        <button class="js-btn-sms-login btn-login">注&nbsp;册</button>
+                        <button id="button2" class="js-btn-sms-login btn-login">注&nbsp;册</button>
                     </div>
-                    <div class="js-user-login register-text">已有账号，立即登录</div></div>
+                    <%--<div class="js-user-login register-text">已有账号，立即登录</div></div>--%>
             </div>
             <a href="#0" class="cd-close-form ">关闭</a>
         </div>
     </div>
-
+    </div>
     <script src="js/firstjs/d-login.js"></script>
 
 </header>
@@ -161,38 +167,27 @@
             <div class="wrap-left pull-left">
                 <!--文章内容页-->
                 <div class="article-wrap">
-                    <h1 class="t-h1">闪送、小罐茶：将单一元素推向极致的创业给我们什么启发？</h1>
+                    <h1 class="t-h1">${article.articleTitle}</h1>
                     <div class="article-author">
-                        <span class="author-name"><a href="" target="_blank">作者</a></span>
+                        <%--<span class="author-name"><a href="" target="_blank">作者</a></span>--%>
                         <div class="column-link-box">
-                            <span class="article-time pull-left">2017-05-30 16:30</span>
-                            <span class="article-pl pull-left">评论16</span>
-                            <a href="#" class="column-link" target="_blank">创业维艰</a> <i></i>
+                            <span class="article-time pull-left">${article.createTimeStr}</span>
+                            <span class="article-pl pull-left">评论${countReview}</span>
+                           <%-- <a href="#" class="column-link" target="_blank">创业维艰</a> <i></i>--%>
                         </div>
                     </div>
                     <!--管理员按钮-->
                     <div class="article-manage-bar" id="article-manage-bar197460"></div>
                     <!--文章头图-->
-                    <div class="article-img-box"><img src="https://img.huxiucdn.com/article/cover/201705/30/163018709897.jpg?imageView2/1/w/800/h/600/|imageMogr2/strip/interlace/1/quality/85/format/jpg" alt="闪送、小罐茶：将单一元素推向极致的创业给我们什么启发？"></div>
+                    <div class="article-img-box"><img src="${article.articlePicture}" alt="${article.articleTitle}"></div>
                     <div id="article_content197460" class="article-content-wrap">
-                        <p>有些人和企业的厉害之处，在于从一个看似成熟、红海的领域，硬生生拓展出一片蓝海市场来，而且生意做到风生水起。</p>
+                        <p>${article.articleContent}</p>
                         <p><br/></p>
-                        <p>而这种闯出一片新天地的方法，最常见的一种，就是将原有的产品或服务模式中的某个元素，推向极致，拓展出新的用户场景和产品价值，自然就拓展出了新的市场。</p>
-                        <p><br/></p>
-                        <p>今天来分析三个例子，来看看这种"单一元素推向极致"的手段有多厉害。</p>
-                        <p><br/></p>
-                        <p>第一个例子，是前段时间非常火爆的电话亭式KTV。</p>
-                        <p><br/></p>
-                        <p>我不知道现在还有多少人经常去KTV唱歌。我能看到的是，在一线城市，传统的量贩式KTV市场一再萎缩，以钱柜、麦乐迪为代表的老企业日渐衰败，新的主打小户型的唱吧麦颂半死不活。长盛不衰此起彼伏的KTV也有，但那是俗称商K的夜总会式KTV，你懂的。</p><p><br/></p><p>究其原因，现在娱乐的个性化和小群体化趋势日益明显，以前那种成群结队去唱歌，还要忍受别人五音不全的唱腔的娱乐形式，显得不够与时俱进。</p>
-                        <p><br/></p>
-                        <p>但是，朋友情侣三两出行，还是有唱歌娱乐的需求的。电话亭式KTV应运而生。</p>
-                        <p><br/></p>
-                        <p>电话亭式KTV，把时间和空间两个元素推向极致。仅容纳两到三个人的私密空间，少至一首歌或者一刻钟的欢唱时间，充分利用碎片化时间和空间，让唱歌这件事不那么仪式感和处心积虑，随时兴起就可以来一发，多么愉快。何况，曲库、音响效果并不亚于传统的KTV，甚至还有所超越。</p>
                     </div>
                     <div class="Qr-code">
                         <!--普通文章点赞-->
-                        <div class="praise-box transition js-like-article pull-right " data-type="like">
-                            <i class="icon icon-article-zan"></i><span class="num">32</span>
+                        <div class="praise-box transition js-like-article pull-right " data-type="like" id="fabulous">
+                            <i class="icon icon-article-zan"></i><span class="num">${countFabulous}</span>
                         </div>
                         <div class="js-qr-img transition info-false">
                             <div class="article-zfb-wx-box" onmouseover="isOut=false" onmouseout="isOut=true">
@@ -213,48 +208,23 @@
                         <div class="pl-form-wrap">
                             <span class="span-mark-author active">发表评论</span>
                             <div class="pl-form-box pl-article-wrap">
+                                <c:if test="${activeUser.isLogin==0 || empty activeUser.isLogin}">
                                 <div class="no-login-box" style="margin-left:10px">
                                     <ul class="nav navbar-nav navbar-right transition  xiala main_nav" style="margin-right: 280px">
                                         <a class="cd-signin">登录</a>后参与评论
                                     </ul>
                                 </div>
-                                <textarea class="form-control hide" id="saytext197460" name="saytext" placeholder="客官，8个字起评，不讲价哟"></textarea>
+                                </c:if>
+                                <c:if test="${activeUser.isLogin==1}">
+                                <textarea class="form-control" id="saytext197460" name="saytext" placeholder="客官，8个字起评，不讲价哟"></textarea>
                                 <!--普通文章评论发表-->
                                 <button class="btn btn-article js-login transition ">发表</button>
+                                </c:if>
                             </div>
                         </div>
                         <div id="pl-wrap197460" name="pl-wrap"></div>
                         <div class="pl-list-wrap">
                             <a href="javascript:void(0)" class="span-mark-author active js-default-new-pl" data-type="agree">评论列表</a>
-                            <div class="pl-box-wrap">
-                                <div class="pl-box-top">
-                                    <div class="author-info">
-                                        <div class="author-face"><img src="https://img.huxiucdn.com/auth/data/avatar/001/54/60/18_1479690318.jpg?|imageMogr2/strip/interlace/1/quality/85/format/jpg"></div>
-                                        <span class="author-name"><a href="#">请叫我__宝器</a><a href="/vip" target="_blank"></a></span>
-                                        <span class="time">6天前</span>
-                                    </div>
-                                    <div class="pl-content">三个这么浅显的例子和分析就能让作者得出结论，这"一叶知秋"的本事我也是服的。</div>
-                                </div>
-                                <div class="pl-box-btm">
-                                    <div class="article-type pull-right">
-                                        <div class="icon-like-prompt">
-                                            <i class="icon icon-like active"></i><span class="c1">+1</span>
-                                        </div>
-                                        <div class="icon-no-like-prompt">
-                                            <i class="icon icon-no-like active"></i><span class="c1">+1</span>
-                                        </div>
-                                        <ul>
-                                            <li class="js-icon-like" data-type="like"><i class="icon icon-like "></i><span class="like">2</span></li>
-                                            <li class="js-no-icon-like" data-type="no-like"><i class="icon icon-no-like "></i><span class="like">1</span></li>
-                                        </ul>
-                                    </div>
-                                    <div class="btn-dp transition js-add-dp-box"><i class="icon icon-dp"></i>我要点评</div>
-                                    <div class="pl-form-box dp-article-box">
-                                        <textarea class="form-control" placeholder="客官，8个字起评，不讲价哟"></textarea>
-                                        <button class="btn btn-article js-article-dp">发表</button>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="pl-box-wrap">
                                 <div class="pl-box-top">
                                     <div class="author-info">
@@ -281,32 +251,25 @@
                                                     <span class="author-content">@lingboxiu 马云家有，对我尔等来说确实是灰常贵</span>
                                                 </p>
                                                 <div class="js-hf-article-pl"><span>回复</span></div>
-                                                <div class="hu-pl-box">
-                                                    <textarea class="form-control" placeholder="客官，8个字起评，不讲价哟"></textarea>
-                                                    <button class="btn btn-article js-article-dp" data-type="hf">发表</button>
+                                                <div class="pl-form-box dp-article-box">
+                                                    <textarea class="form-control hide" placeholder="客官，8个字起评，不讲价哟"></textarea>
+                                                    <button class="btn btn-article js-article-dp hide">发表</button>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="dp-list-box" style="display:none">
-                                            <div class="dl-user del-pl108924">
-                                                <ul>
-                                                    <li><a href="#" target="_blank"><img src="https://img.huxiucdn.com/auth/data/avatar/3.jpg?|imageMogr2/strip/interlace/1/quality/85/format/jpg"></a></li>
-                                                </ul>
-                                                <div class="one-pl-content">
-                                                    <div class="pull-right time">6天前</div>
-                                                    <p class="content">
-                                                        <span class="name">寂地_</span>
-                                                        <a href="#" target="_blank"></a>&nbsp;&nbsp;
-                                                        <span class="author-content"><a href="#" target="_blank">@lingboxiu</a> 马云家有，对我尔等来说确实是灰常贵</span>
-                                                    </p>
-                                                    <div class="js-hf-article-pl"><span>回复</span></div>
-                                                    <div class="hu-pl-box">
-                                                        <textarea class="form-control" placeholder="客官，8个字起评，不讲价哟"></textarea>
-                                                        <button class="btn btn-article js-article-dp" data-type="hf">发表</button>
+                                                <div class="dl-user dl-user-list  " data-type="dl-user" style="display:block">
+                                                    <ul>
+                                                        <li class="del-pl108924"><a href="#" target="_blank"><img src="https://img.huxiucdn.com/auth/data/avatar/3.jpg?|imageMogr2/strip/interlace/1/quality/85/format/jpg"></a></li>
+                                                    </ul>
+                                                    <!--只有一条点评时显示-->
+                                                    <div class="one-pl-content one-pl-content-box">
+                                                        <div class="pull-right time">6天前</div>
+                                                        <p class="content">
+                                                            <span class="name">寂地_</span>
+                                                            <a href="#" target="_blank"></a>&nbsp;&nbsp;
+                                                            <span class="author-content">@lingboxiu 马云家有，对我尔等来说确实是灰常贵</span>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="close-dp-list-box js-show-hide-dp-box" data-buttom="true">收起</div>
                                         </div>
                                     </div>
                                 </div>
@@ -325,12 +288,11 @@
                                     </div>
                                     <div class="btn-dp transition js-add-dp-box"><i class="icon icon-dp"></i>我要点评</div>
                                     <div class="pl-form-box dp-article-box">
-                                        <textarea class="form-control" placeholder="客官，8个字起评，不讲价哟"></textarea>
-                                        <button class="btn btn-article js-article-dp">发表</button>
+                                        <textarea class="form-control hide" placeholder="客官，8个字起评，不讲价哟"></textarea>
+                                        <button class="btn btn-article js-article-dp hide">发表</button>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <!--相关文章位置-->
@@ -338,26 +300,27 @@
                 </div>
             </div>
             <div class="wrap-right pull-right">
+                <c:if test="${user.role=='user'}">
                 <div class="box-author-info">
                     <div class="author-face">
                         <a href="#" target="_blank">
-                            <img src="https://img.huxiucdn.com/auth/data/avatar/001/37/36/58_avatar_big.jpg?|imageMogr2/strip/interlace/1/quality/85/format/jpg">
+                            <img src="${userInfo.userPicture}">
                         </a>
                     </div>
                     <div class="author-name">
-                        <a href="#" target="_blank">判官</a>
+                        <a href="#" target="_blank">${userInfo.realName}</a>
                     </div>
                     <div class="author-one">
                         <span>粉丝：</span>
-                        <span>100</span>
+                        <span>${countFansAndConcern.fansCount}</span>
                     </div>
                     <div class="author-one">
                         <span>关注：</span>
-                        <span>150</span>
+                        <span>${countFansAndConcern.concernCount}</span>
                     </div>
                     <div class="author-article-pl">
                         <ul>
-                            <li><span><input type="button" class="btn" value="加关注" name="add" onclick=""></span></li>
+                            <li><span><input type="button" class="btn" value="${concernType==0?'未关注':(concernType==1?'已关注':'互相关注')}" name="add"  id="concern"></span></li>
                         </ul>
                     </div>
                     <div class="author-next-article">
@@ -365,6 +328,7 @@
                         <a href="#" target="_blank">冷眼看快手的"短视频社交"</a>
                     </div>
                 </div>
+                </c:if>
                 <div class="box-moder hot-tag">
                     <h3>热门标签</h3>
                     <span class="pull-right project-more"><a href="#" class="transition" target="_blank">全部</a></span>
@@ -389,36 +353,14 @@
                     <h3>热文</h3>
                     <span class="span-mark"></span>
                     <ul>
+                        <c:forEach var="hotArticle" items="${hot}">
                         <li>
                             <div class="hot-article-img">
-                                <a href="#" target="_blank"><img src="https://img.huxiucdn.com/article/cover/201706/04/105715329877.jpg?imageView2/1/w/280/h/210/|imageMogr2/strip/interlace/1/quality/85/format/jpg"></a>
+                                <a href="${ctx}/article/show?id=${hotArticle.id}" target="_blank"><img src="${hotArticle.articlePicture}"></a>
                             </div>
-                            <a href="#" class="transition" target="_blank">3年了，我们的内容消费发生了什么变化？</a>
+                            <a href="${ctx}/article/show?id=${hotArticle.id}" class="transition" target="_blank">${hotArticle.articleTitle}</a>
                         </li>
-                        <li>
-                            <div class="hot-article-img">
-                                <a href="#" target="_blank"><img src="https://img.huxiucdn.com/article/cover/201706/04/191327154498.jpg?imageView2/1/w/280/h/210/|imageMogr2/strip/interlace/1/quality/85/format/jpg"></a>
-                            </div>
-                            <a href="#" class="transition" target="_blank">顺丰，菜鸟，令狐冲，岳不群</a>
-                        </li>
-                        <li>
-                            <div class="hot-article-img">
-                                <a href="#" target="_blank"><img src="https://img.huxiucdn.com/article/cover/201706/04/105715329877.jpg?imageView2/1/w/280/h/210/|imageMogr2/strip/interlace/1/quality/85/format/jpg"></a>
-                            </div>
-                            <a href="#" class="transition" target="_blank">3年了，我们的内容消费发生了什么变化？</a>
-                        </li>
-                        <li>
-                            <div class="hot-article-img">
-                                <a href="#" target="_blank"><img src="https://img.huxiucdn.com/article/cover/201706/04/191327154498.jpg?imageView2/1/w/280/h/210/|imageMogr2/strip/interlace/1/quality/85/format/jpg"></a>
-                            </div>
-                            <a href="#" class="transition" target="_blank">顺丰，菜鸟，令狐冲，岳不群</a>
-                        </li>
-                        <li>
-                            <div class="hot-article-img">
-                                <a href="#" target="_blank"><img src="https://img.huxiucdn.com/article/cover/201706/04/105715329877.jpg?imageView2/1/w/280/h/210/|imageMogr2/strip/interlace/1/quality/85/format/jpg"></a>
-                            </div>
-                            <a href="#" class="transition" target="_blank">3年了，我们的内容消费发生了什么变化？</a>
-                        </li>
+                        </c:forEach>
                     </ul>
                 </div>
             </div>
@@ -436,6 +378,157 @@
 
 </footer>
 <script type="text/javascript" src="js/firstjs/mouse.js"></script>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+    //登录
+    var loginType = "SHOW_PAGE";
+    $("#button1").click(function () {
+        var username = $("#login_username").val();
+        var password = $("#login_password").val();
+        window.location="${ctx}/account/login?username="+username+"&password="+password+"&loginType="+loginType+"&articleId=${article.id}";
+    })
+    //注册
+    $("#button2").click(function () {
+        var obj ={
+            username:$("#register_username").val(),
+            password:$("#register_password").val()
+        }
+        $.ajax({
+            url:"/account/home/register",
+            type:"post",
+            data:obj,
+            success:function (rs) {
+                if(rs.code==200){
+                    window.location="${ctx}/views/show.jsp"
+                }
+                if(rs.code==404){
+                    alert(rs.message);
+                }
+            }
+        })
+    })
+    //退出
+    $("#logout").click(function () {
+        var logintype="HOME_PAGE_LOGIN";
+        $.ajax({
+            url:"/account/logout",
+            type:"post",
+            data:"loginType="+logintype,
+            success:function (rs) {
+                if(rs.code==200){
+                    window.location="${ctx}/article/show?id=${article.id}";
+                }
+                if (rs.code==404){
+                    alert(rs.message);
+                }
+            }
+        })
+    });
+    $("#concern").click(function () {
+        var concernedUserId="${article.createUserId}";
+        $.ajax({
+            url:"/article/concern",
+            type:"post",
+            data:"concernedUserId="+concernedUserId,
+            success:function (rs) {
+                if (rs.code==200){
+                    window.location="${ctx}/article/show?id=${article.id}";
+                }
+                if (rs.code==404){
+                    alert(rs.message);
+                }
+            }
+        });
+    });
+    //点赞
+    $("#fabulous").click(function () {
+        var obj={
+            articleId:"${article.id}",
+            fabulousUserId:"${activeUser.userId}"
+        }
+        $.ajax({
+            url:"/article/fabulous",
+            type:"post",
+            data:obj,
+            success:function (rs) {
+                if (rs.code==200){
+                    window.location="${ctx}/article/show?id=${article.id}";
+                }
+                if (rs.code==404){
+                    alert(rs.message);
+                }
+            }
+        })
+    })
+    //评论弹框
+    $(".pl-box-top").find(".js-hf-article-pl").click(function () {
+        var $comment = $(this).next("div").find("textarea");
+        var $publish = $(this).next("div").find("button");
+        if ($comment.hasClass("hide") && $publish.hasClass("hide")){
+            $comment.removeClass("hide");
+            $publish.removeClass("hide")
+        }else {
+            $comment.addClass("hide");
+            $publish.addClass("hide");
+        }
+    })
+    $(".pl-box-btm").find(".js-add-dp-box").click(function () {
+        var $comment = $(this).next("div").find("textarea");
+        var $publish = $(this).next("div").find("button");
+        if ($comment.hasClass("hide") && $publish.hasClass("hide")){
+            $comment.removeClass("hide");
+            $publish.removeClass("hide")
+        }else {
+            $comment.addClass("hide");
+            $publish.addClass("hide");
+        }
+    })
+    //发表
+    $(".pl-form-wrap").find(".transition").click(function () {
+        var obj = {
+            articleId:"${article.id}",
+            reviewUserId:"${activeUser.userId}",
+            content:$(".pl-form-wrap").find(".form-control").val()
+        }
+        $.ajax({
+            url:"/article/review",
+            type:"post",
+            data:obj,
+            success:function (rs) {
+                if(rs.code==200){
+                    window.location="${ctx}/article/show?id=${article.id}";
+                }
+                if(rs.code==404){
+                    alert(rs.message);
+                }
+            }
+        })
+    })
+    //点评评论
+    $(".pl-box-btm").find("js-article-dp").click(function () {
+        var obj = {
+            reviewId:"",
+            articleId:"${article.id}",
+            reviewUserId:"${activeUser.userId}"
+        }
+        $.ajax({
+            url:"/article/remark/on",
+            type:"post",
+            data:obj,
+            success:function (rs) {
+                if(rs.code==200){
+                    window.location="${ctx}/article/show?id=${article.id}";
+                }
+                if(rs.code==404){
+                    alert(rs.message);
+                }
+            }
+        })
+    })
+    //评论 好评
+    $(".pl-box-btm").find(".js-icon-like").click(function () {
 
+    })
+</script>
 </body>
 </html>

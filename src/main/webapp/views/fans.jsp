@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -35,6 +36,7 @@
     <script src="js/morris.js"></script>
     <link rel="stylesheet" href="css/gonggao.css">
     <link href="css/public.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/pagination/pagination.css" />
     <style>
         .user-info{
             overflow: hidden;
@@ -102,217 +104,30 @@
                                 <input name="submit" style="height: 32px" class="btn" type="submit" value="查找">
                             </form>
                         </div>-->
-                            <span style="float: right;color: red;margin-right: 50px">1000</span><span style="float: right;">当前粉丝数：</span>
-
-
+                            <span style="float: right;color: red;margin-right: 50px">${pageData.totalCount}</span><span style="float: right;">当前粉丝数：</span>
                         <table>
                             <tr>
+                                <c:forEach items="${pageData.fansList}" var="fan">
                                 <td>
                                     <div style="padding: 20px 40px;text-align: center">
                                         <div class="user-info">
                                             <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
+                                                <img src="${fan.userPicture}" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
                                             </a>
                                             <div class="user-name">
-                                                chen
+                                                ${fan.userName}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g6.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g6.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g6.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g6.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
+                                </c:forEach>
                             </tr>
                         </table>
-
                     </div>
                 </div>
             </div>
         </section>
-
+        <div class="m-style" style="float: right;margin-right:500px"></div>
     </section>
     <!--main content end-->
 </section>
@@ -411,6 +226,20 @@
     });
 </script>
 <!-- //calendar -->
-
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/highlight.min.js"></script>
+<script type="text/javascript" src="/js/jquery.pagination.js"></script>
+<script>
+    $('.m-style').pagination({
+        mode: 'fixed',
+        pageCount:${pageData.totalPage},
+        totalData:${pageData.totalCount},
+        showData:${pageData.pageSize},
+        current:${pageData.pageNo},
+        callback:function (api) {
+            window.location="${ctx}/fans/list?pageNo="+api.getCurrent();
+        }
+    });
+</script>
 </body>
 </html>

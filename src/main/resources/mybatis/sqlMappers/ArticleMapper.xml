@@ -355,6 +355,9 @@
     <if test="createUserId != null">
       AND create_user_id = #{createUserId,jdbcType=VARCHAR}
     </if>
+    <if test="articleTypeId != null">
+      AND article_type_id = #{articleTypeId,jdbcType=VARCHAR}
+    </if>
     ORDER BY create_date
     limit #{pagination.start},#{pagination.pageSize}
   </select>
@@ -365,5 +368,18 @@
       AND create_user_id = #{createUserId,jdbcType=VARCHAR}
     </if>
     ORDER BY create_date
+  </select>
+  <select id="getArticleByArticleCode" parameterType="map" resultType="cn.clt.core.entity.Article">
+    SELECT * FROM article where status=1
+    <if test="articleIds != null">
+      AND article_type_id IN
+      <foreach collection="articleIds" index="index" item="item" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    ORDER by create_date
+    <if test="pagination">
+      limit #{pagination.start},#{pagination.pageSize}
+    </if>
   </select>
 </mapper>

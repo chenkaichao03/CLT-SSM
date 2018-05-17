@@ -1,11 +1,17 @@
 package cn.clt.core.service.impl;
 
+import cn.clt.core.entity.Concern;
 import cn.clt.core.entity.UserInfo;
 import cn.clt.core.entity.UserInfoExample;
+import cn.clt.core.enums.RoleCode;
 import cn.clt.core.exception.BussinessException;
+import cn.clt.core.mapper.ConcernMapper;
 import cn.clt.core.mapper.UserInfoMapper;
+import cn.clt.core.params.ManagementPageData;
+import cn.clt.core.params.Pagination;
 import cn.clt.core.service.UserInfoService;
 import cn.clt.core.utils.GuidUtil;
+import cn.clt.core.vo.UserInfoVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @Description UserInfoServiceImpl
@@ -30,6 +34,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     private static Logger logger = LoggerFactory.getLogger(UserInfoServiceImpl.class);
     @Autowired
     private UserInfoMapper userInfoMapper;
+    @Autowired
+    private ConcernMapper concernMapper;
 
     /**
      * @Title insertUserInfo
@@ -40,7 +46,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param userId
      */
     @Override
-    public void insertUserInfo(UserInfo info, String userId) {
+    public String insertUserInfo(UserInfo info, String userId) {
         String id = info.getId();
         //新增
         if (StringUtils.isEmpty(id)){
@@ -49,9 +55,11 @@ public class UserInfoServiceImpl implements UserInfoService {
                 info.setUserId(userId);
             }
             userInfoMapper.insert(info);
+            return info.getId();
         }else {
             //更新
             userInfoMapper.updateByPrimaryKeySelective(info);
+            return info.getId();
         }
     }
 
@@ -154,10 +162,12 @@ public class UserInfoServiceImpl implements UserInfoService {
                 if (!CollectionUtils.isEmpty(userInfoList)){
                     userInfo = userInfoList.get(0);
                     String userPicture = userInfo.getUserPicture();
-                    userPicture = userPicture.substring(userPicture.lastIndexOf("/"),userPicture.length());
-                    File pictureFile = new File(pathFile,userPicture);
-                    if (pictureFile.exists()){
-                        pictureFile.delete();
+                    if (!StringUtils.isEmpty(userPicture)) {
+                        userPicture = userPicture.substring(userPicture.lastIndexOf("/"), userPicture.length());
+                        File pictureFile = new File(pathFile, userPicture);
+                        if (pictureFile.exists()) {
+                            pictureFile.delete();
+                        }
                     }
                     userInfo.setUserPicture("upload/" + originalFileName);
                     userInfoMapper.updateByPrimaryKeySelective(userInfo);
@@ -176,5 +186,39 @@ public class UserInfoServiceImpl implements UserInfoService {
             logger.error("写入图片异常",e.getMessage());
             throw new BussinessException("上传图片异常.");
         }
+    }
+
+    /**
+     * @Title selectUserPage
+     * @Description 获取用户列表 管理员使用
+     * @Author CLT
+     * @Date 2018/5/9 11:31
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public ManagementPageData selectUserPage(Integer pageNo, Integer pageSize) {
+        Map<String,Object> params = new HashMap<>();
+        Pagination pagination = new Pagination(pageNo,pageSize);
+        params.put("pagination",pagination);
+        params.put("role", RoleCode.USER.getValue());
+        //用户列表
+        List<UserInfoVO> userInfoVOList = userInfoMapper.listUsers(params);
+        //用户数量
+        Long count = userInfoMapper.countUsers(params);
+        for (UserInfoVO userInfoVO : userInfoVOList){
+            //根据id获取用户的粉丝数,关注数
+            String userId = userInfoVO.getConcernedUserId();
+            params.put("userId", userId);
+            userInfoVO.setTotalConcerns(concernMapper.countConcern(params));
+            userInfoVO.setTotalFans(concernMapper.countFans(params));
+        }
+        ManagementPageData pageData = new ManagementPageData();
+        pageData.setUserList(userInfoVOList);
+        pageData.setTotalCount(count-1);
+        pageData.setPageNo(pageNo);
+        pageData.setPageSize(pageSize);
+        return pageData;
     }
 }

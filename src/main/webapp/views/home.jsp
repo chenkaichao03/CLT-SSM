@@ -1,3 +1,5 @@
+<%@ taglib uri="/WEB-INF/tlds/c.tld" prefix="c"%>
+<%@ taglib uri="/WEB-INF/tlds/fmt.tld" prefix="fmt"%>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
     String path = request.getContextPath();
@@ -47,7 +49,7 @@
                             <i class="fa fa-eye"> </i>
                         </div>
                         <div class="col-md-8 market-update-left">
-                            <a href=""><h4>累计浏览量</h4></a>
+                            <a href=""><h4>浏览量</h4></a>
                             <h3>13,500</h3>
                         </div>
                         <div class="clearfix"> </div>
@@ -59,8 +61,8 @@
                             <i class="fa fa-users" ></i>
                         </div>
                         <div class="col-md-8 market-update-left">
-                            <h4>粉丝</h4>
-                            <h3>1,250</h3>
+                            <h4>粉丝数</h4>
+                            <h3>${countFansAndConcern.fansCount}</h3>
                         </div>
                         <div class="clearfix"> </div>
                     </div>
@@ -71,7 +73,7 @@
                             <i class="fa fa-video-camera"></i>
                         </div>
                         <div class="col-md-8 market-update-left">
-                            <a href="views/video.jsp"><h4>累计播放量</h4></a>
+                            <a href="views/video.jsp"><h4>关注数</h4></a>
                             <h3>1,500</h3>
                         </div>
                         <div class="clearfix"> </div>
@@ -83,7 +85,7 @@
                             <i class="fa fa-usd"></i>
                         </div>
                         <div class="col-md-8 market-update-left">
-                            <a href=""><h4>历史总收益</h4></a>
+                            <a href=""><h4>总收益</h4></a>
                             <h3>1,500</h3>
                         </div>
                         <div class="clearfix"> </div>
@@ -118,36 +120,13 @@
                                 </span>
                             </ul>
                          <div id="gonggao">
+                             <c:forEach var="article" items="${adminArticle}">
                         <div class="announcement">
-                            <a target="_blank"  href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
+                            <a target="_blank"  href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">${article.articleTitle}
                                 <span style="color: red;font-style: italic">new</span></a>
-                            <span class="create_time">2018-04-16</span>
+                            <span class="create_time"><fmt:formatDate value="${article.createDate}" type="both" pattern="MM-dd HH:mm"/></span>
                         </div>
-                        <div class="announcement">
-                            <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
-                                <span style="color: red;font-style: italic">new</span></a>
-                            <span class="create_time">2018-04-16</span>
-                        </div>
-                        <div class="announcement">
-                            <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
-                                <span style="color: red;font-style: italic">new</span></a>
-                            <span class="create_time">2018-04-16</span>
-                        </div>
-                        <div class="announcement">
-                            <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
-                                <span class="create_time">2018-04-16</span>
-                            </a>
-                        </div>
-                        <div class="announcement">
-                            <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
-                                <span class="create_time">2018-04-16</span>
-                            </a>
-                        </div>
-                        <div class="announcement">
-                            <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
-                            </a>
-                            <span class="create_time">2018-04-16</span>
-                        </div>
+                             </c:forEach>
                     </div>
                          </div>
                     </div>

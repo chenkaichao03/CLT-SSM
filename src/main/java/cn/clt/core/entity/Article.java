@@ -23,6 +23,10 @@ public class Article {
 
     private String articleContent;
 
+    private String createTimeStr;
+
+    private Integer timeDifference;
+
     public String getId() {
         return id;
     }
@@ -101,5 +105,21 @@ public class Article {
 
     public void setArticleContent(String articleContent) {
         this.articleContent = articleContent == null ? null : articleContent.trim();
+    }
+
+    public String getCreateTimeStr() {
+        return createTimeStr;
+    }
+
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
+    }
+
+    public Integer getTimeDifference() {
+        return timeDifference;
+    }
+
+    public void setTimeDifference(Integer timeDifference) {
+        this.timeDifference = timeDifference;
     }
 }

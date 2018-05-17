@@ -35,6 +35,37 @@
     <script src="js/morris.js"></script>
     <link rel="stylesheet" href="css/gonggao.css">
     <link href="css/public.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+    <script>
+        $(function () {
+            $("#select1").bind("change",function () {
+                var exchangeId = $(this).val();
+                if (exchangeId!==""){
+                    $.ajax({
+                        url:"/exchange/get",
+                        type:"post",
+                        data:"id="+exchangeId,
+                        success:function (rs) {
+                            if (rs.code==200){
+                                debugger
+                                var number = rs.object.exchangeRateNumber;
+                                console.log(number);
+                                var money = rs.object.exchangeRateMoney;
+                                $("#rate").html("兑换比例："+number+":"+money);
+                            }
+                            if (rs.code==404){
+                                alert(rs.message);
+                            }
+                        }
+                    })
+                }else {
+                    $("#rate").html("");
+                }
+            })
+        })
+
+
+    </script>
 </head>
 <body>
 <section id="container">
@@ -59,29 +90,29 @@
                             </ul>
                         </div>
                         <div style="margin: 20px 0 0 50px;">
-                            <form  name="form1" action="" method="post" enctype="multipart/form-data">
-                                <table style="width: 800px;height: 200px;border:10px solid #F3F3F5"  cellpadding="0" cellspacing="0" class="">
-                                    <tr>
-                                        <td>
-                                            <span style="margin-left: 230px">兑换类型：
-                                                <select name="articleTypeId" style="margin-right: 10px">
-                                                    <option value="0" selected="selected">--未选择--</option>
-                                                    <option value="1"> 粉丝数</option>
-                                                    <option value="2"> 点击量</option>
+                            <table style="width: 800px;height: 200px;border:10px solid #F3F3F5"  cellpadding="0" cellspacing="0" class="">
+                                <tr>
+                                    <td>
+                                        <span style="margin-left: 230px">兑换类型：
+                                                <select name="id" style="margin-right: 10px" id="select1">
+                                                    <option value="" selected="id">--未选择--</option>
+                                                    <option value="${fans.id}">粉丝兑换</option>
+                                                    <option value="${browse.id}">浏览量兑换</option>
+                                                    <option value="${comment.id}">评论量兑换</option>
+                                                    <option value="${integral.id}">积分兑换</option>
+                                                    <option value="${exchangeCount.id}">兑换总次数</option>
                                                 </select>
                                             </span><br/><br/>
-                                            <span style="margin-left: 230px">
-                                                兑换比例：100：1
-                                            </span><br/><br/>
-                                            <span style="margin-left: 198px">输入兑换数量：
+                                        <span style="margin-left: 230px;" id="rate">
+                                        </span>
+                                        <br/><br/>
+                                        <span style="margin-left: 198px">输入兑换数量：
                                                 <input type="text" style="height: 32px;margin-right: 10px;"/>
                                                 <input name="submit" style="height: 32px" class="btn" type="submit" value="兑换">
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </form>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>

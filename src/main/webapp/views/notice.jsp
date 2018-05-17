@@ -1,4 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="/WEB-INF/tlds/c.tld" prefix="c"%>
+<%@ taglib uri="/WEB-INF/tlds/fmt.tld" prefix="fmt"%>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -49,39 +51,13 @@
                             </ul>
                         </div>
                         <div id="gonggao">
+                            <c:forEach var="article" items="${adminArticle}">
                             <div class="announcement">
-
-                                <a target="_blank"  href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
+                                <a target="_blank"  href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">${article.articleTitle}
                                     <span style="color: red;font-style: italic">new</span></a>
-                                <span class="create_time">2018-04-16</span>
-
+                                <span class="create_time"><fmt:formatDate value="${article.createDate}" type="both" pattern="MM-dd HH:mm"/></span>
                             </div>
-                            <div class="announcement">
-                                    <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
-                                        <span style="color: red;font-style: italic">new</span>
-                                    </a>
-                                    <span class="create_time">2018-04-16</span>
-                            </div>
-                            <div class="announcement">
-                                <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
-                                    <span style="color: red;font-style: italic">new</span></a>
-                                <span class="create_time">2018-04-16</span>
-                            </div>
-                            <div class="announcement">
-                                <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
-                                    <span class="create_time">2018-04-16</span>
-                                </a>
-                            </div>
-                            <div class="announcement">
-                                <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
-                                    <span class="create_time">2018-04-16</span>
-                                </a>
-                            </div>
-                            <div class="announcement">
-                                <a target="_blank" href="https://www.toutiao.com/i6545035326627250691/" rel="noopener noreferrer">头条号平台鼓励作者展开自查自纠的公告
-                                </a>
-                                <span class="create_time">2018-04-16</span>
-                            </div>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -35,6 +36,7 @@
     <script src="js/morris.js"></script>
     <link rel="stylesheet" href="css/gonggao.css">
     <link href="css/public.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/pagination/pagination.css" />
 </head>
 <body>
 <section id="container">
@@ -59,7 +61,7 @@
                             </ul>
                         </div>
                         <div style="font-size: 15px;padding: 14px 0 55px 0" >
-                            <span style="float: right;color: red;margin-right: 50px">1000</span><span style="float: right">当前用户人数：</span>
+                            <span style="float: right;color: red;margin-right: 50px">${pageData.totalCount}</span><span style="float: right">当前用户人数：</span>
                         </div>
                         <form name="form1" action="" method="post" enctype="multipart/form-data" style="text-align: center">
                             <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
@@ -73,26 +75,28 @@
                                     <td>关注数</td>
                                     <td>操作</td>
                                 </tr>
+                                <c:forEach items="${pageData.userList}" var="user" varStatus="status">
                                 <tr align="center">
-                                    <td>1</td>
-                                    <td>4548212</td>
-                                    <td>陈莉婷</td>
-                                    <td>12345678900</td>
-                                    <td>福建泉州</td>
-                                    <td>100</td>
-                                    <td>101</td>
+                                    <td>${status.index+1+((pageData.pageNo-1)*pageData.pageSize)}</td>
+                                    <td>${user.userNo}</td>
+                                    <td>${user.userRealName}</td>
+                                    <td>${user.userPhone}</td>
+                                    <td>${user.userAddress}</td>
+                                    <td>${user.totalFans}</td>
+                                    <td>${user.totalConcerns}</td>
                                     <td>
-                                        <a href="views/followuser.jsp"><input type="button" class="listbtn" value="他的关注"></a>
-                                        <a href="views/fans.jsp"><input type="button" class="listbtn" value="他的粉丝"></a>
-                                        <input type="button" class="listbtn" value="删除用户">
+                                        <a href="/concern/list?userManageId=${user.concernedUserId}"><input type="button"  class="listbtn" name="button1" value="他的关注"></a>
+                                        <a href="/fans/list?userManageId=${user.concernedUserId}"><input type="button"  class="listbtn" name="button2" value="他的粉丝"></a>
+                                        <a href=""><input type="button"  class="listbtn" name="button3" value="删除用户"></a>
                                     </td>
                                 </tr>
-
+                                </c:forEach>
                             </table>
                         </form>
                     </div>
                 </div>
             </div>
+            <div class="m-style" style="float: right;margin-right:500px"></div>
         </section>
 
     </section>
@@ -193,6 +197,20 @@
     });
 </script>
 <!-- //calendar -->
-
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/highlight.min.js"></script>
+<script type="text/javascript" src="/js/jquery.pagination.js"></script>
+<script>
+    $('.m-style').pagination({
+        mode: 'fixed',
+        pageCount:${pageData.totalPage},
+        totalData:${pageData.totalCount},
+        showData:${pageData.pageSize},
+        current:${pageData.pageNo},
+        callback:function (api) {
+            window.location="${ctx}/user/manage/list?pageNo="+api.getCurrent();
+        }
+    });
+</script>
 </body>
 </html>

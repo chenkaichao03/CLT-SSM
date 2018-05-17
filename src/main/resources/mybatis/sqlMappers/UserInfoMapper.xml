@@ -255,4 +255,26 @@
       user_address = #{userAddress,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="listUsers" parameterType="map" resultType="cn.clt.core.vo.UserInfoVO">
+    select
+    user.id AS concernedUserId,
+    user.user_name AS userName,
+    user_info.real_name AS userRealName,
+    user_info.user_no AS userNo,
+    user_info.user_phone AS userPhone,
+    user_info.user_address AS userAddress
+    FROM user LEFT JOIN user_info
+    ON user.id  = user_info.user_id
+    WHERE user.status=1 and user.role=#{role,jdbcType=VARCHAR}
+    <if test="pagination != null">
+      limit #{pagination.start},#{pagination.pageSize}
+    </if>
+  </select>
+  <select id="countUsers" parameterType="map" resultType="java.lang.Long">
+    select
+    COUNT(1)
+    FROM user LEFT JOIN user_info
+    ON user.id  = user_info.user_id
+    WHERE user.status=1
+  </select>
 </mapper>

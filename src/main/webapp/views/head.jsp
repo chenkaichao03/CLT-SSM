@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -6,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
     <title></title>
@@ -40,7 +42,7 @@
                     <li><a href="views/usercenter.jsp"><i class=" fa fa-asterisk"></i>个人主页</a></li>
                     <li><a href="/account/get/user-info"><i class=" fa fa-user"></i>账号信息</a></li>
                     <li><a href="/account/get/picture"><i class="fa fa-cog"></i>头像设置</a></li>
-                    <li><a href="/account/logout"><i class="fa fa-power-off"></i>退出登录</a></li>
+                    <li><a href="/account/signout"><i class="fa fa-power-off"></i>退出登录</a></li>
                 </ul>
             </li>
             <!-- user login dropdown end -->

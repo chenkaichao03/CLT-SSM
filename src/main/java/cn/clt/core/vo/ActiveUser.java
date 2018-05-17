@@ -10,6 +10,8 @@ public class ActiveUser {
     private String userName;
     private String userInfoId;
     private String userPicture;
+    private String role;
+    private Integer isLogin;
 
     public String getUserId() {
         return userId;
@@ -41,5 +43,21 @@ public class ActiveUser {
 
     public void setUserPicture(String userPicture) {
         this.userPicture = userPicture;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Integer getIsLogin() {
+        return isLogin;
+    }
+
+    public void setIsLogin(Integer isLogin) {
+        this.isLogin = isLogin;
     }
 }

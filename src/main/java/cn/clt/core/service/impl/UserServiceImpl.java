@@ -53,10 +53,32 @@ public class UserServiceImpl implements UserService {
         if (!password.equals(user.getPassword())){
             throw new BussinessException("密码错误");
         }
+        //更新
+        Integer result = loginUpdate(user);
+        if (result==0){
+            throw new BussinessException("用户不存在.");
+        }
         ActiveUser activeUser = new ActiveUser();
         activeUser.setUserId(user.getId());
         activeUser.setUserName(username);
+        activeUser.setRole(user.getRole());
+        //已经登录
+        activeUser.setIsLogin(1);
         return activeUser;
+    }
+
+    /**
+     * @Title loginUpdate
+     * @Description 更新为登录状态
+     * @Author CLT
+     * @Date 2018/5/14 14:54
+     * @param user
+     * @return
+     */
+    private int loginUpdate(User user){
+        user.setIsLogin(1);
+        user.setModifyDate(new Date());
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
     /**
@@ -68,7 +90,7 @@ public class UserServiceImpl implements UserService {
      * @param password
      */
     @Override
-    public void insertPrUser(String username, String password) {
+    public String insertPrUser(String username, String password) {
         List<User> userList = getUserByName(username);
         if (userList.size() > 0){
             throw new BussinessException("用户已存在.");
@@ -90,6 +112,7 @@ public class UserServiceImpl implements UserService {
         user.setCreateDate(date);
         user.setModifyDate(date);
         userMapper.insert(user);
+        return user.getId();
     }
 
     /**
@@ -100,7 +123,7 @@ public class UserServiceImpl implements UserService {
      * @param username
      * @return
      */
-    private List<User> getUserByName(String username){
+    public List<User> getUserByName(String username){
         UserExample example = new UserExample();
         example.createCriteria().andUserNameEqualTo(username).andStatusEqualTo(1);
         return userMapper.selectByExample(example);
@@ -109,7 +132,7 @@ public class UserServiceImpl implements UserService {
     /**
      * @Title erificationUserInfo
      * @Description 手机号校验
-     * @Author Lizi
+     * @Author CLT
      * @Date 2018/4/24 15:23
      * @param userName
      * @param phone
@@ -139,7 +162,7 @@ public class UserServiceImpl implements UserService {
     /**
      * @Title passwordSetting
      * @Description 新密码设置
-     * @Author Lizi
+     * @Author CLT
      * @Date 2018/4/24 15:48
      * @param userId
      * @param password
@@ -162,5 +185,25 @@ public class UserServiceImpl implements UserService {
         }else {
             throw new BussinessException("用户不存在");
         }
+    }
+
+
+    /**
+     * @Title getUserById
+     * @Description 根据id获取用户信息
+     * @Author CLT
+     * @Date 2018/5/3 16:29
+     * @param id
+     * @return
+     */
+    @Override
+    public User getUserById(String id) {
+        UserExample example = new UserExample();
+        example.createCriteria().andIdEqualTo(id).andStatusEqualTo(1);
+        List<User> userList = userMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(userList)){
+            return userList.get(0);
+        }
+        return null;
     }
 }

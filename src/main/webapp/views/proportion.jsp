@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -10,6 +11,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
     <base href="<%=basePath%>">
@@ -80,20 +82,62 @@
                                         <td><br/><br/>
                                             <div style="">
                                                 <span>粉丝数兑换：设置 </span>
-                                                <input type="number" style="width:90px;color: red;text-align: center"/>
+                                                <input type="hidden" value="${fans.id}">
+                                                <input type="number" style="width:90px;color: red;text-align: center" value="${fans.exchangeRateNumber}"/>
                                                 <span>个粉丝，兑换</span>
                                                 <span style="color: red">1</span>
                                                 <span>元钱；</span>
-                                                <input name="submit" style="height: 32px" class="btn" type="submit" value="保存">
+                                                <input name="submit" id="button1" style="height: 32px" class="btn" type="submit" value="保存">
                                             </div>
-                                            <br/><br/>
+                                            <br/><br/><br/>
                                             <div style="">
-                                                <span>点击量兑换：设置 </span>
-                                                <input type="number" style="width:90px;color: red;text-align: center"/>
-                                                <span>点击量，兑换</span>
+                                                <span>浏览量兑换：设置 </span>
+                                                <input type="hidden" value="${browse.id}">
+                                                <input type="number" style="width:90px;color: red;text-align: center" value="${browse.exchangeRateNumber}"/>
+                                                <span>条浏览，兑换</span>
+                                                <span style="color:red">1</span>
+                                                <span>元钱；</span>
+                                                <input name="submit" id="button2" style="height: 32px" class="btn" type="submit" value="保存">
+                                            </div>
+                                            <br/><br/><br/>
+                                            <div style="">
+                                                <span>评论量兑换：设置 </span>
+                                                <input type="hidden" value="${comment.id}">
+                                                <input type="number" style="width:90px;color: red;text-align: center" value="${comment.exchangeRateNumber}"/>
+                                                <span>条评论，兑换</span>
                                                 <span style="color: red">1</span>
                                                 <span>元钱；</span>
-                                                <input name="submit" style="height: 32px" class="btn" type="submit" value="保存">
+                                                <input name="submit" id="button3" style="height: 32px" class="btn" type="submit" value="保存">
+                                            </div>
+                                            <br/><br/><br/>
+                                            <div style="">
+                                                <span>积分数兑换：设置 </span>
+                                                <input type="hidden" value="${integral.id}">
+                                                <input type="number" style="width:90px;color: red;text-align: center" value="${integral.exchangeRateNumber}"/>
+                                                <span>个积分，兑换</span>
+                                                <span style="color: red">1</span>
+                                                <span>元钱；</span>
+                                                <input name="submit" id="button4" style="height: 32px" class="btn" type="submit" value="保存">
+                                            </div>
+                                            <br/><br/><br/>
+                                            <div style="">
+                                                <span>兑换总次数：设置 </span>
+                                                <input type="hidden" value="${exchangeCount.id}">
+                                                <input type="number" style="width:90px;color: red;text-align: center" value="${exchangeCount.exchangeRateNumber}"/>
+                                                <span>次兑换，送</span>
+                                                <span style="color: red">10</span>
+                                                <span>个积分；</span>
+                                                <input name="submit" id="button5" style="height: 32px" class="btn" type="submit" value="保存">
+                                            </div>
+                                            <br/><br/><br/>
+                                            <div style="">
+                                                <span>点赞数兑换：设置 </span>
+                                                <input type="hidden" value="${fabulous.id}">
+                                                <input type="number" style="width:90px;color: red;text-align: center" value="${fabulous.exchangeRateNumber}"/>
+                                                <span>个点赞数，送</span>
+                                                <span style="color: red">1</span>
+                                                <span>元钱；</span>
+                                                <input name="submit" id="button6" style="height: 32px" class="btn" type="submit" value="保存">
                                             </div>
                                             <br/><br/><br/>
                                         </td>
@@ -206,6 +250,61 @@
     });
 </script>
 <!-- //calendar -->
-
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script>
+    $("#button1").click(function () {
+        var id = $(this).prevAll("input:hidden").val();
+        var exchangeRateNumber = $(this).prevAll("input").val();
+        exchangeSetting("FANS",id,exchangeRateNumber);
+    });
+    $("#button2").click(function () {
+        var id = $(this).prevAll("input:hidden").val();
+        var exchangeRateNumber = $(this).prevAll("input").val();
+        exchangeSetting("BROWSE",id,exchangeRateNumber);
+    });
+    $("#button3").click(function () {
+        var id = $(this).prevAll("input:hidden").val();
+        var exchangeRateNumber = $(this).prevAll("input").val();
+        exchangeSetting("COMMENT",id,exchangeRateNumber);
+    });
+    $("#button4").click(function () {
+        var id = $(this).prevAll("input:hidden").val();
+        var exchangeRateNumber = $(this).prevAll("input").val();
+        exchangeSetting("INTEGRAL",id,exchangeRateNumber);
+    });
+    $("#button5").click(function () {
+        var id = $(this).prevAll("input:hidden").val();
+        var exchangeRateNumber = $(this).prevAll("input").val();
+        exchangeSetting("EXCHANGE_COUNT",id,exchangeRateNumber);
+    });
+    $("#button6").click(function () {
+        var id = $(this).prevAll("input:hidden").val();
+        var exchangeRateNumber = $(this).prevAll("input").val();
+        exchangeSetting("FABULOUS",id,exchangeRateNumber);
+    });
+    function exchangeSetting(type,id,exchangeRateNumber) {
+        var obj = {
+            id:id,
+            exchangeType:type,
+            exchangeRateNumber:exchangeRateNumber,
+            exchangeRateMoney:1,
+        }
+        if(confirm("确定保存？")) {
+            $.ajax({
+                url:"/exchange/setting",
+                type:"post",
+                data:obj,
+                success:function (rs) {
+                    if(rs.code==200){
+                        window.location="${ctx}/exchange//init"
+                    }
+                    if(rs.code==404){
+                        alert(rs.message);
+                    }
+                }
+            })
+        }
+    }
+</script>
 </body>
 </html>

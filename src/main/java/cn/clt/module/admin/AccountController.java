@@ -1,9 +1,12 @@
 package cn.clt.module.admin;
 
+import cn.clt.core.entity.User;
 import cn.clt.core.entity.UserInfo;
 import cn.clt.core.enums.Code;
+import cn.clt.core.enums.LoginTypeCode;
 import cn.clt.core.exception.BussinessException;
 import cn.clt.core.params.Result;
+import cn.clt.core.service.ActiveUserService;
 import cn.clt.core.service.UserInfoService;
 import cn.clt.core.service.UserService;
 import cn.clt.core.vo.ActiveUser;
@@ -46,6 +49,8 @@ public class AccountController {
     private UserService userService;
     @Autowired
     private UserInfoService userInfoService;
+    @Autowired
+    private ActiveUserService activeUserService;
 
 
     /**
@@ -59,7 +64,7 @@ public class AccountController {
      */
     @RequestMapping(value = "/login", produces = {"application/json;charset=UTF-8"})
     public String signin(HttpSession session, @RequestParam(value = "username") String username,
-                         @RequestParam(value = "password") String password)throws BussinessException{
+                         @RequestParam(value = "password") String password,String loginType,String articleId)throws BussinessException{
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
            throw new BussinessException("用户/密码不能为空");
         }
@@ -74,7 +79,17 @@ public class AccountController {
             }
         }
         session.setAttribute("activeUser",activeUser);
-        return "redirect:/home/index";
+        if (loginType.equals(LoginTypeCode.HOME_PAGE_LOGIN.name())){
+            //前台页面
+            return "redirect:/home/reception/index";
+        } else if (loginType.equals(LoginTypeCode.BACKSTAGE.name())) {
+            //后台页面
+            return "redirect:/home/backstage/index";
+        }else if(loginType.equals(LoginTypeCode.SHOW_PAGE.name())){
+            //文章详情登录
+            return "redirect:/article/show?id="+articleId;
+        }
+        return "redirect:/account/logout";
     }
 
     /**
@@ -85,8 +100,39 @@ public class AccountController {
      * @return
      */
     @RequestMapping("/logout")
-    public String signout(){
-        return "login";
+    @ResponseBody
+    public String signout(String loginType,HttpSession session){
+        try {
+            if (!LoginTypeCode.checkLoginTypeCode(loginType)){
+                return Result.error("错误登录类型.");
+            }
+            ActiveUser activeUser = activeUserService.getActiveUser(session);
+            if (activeUser != null){
+                session.removeAttribute("activeUser");
+                session.invalidate();
+            }
+            return Result.ok(Code.OK.getValue(),"登出成功.",loginType);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("登出失败.");
+            return Result.error("登出失败.");
+        }
+    }
+
+    @RequestMapping("/signout")
+    public String backstageSignout(HttpSession session){
+        try{
+            ActiveUser activeUser = activeUserService.getActiveUser(session);
+            if (activeUser != null){
+                session.removeAttribute("activeUser");
+                session.invalidate();
+            }
+            return "login";
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("登出失败.");
+            throw new BussinessException("登出失败.");
+        }
     }
 
 
@@ -109,6 +155,34 @@ public class AccountController {
     }
 
     /**
+     * @Title homeRegister
+     * @Description 前台注册
+     * @Author CLT
+     * @Date 2018/5/14 16:14
+     * @param username
+     * @param password
+     * @return
+     * @throws BussinessException
+     */
+    @RequestMapping("/home/register")
+    @ResponseBody
+    public String homeRegister(@RequestParam(value = "username") String username,
+                           @RequestParam(value = "password") String password){
+        try {
+            if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+                throw new BussinessException("用户/密码不能为空");
+            }
+            //新增用户
+            String userId = userService.insertPrUser(username, password);
+            return Result.ok(Code.OK.getValue(),"注册成功.",userId);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("注册失败.");
+            return Result.error("注册失败.");
+        }
+    }
+
+    /**
      * @Title getUserInfo
      * @Description 获取用户信息
      * @Author CLT
@@ -125,6 +199,9 @@ public class AccountController {
             List<UserInfo> userInfoList = userInfoService.listUserInfo(id);
             if (!CollectionUtils.isEmpty(userInfoList)) {
                 userInfo = userInfoList.get(0);
+                //获取用户信息 用于判断是否是管理员
+                User user = userService.getUserById(userInfo.getUserId());
+                model.addAttribute("userRole", user);
             }
         }
         model.addAttribute("activeUser",activeUser);
@@ -152,6 +229,11 @@ public class AccountController {
             userInfo = userInfoList.get(0);
         }
         model.addAttribute("userInfo",userInfo);
+        //判断改用户角色
+        User user = userService.getUserById(userId);
+        if (user != null) {
+            model.addAttribute("userRole", user);
+        }
         return "usersetting";
     }
 
@@ -179,7 +261,7 @@ public class AccountController {
             e.printStackTrace();
             logger.error("上传图片失败.",e.getMessage());
         }
-        return "redirect:/home/index";
+        return "redirect:/home/backstage/index";
     }
 
     /**
@@ -199,14 +281,15 @@ public class AccountController {
             ActiveUser activeUser = (ActiveUser) session.getAttribute("activeUser");
             String userId = activeUser.getUserId();
             //用户信息设置
-            userInfoService.insertUserInfo(userInfo,userId);
+            String id = userInfoService.insertUserInfo(userInfo,userId);
+            activeUser.setUserInfoId(id);
         }catch (BussinessException e){
             throw new BussinessException(e.getMessage());
         }catch (Exception e){
             e.printStackTrace();
             logger.error("用户信息设置失败.",e.getMessage());
         }
-        return "redirect:/home/index";
+        return "redirect:/home/backstage/index";
     }
 
      /**

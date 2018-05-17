@@ -3,8 +3,10 @@ package cn.clt.core.mapper;
 import cn.clt.core.entity.User;
 import cn.clt.core.entity.UserExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface UserMapper {
     long countByExample(UserExample example);
 

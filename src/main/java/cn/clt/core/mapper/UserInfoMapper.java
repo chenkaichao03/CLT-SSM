@@ -1,9 +1,13 @@
 package cn.clt.core.mapper;
 import java.util.List;
+import java.util.Map;
+
 import cn.clt.core.entity.UserInfo;
 import cn.clt.core.entity.UserInfoExample;
+import cn.clt.core.vo.UserInfoVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
+@Mapper
 public interface UserInfoMapper {
     long countByExample(UserInfoExample example);
 
@@ -26,4 +30,8 @@ public interface UserInfoMapper {
     int updateByPrimaryKeySelective(UserInfo record);
 
     int updateByPrimaryKey(UserInfo record);
+
+    List<UserInfoVO> listUsers(Map<String,Object> params);
+
+    Long countUsers(Map<String,Object> params);
 }

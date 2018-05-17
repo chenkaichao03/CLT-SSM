@@ -16,7 +16,7 @@ public interface ArticleTypeService {
      * @Date 2018/4/25 14:35
      * @return
      */
-    List<ArticleType> listArticleType();
+    List<ArticleType> listArticleType(String role);
 
     /**
      * @Title addArticleType
@@ -26,5 +26,15 @@ public interface ArticleTypeService {
      * @param articleType
      */
     void addArticleType(ArticleType articleType);
+
+    /**
+     * @Title getArticleTypeByName
+     * @Description 获取文章类型通过名称
+     * @Author CLT
+     * @Date 2018/5/7 14:33
+     * @param articleTypeName
+     * @return
+     */
+    ArticleType getArticleTypeByName(String articleTypeName);
 
 }

@@ -1,6 +1,9 @@
 package cn.clt.core.service;
 
+import cn.clt.core.entity.User;
 import cn.clt.core.vo.ActiveUser;
+
+import java.util.List;
 
 /**
  * @Description UserService
@@ -26,7 +29,7 @@ public interface UserService {
      * @param username
      * @param password
      */
-    void insertPrUser(String username, String password);
+    String insertPrUser(String username, String password);
 
     /**
      * @Title erificationUserInfo
@@ -47,5 +50,26 @@ public interface UserService {
      * @param newPassword
      */
     String passwordSetting(String userId,String password,String newPassword);
+
+    /**
+     * @Title getUserById
+     * @Description 根据id获取用户信息
+     * @Author CLT
+     * @Date 2018/5/3 16:29
+     * @param id
+     * @return
+     */
+    User getUserById(String id);
+
+
+    /**
+     * @Title getUserByName
+     * @Description
+     * @Author CLT
+     * @Date 2018/4/14 23:14
+     * @param username
+     * @return
+     */
+    List<User> getUserByName(String username);
 
 }

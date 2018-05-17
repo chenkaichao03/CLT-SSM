@@ -43,11 +43,24 @@ public class ArticleTypeServiceImpl implements ArticleTypeService{
      * @return
      */
     @Override
-    public List<ArticleType> listArticleType() {
-        ArticleCode[] articleCodes = ArticleCode.values();
+    public List<ArticleType> listArticleType(String role) {
+/*        ArticleCode[] articleCodes = ArticleCode.values();
         List<String> articleCodeList = new LinkedList<>();
         for (int i=0; i< articleCodes.length;i++){
             articleCodeList.add(articleCodes[i].name());
+        }*/
+        List<String> articleCodeList = new LinkedList<>();
+        if (role.equals("admin")) {
+            //管理员  通知，公告，活动，头条
+            articleCodeList.add(ArticleCode.ACTIVITY.name());
+            articleCodeList.add(ArticleCode.AFFICHE.name());
+            articleCodeList.add(ArticleCode.NOTICE.name());
+            articleCodeList.add(ArticleCode.HEADLINE.name());
+        }else if (role.equals("user")){
+            //普通用户 新闻，娱乐，热文
+            articleCodeList.add(ArticleCode.ENTERTAINMENT.name());
+            articleCodeList.add(ArticleCode.NEWS.name());
+            articleCodeList.add(ArticleCode.HOT.name());
         }
         ArticleTypeExample example = new ArticleTypeExample();
         example.createCriteria().andArticleTypeCodeIn(articleCodeList);
@@ -77,6 +90,24 @@ public class ArticleTypeServiceImpl implements ArticleTypeService{
         articleTypeMapper.insert(articleType);
     }
 
+    /**
+     * @Title getArticleTypeByName
+     * @Description 获取文章类型通过名称
+     * @Author CLT
+     * @Date 2018/5/7 14:33
+     * @param articleTypeName
+     * @return
+     */
+    @Override
+    public ArticleType getArticleTypeByName(String articleTypeName) {
+        ArticleTypeExample example = new ArticleTypeExample();
+        example.createCriteria().andArticleTypeCodeEqualTo(articleTypeName);
+        List<ArticleType> articleTypeList = articleTypeMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(articleTypeList)){
+            return articleTypeList.get(0);
+        }
+        return null;
+    }
 
     /**
      * @Title getArticleTypeMaxSortOrder

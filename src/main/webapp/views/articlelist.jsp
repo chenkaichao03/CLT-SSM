@@ -32,15 +32,6 @@
     <link href="css/public.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript">
-/*        $(function () {
-            $(".listbtn").click(function () {
-                var articleId = $(this).parent().prevAll("input").val();
-                //发送ajax请求
-                $.ajax({
-                    url:
-                });
-            });
-        });*/
     </script>
 </head>
 <body>
@@ -63,6 +54,9 @@
                                 <span>
                                     内容管理
                                 </span>
+                                <span style="float: right;">
+                                    <a href="/article/type/list"><input type="button" class="btn" value="发布文章"></a>
+                                </span>
                             </ul>
                         </div>
                         <form name="form1" action="" method="post" enctype="multipart/form-data">
@@ -82,8 +76,8 @@
                                     <td>${article.articleTitle}</td>
                                     <td><fmt:formatDate value="${article.createDate}" type="both" pattern="MM-dd HH:mm"/></td>
                                     <td>
-                                        <a href=""><input type="button" class="listbtn" value="查看" name="add" ></a>
-                                        <a href="/article/show?id=${article.id}"><input type="button" class="listbtn" value="修改 " name="update" ></a>
+                                        <a href="/article/show?id=${article.id}"><input type="button" class="listbtn" value="查看" name="add" ></a>
+                                        <a href="/article/update?id=${article.id}"><input type="button" class="listbtn" value="修改 " name="update" ></a>
                                         <a href="/article/delete?id=${article.id}"><input type="button" class="listbtn" value="删除" name="delete" ></a>
                                     </td>
                                 </tr>
@@ -96,6 +90,23 @@
         </section>
     </section>
     <!--main content end-->
+    <div class="row">
+        <!--分页文字信息  -->
+        <div class="col-md-3 col-md-offset-3">当前${pageResult.pageNo + 1}页,总${pageResult.totalPage }
+            页,总 ${pageResult.totalCount } 条记录</div>
+        <!-- 分页条信息 -->
+        <div class="col-md-3 ">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li><a href="/article/list?pageNo=1">首页</a></li>
+                    <c:forEach var="index" begin="1" end="${pageResult.totalPage}" step="1">
+                        <li><a href="/article/list?pageNo=${index}">${index}</a></li>
+                    </c:forEach>
+                    <li><a href="/article/list?pageNo=${pageResult.totalPage}">末页</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </section>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.dcjqaccordion.2.7.js"></script>

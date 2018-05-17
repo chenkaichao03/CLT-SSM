@@ -1,13 +1,20 @@
 package cn.clt.core.service.impl;
 
-import cn.clt.core.entity.Article;
-import cn.clt.core.entity.ArticleExample;
+import cn.clt.core.entity.*;
+import cn.clt.core.enums.ArticleCode;
 import cn.clt.core.exception.BussinessException;
 import cn.clt.core.mapper.ArticleMapper;
+import cn.clt.core.mapper.ArticleTypeMapper;
 import cn.clt.core.params.ManagementPageData;
 import cn.clt.core.params.Pagination;
 import cn.clt.core.service.ArticleService;
+import cn.clt.core.service.ArticleTypeService;
+import cn.clt.core.service.UserService;
+import cn.clt.core.utils.DateUtil;
 import cn.clt.core.utils.GuidUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +38,12 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ArticleTypeService articleTypeService;
+    @Autowired
+    private ArticleTypeMapper articleTypeMapper;
 
     /**
      * @Title seletArticlePage
@@ -98,6 +111,14 @@ public class ArticleServiceImpl implements ArticleService{
         return null;
     }
 
+    /**
+     * @Title getArticleById
+     * @Description 根据id获取文章
+     * @Author CLT
+     * @Date 2018/5/7 13:46
+     * @param id
+     * @return
+     */
     @Override
     public Article getArticleById(String id) {
         return articleMapper.selectByPrimaryKey(id);
@@ -165,7 +186,7 @@ public class ArticleServiceImpl implements ArticleService{
         if (StringUtils.isEmpty(article.getId())){
             article.setId(GuidUtil.newGuid());
             if (!StringUtils.isEmpty(originalFileName)){
-                article.setArticlePicture(originalFileName);
+                article.setArticlePicture("article/"+originalFileName);
             }
             article.setStatus(1);
             article.setCreateUserId(userId);
@@ -187,7 +208,7 @@ public class ArticleServiceImpl implements ArticleService{
                         file.exists();
                     }
                 }
-                article.setArticlePicture(originalFileName);
+                article.setArticlePicture("article/"+originalFileName);
             }
             article.setStatus(1);
             article.setModifyUserId(userId);
@@ -232,4 +253,84 @@ public class ArticleServiceImpl implements ArticleService{
         }
     }
 
+    /**
+     * @Title getArticleByAdmin
+     * @Description 获取管理员的文章
+     * @Author CLT
+     * @Date 2018/5/4 15:05
+     * @return
+     */
+    @Override
+    public List<Article> getArticleByAdmin(String articleCode) {
+        Map<String,Object> params = new HashMap<>();
+        //获取管理员的id
+        List<User> userList = userService.getUserByName("admin");
+        User user = null;
+        if (!CollectionUtils.isEmpty(userList)){
+            user = userList.get(0);
+        }
+        String adminId = user.getId();
+        //获取对应的articleCode的id
+        ArticleType articleType = articleTypeService.getArticleTypeByName(articleCode);
+        String articleTypeId = null;
+        if (articleType != null){
+            articleTypeId = articleType.getId();
+        }
+        Pagination pagination = new Pagination(1,10);
+        params.put("createUserId",adminId);
+        params.put("pagination",pagination);
+        params.put("articleTypeId",articleTypeId);
+        List<Article> articleList = articleMapper.listArticle(params);
+        if (!CollectionUtils.isEmpty(articleList)){
+            return articleList;
+        }
+        return null;
+    }
+
+    /**
+     * @Title getSrticleByArticleCode
+     * @Description 根据文章类型获取文章
+     * @Author CLT
+     * @Date 2018/5/15 9:47
+     * @param articleId
+     * @return
+     */
+    @Override
+    public List<Article> getArticleByArticleId(Integer pageNo, Integer pageSize, String... articleId) {
+        List<String> articleIdList = new LinkedList<>();
+        for (String type : articleId) {
+            articleIdList.add(type);
+        }
+        Pagination pagination = new Pagination(pageNo, pageSize);
+        Map<String, Object> params = new HashMap<>();
+        params.put("pagination", pagination);
+        params.put("articleIds", articleIdList);
+        List<Article> articleList = articleMapper.getArticleByArticleCode(params);
+        for (Article article : articleList) {
+            String createTime = DateUtil.formatDate(DateUtil.DATE_FORMATS[0], article.getCreateDate());
+            article.setCreateTimeStr(createTime);
+            Integer timeDifference = DateUtil.getTimeDifference(System.currentTimeMillis(), article.getCreateDate().getTime());
+            article.setTimeDifference(timeDifference);
+        }
+        return articleList;
+    }
+
+    /**
+     * @Title getArticleTypeId
+     * @Description 获取文章类型id
+     * @Author CLT
+     * @Date 2018/5/15 11:17
+     * @param articleCode
+     * @return
+     */
+    @Override
+    public String getArticleTypeId(String articleCode) {
+        ArticleTypeExample example = new ArticleTypeExample();
+        example.createCriteria().andArticleTypeCodeEqualTo(articleCode);
+        List<ArticleType> articleTypeList = articleTypeMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(articleTypeList)){
+            return articleTypeList.get(0).getId();
+        }
+        return null;
+    }
 }

@@ -27,6 +27,7 @@
 	<div class="logo_box">
 		<h3>Welcome</h3>
 		<form action="/account/login" name="f" method="post" onsubmit="return condition(this)">
+			<input type="hidden" name="loginType" value="BACKSTAGE">
 			<div class="input_outer">
 				<span class="u_user"></span>
 				<input name="username" class="text" placeholder="输入用户名登录" style="color: #FFFFFF !important" type="text">

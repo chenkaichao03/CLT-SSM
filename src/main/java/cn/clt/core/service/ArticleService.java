@@ -1,7 +1,9 @@
 package cn.clt.core.service;
 
 import cn.clt.core.entity.Article;
+import cn.clt.core.enums.ArticleCode;
 import cn.clt.core.params.ManagementPageData;
+import com.github.pagehelper.PageInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -58,6 +60,15 @@ public interface ArticleService {
      */
     Article getArticleByIdAndUserId(String id,String userId);
 
+
+    /**
+     * @Title getArticleById
+     * @Description 根据id获取文章
+     * @Author CLT
+     * @Date 2018/5/7 13:46
+     * @param id
+     * @return
+     */
     Article getArticleById(String id);
 
     /**
@@ -70,4 +81,33 @@ public interface ArticleService {
      * @return
      */
     int  deleteArticle(String id,String userId);
+
+    /**
+     * @Title getArticleByAdmin
+     * @Description 获取管理员的文章
+     * @Author CLT
+     * @Date 2018/5/4 15:05
+     * @return
+     */
+    List<Article> getArticleByAdmin(String articleCode);
+
+    /**
+     * @Title getSrticleByArticleCode
+     * @Description 根据文章类型获取文章
+     * @Author CLT
+     * @Date 2018/5/15 9:47
+     * @param articleId
+     * @return
+     */
+    List<Article> getArticleByArticleId(Integer pageNo, Integer pageSize, String... articleId);
+
+    /**
+     * @Title getArticleTypeId
+     * @Description 获取文章类型id
+     * @Author CLT
+     * @Date 2018/5/15 11:17
+     * @param articleCode
+     * @return
+     */
+    String getArticleTypeId(String articleCode);
 }

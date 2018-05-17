@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -10,6 +11,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
     <base href="<%=basePath%>">
@@ -35,6 +37,7 @@
     <script src="js/morris.js"></script>
     <link rel="stylesheet" href="css/gonggao.css">
     <link href="css/public.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/pagination/pagination.css" />
     <style>
         .user-info{
             overflow: hidden;
@@ -102,282 +105,42 @@
                                 <input name="submit" style="height: 32px" class="btn" type="submit" value="查找">
                             </form>
                         </div>-->
-                        <span style="float: right;color: red;margin-right: 50px">1000</span><span style="float: right;">当前关注人数：</span>
+                        <span style="float: right;color: red;margin-right: 50px">${pageData.totalCount}</span><span style="float: right;">当前关注人数：</span>
 
 
-                        <table>
+                        <table id="table1">
                             <tr>
+                                <c:forEach items="${pageData.concernList}" var="concern">
                                 <td>
                                     <div style="padding: 20px 40px;text-align: center">
                                         <div class="user-info">
                                             <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
+                                                <img src="${concern.userPicture}" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
                                             </a>
                                             <div class="user-name">
-                                                chen
+                                                ${concern.userName}
                                             </div>
+                                            <c:if test="${userRole.role=='user'}">
                                             <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
+                                                <input id="concernedUserId" type="hidden" value="${concern.concernedUserId}">
+                                                <input name="submit" class="btn" type="submit" value="${concern.concernType==0?'末关注':(concern.concernType==1?'已关注':'互相关注')}">
                                                 <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
                                             </div>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g6.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g6.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g6.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g6.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding: 20px 40px;text-align: center">
-                                        <div class="user-info">
-                                            <a>
-                                                <img src="images/g5.jpg" style="float-displace:10px;width: 84px;height: 84px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"/>
-                                            </a>
-                                            <div class="user-name">
-                                                chen
-                                            </div>
-                                            <div class="user-follow"><!--未取消关注有取消关注按钮，取消关注了则显示已取消关注 -->
-                                                <input name="submit" class="btn" type="submit" value="取消关注">
-                                                <!--<input name="submit" style="height: 32px" class="btn" type="submit" value="已取消关注">-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
+                                </c:forEach>
                             </tr>
                         </table>
-
                     </div>
                 </div>
             </div>
+            <div class="m-style" style="float: right;margin-right:500px"></div>
         </section>
 
     </section>
+
     <!--main content end-->
 </section>
 <script src="js/bootstrap.js"></script>
@@ -475,6 +238,39 @@
     });
 </script>
 <!-- //calendar -->
-
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/highlight.min.js"></script>
+<script type="text/javascript" src="/js/jquery.pagination.js"></script>
+<script>
+    $('.m-style').pagination({
+        mode: 'fixed',
+        pageCount:${pageData.totalPage},
+        totalData:${pageData.totalCount},
+        showData:${pageData.pageSize},
+        current:${pageData.pageNo},
+        callback:function (api) {
+            window.location="${ctx}/concern/list?pageNo="+api.getCurrent();
+        }
+    });
+    
+    $(".btn").click(function () {
+        var concernedUserId = $(this).prev("input:hidden").val();
+        if(confirm("确定取消关注吗？")) {
+            $.ajax({
+                url: "/concern/cancel",
+                type: "post",
+                data: "concernedUser="+concernedUserId,
+                success: function (rs) {
+                    if(rs.code==404){
+                        alert(rs.message);
+                    }
+                    if(rs.code==200){
+                        window.location="${ctx}/concern/list?pageNo="+1;
+                    }
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>
