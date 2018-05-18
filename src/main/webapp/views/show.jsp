@@ -153,11 +153,14 @@
                 $("#other").find(".mod-art:eq("+index+")").find(".lazy").attr("alt",elem.articleTitle);
                 $("#other").find(".mod-art:eq("+(index)+")").find(".msubstr-row2").attr("href","/article/show?id="+elem.id);
                 $("#other").find(".mod-art:eq("+(index)+")").find(".msubstr-row2").html(elem.articleTitle);
+                $("#other").find(".mod-art:eq("+(index)+")").find(".mob-author").find("a").attr("href","/article/show?id="+elem.id);
+                $("#other").find(".mod-art:eq("+(index)+")").find(".mob-author").find("a").find(".author-name").html(elem.articleTitle);
                 $("#other").find(".mod-art:eq("+(index)+")").find(".mob-author").find(".author-face>a").attr("href","/article/show?id="+elem.id);
                 $("#other").find(".mod-art:eq("+(index)+")").find(".mob-author").find(".author-face>a>img").attr("src",elem.articlePicture);
                 $("#other").find(".mod-art:eq("+(index)+")").find(".mob-author>a").attr("href","/article/show?id="+elem.id);
+                $("#other").find(".mod-art:eq("+(index)+")").find(".mob-author>i").next("em").html(elem.countReview);
                 if(elem.timeDifference<=24){
-                    $("#other").find(".mod-art:eq("+index+")").find(".time").html(elem.timeDifference);
+                    $("#other").find(".mod-art:eq("+index+")").find(".time").html(elem.timeDifference+"小时");
                 }else {
                     $("#other").find(".mod-art:eq("+index+")").find(".time").html(elem.createTimeStr);
                 }

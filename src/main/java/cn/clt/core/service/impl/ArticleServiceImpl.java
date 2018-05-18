@@ -9,6 +9,7 @@ import cn.clt.core.params.ManagementPageData;
 import cn.clt.core.params.Pagination;
 import cn.clt.core.service.ArticleService;
 import cn.clt.core.service.ArticleTypeService;
+import cn.clt.core.service.ReviewService;
 import cn.clt.core.service.UserService;
 import cn.clt.core.utils.DateUtil;
 import cn.clt.core.utils.GuidUtil;
@@ -44,6 +45,8 @@ public class ArticleServiceImpl implements ArticleService{
     private ArticleTypeService articleTypeService;
     @Autowired
     private ArticleTypeMapper articleTypeMapper;
+    @Autowired
+    private ReviewService reviewService;
 
     /**
      * @Title seletArticlePage
@@ -311,6 +314,8 @@ public class ArticleServiceImpl implements ArticleService{
             article.setCreateTimeStr(createTime);
             Integer timeDifference = DateUtil.getTimeDifference(System.currentTimeMillis(), article.getCreateDate().getTime());
             article.setTimeDifference(timeDifference);
+            //获取评论数
+            article.setCountReview(reviewService.countReview(article.getId()));
         }
         return articleList;
     }

@@ -1,6 +1,7 @@
 package cn.clt.core.params;
 
 import cn.clt.core.entity.Article;
+import cn.clt.core.entity.Review;
 import cn.clt.core.entity.UserExchange;
 import cn.clt.core.vo.UserInfoVO;
 
@@ -18,6 +19,7 @@ public class ManagementPageData extends BasePageData{
     private List<UserInfoVO> fansList;
     private List<UserInfoVO> userList;
     private List<UserExchange> userExchangeList;
+    private List<Review> reviewList;
 
     public List<Article> getArticleList() {
         return articleList;
@@ -57,5 +59,13 @@ public class ManagementPageData extends BasePageData{
 
     public void setUserExchangeList(List<UserExchange> userExchangeList) {
         this.userExchangeList = userExchangeList;
+    }
+
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
     }
 }

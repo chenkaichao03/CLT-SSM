@@ -233,7 +233,9 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/show")
-    public String showArticle(@RequestParam(value = "id") String id,HttpSession session,Model model){
+    public String showArticle(@RequestParam(value = "id") String id,HttpSession session,Model model,
+                              @RequestParam(defaultValue = "1") Integer pageNo,
+                              @RequestParam(defaultValue = "2") Integer pageSize){
         try {
             //获取用户信息
             ActiveUser activeUser = activeUserService.getActiveUser(session);
@@ -288,8 +290,8 @@ public class ArticleController {
             Long countReview = reviewService.countReview(id);
             model.addAttribute("countReview",countReview);
             //获取评论内容
-            List<Review> reviewList = reviewService.listReview(id);
-            model.addAttribute("reviewList",reviewList);
+            ManagementPageData pageData = reviewService.listReview(id,pageNo,pageSize);
+            model.addAttribute("pageData",pageData);
         }catch (Exception e){
             e.printStackTrace();
             logger.error("文章获取失败.",e.getMessage());
@@ -485,8 +487,8 @@ public class ArticleController {
             return Result.ok(Code.OK.getValue(),"评论差评成功.",id);
         }catch (Exception e){
             e.printStackTrace();
-            logger.error("评论好评失败.");
-            return Result.error("评论好评失败.");
+            logger.error("评论差评失败..");
+            return Result.error("评论差评失败..");
         }
     }
 

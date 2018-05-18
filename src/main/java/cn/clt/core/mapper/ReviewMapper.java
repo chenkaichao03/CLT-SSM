@@ -3,6 +3,7 @@ package cn.clt.core.mapper;
 import cn.clt.core.entity.Review;
 import cn.clt.core.entity.ReviewExample;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -35,4 +36,8 @@ public interface ReviewMapper {
     int updateByPrimaryKeyWithBLOBs(Review record);
 
     int updateByPrimaryKey(Review record);
+
+    List<Review> listReview(Map<String,Object> params);
+
+    Long countReview(Map<String,Object> params);
 }

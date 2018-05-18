@@ -24,6 +24,10 @@ public class Review {
 
     private Integer dayDifferent;
 
+    private Long countGoodReview;
+
+    private Long countBadReview;
+
     public String getId() {
         return id;
     }
@@ -102,5 +106,21 @@ public class Review {
 
     public void setDayDifferent(Integer dayDifferent) {
         this.dayDifferent = dayDifferent;
+    }
+
+    public Long getCountGoodReview() {
+        return countGoodReview;
+    }
+
+    public void setCountGoodReview(Long countGoodReview) {
+        this.countGoodReview = countGoodReview;
+    }
+
+    public Long getCountBadReview() {
+        return countBadReview;
+    }
+
+    public void setCountBadReview(Long countBadReview) {
+        this.countBadReview = countBadReview;
     }
 }

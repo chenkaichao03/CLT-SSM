@@ -18,4 +18,15 @@ public interface BadReviewService {
      * @return
      */
     String insertBadReview(BadReview badReview);
+
+    /**
+     * @Title countBadReview
+     * @Description 获取文章评论对应的差评数
+     * @Author CLT
+     * @Date 2018/5/18 1:02
+     * @param articleId
+     * @param reviewId
+     * @return
+     */
+    Long countBadReview(String articleId,String reviewId);
 }

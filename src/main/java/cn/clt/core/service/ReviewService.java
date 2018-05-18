@@ -1,8 +1,7 @@
 package cn.clt.core.service;
 
 import cn.clt.core.entity.Review;
-
-import java.util.List;
+import cn.clt.core.params.ManagementPageData;
 
 /**
  * @Description ReviewService
@@ -40,7 +39,7 @@ public interface ReviewService {
      * @param articleId
      * @return
      */
-    List<Review> listReview(String articleId);
+    ManagementPageData listReview(String articleId, Integer pageNo, Integer pageSize);
 
 
 }

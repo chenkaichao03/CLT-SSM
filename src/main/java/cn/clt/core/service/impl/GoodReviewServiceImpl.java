@@ -48,12 +48,13 @@ public class GoodReviewServiceImpl implements GoodReviewService{
             goodReview.setId(GuidUtil.newGuid());
             List<UserInfo> userInfoList = userInfoService.listUserInfoByUsreId(goodReview.getGoodReviewUserId());
             if (!CollectionUtils.isEmpty(userInfoList)){
-                UserInfo userInfo = new UserInfo();
+                UserInfo userInfo = userInfoList.get(0);
                 goodReview.setGoodReviewUserName(userInfo.getRealName());
                 goodReview.setGoodReviewUserPicture(userInfo.getUserPicture());
             }
             goodReview.setStatus(1);
             goodReview.setCreateTime(date);
+            goodReviewMapper.insert(goodReview);
             return goodReview.getId();
         }else {
             Integer status = goodReview1.getStatus();
@@ -68,6 +69,22 @@ public class GoodReviewServiceImpl implements GoodReviewService{
             }
         }
         return goodReview1.getId();
+    }
+
+    /**
+     * @Title countGoodReview
+     * @Description 获取文章评论对应的好评数
+     * @Author CLT
+     * @Date 2018/5/18 0:58
+     * @param articleId
+     * @param reviewId
+     * @return
+     */
+    @Override
+    public Long countGoodReview(String articleId, String reviewId) {
+        GoodReviewExample example = new GoodReviewExample();
+        example.createCriteria().andArticleIdEqualTo(articleId).andReviewIdEqualTo(reviewId).andStatusEqualTo(1);
+        return goodReviewMapper.countByExample(example);
     }
 
     /**

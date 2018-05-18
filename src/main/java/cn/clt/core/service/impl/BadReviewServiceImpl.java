@@ -47,12 +47,13 @@ public class BadReviewServiceImpl implements BadReviewService {
             badReview.setId(GuidUtil.newGuid());
             List<UserInfo> userInfoList = userInfoService.listUserInfoByUsreId(badReview.getBadReviewUserId());
             if (!CollectionUtils.isEmpty(userInfoList)) {
-                UserInfo userInfo = new UserInfo();
+                UserInfo userInfo = userInfoList.get(0);
                 badReview.setBadReviewUserName(userInfo.getRealName());
                 badReview.setBadReviewUserPicture(userInfo.getUserPicture());
             }
             badReview.setStatus(1);
             badReview.setCreateTime(date);
+            badReviewMapper.insert(badReview);
             return badReview.getId();
         }else {
             Integer status = badReview1.getStatus();
@@ -70,6 +71,22 @@ public class BadReviewServiceImpl implements BadReviewService {
     }
 
     /**
+     * @Title countBadReview
+     * @Description 获取文章评论对应的差评数
+     * @Author CLT
+     * @Date 2018/5/18 1:02
+     * @param articleId
+     * @param reviewId
+     * @return
+     */
+    @Override
+    public Long countBadReview(String articleId, String reviewId) {
+        BadReviewExample example = new BadReviewExample();
+        example.createCriteria().andArticleIdEqualTo(articleId).andReviewIdEqualTo(reviewId).andStatusEqualTo(1);
+        return badReviewMapper.countByExample(example);
+    }
+
+    /**
      * @Title getBadReview
      * @Description 获取评论差评
      * @Author CLT
@@ -82,7 +99,7 @@ public class BadReviewServiceImpl implements BadReviewService {
         BadReviewExample example = new BadReviewExample();
         example.createCriteria().andReviewIdEqualTo(reviewId).andBadReviewUserIdEqualTo(badReviewUserId).andStatusEqualTo(1);
         List<BadReview> badReviewList = badReviewMapper.selectByExample(example);
-        if (CollectionUtils.isEmpty(badReviewList)){
+        if (!CollectionUtils.isEmpty(badReviewList)){
             return badReviewList.get(0);
         }
         return null;

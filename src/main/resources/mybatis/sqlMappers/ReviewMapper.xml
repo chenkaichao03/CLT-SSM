@@ -301,4 +301,21 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="listReview" parameterType="map" resultMap="BaseResultMap">
+    select * from review where status = 1
+    <if test="articleId != null">
+     and  article_id = #{articleId}
+    </if>
+    order by create_time DESC
+    <if test="pagination">
+      limit #{pagination.start},#{pagination.pageSize}
+    </if>
+  </select>
+  <select id="countReview" parameterType="map" resultType="java.lang.Long">
+    select COUNT(1) from review where status = 1
+    <if test="articleId != null">
+      and  article_id = #{articleId}
+    </if>
+    order by create_time DESC
+  </select>
 </mapper>

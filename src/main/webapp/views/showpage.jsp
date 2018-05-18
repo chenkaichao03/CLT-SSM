@@ -1,4 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="/WEB-INF/tlds/c.tld" prefix="c"%>
+<%@ taglib uri="/WEB-INF/tlds/fmt.tld" prefix="fmt"%>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -205,6 +206,7 @@
                     </div>
                     <!--公共评论-->
                     <div class="pl-wrap" id="pl-wrap-article197460" name="pl-wrap-article">
+                        <!--登录评论-->
                         <div class="pl-form-wrap">
                             <span class="span-mark-author active">发表评论</span>
                             <div class="pl-form-box pl-article-wrap">
@@ -222,79 +224,90 @@
                                 </c:if>
                             </div>
                         </div>
+                        <!--点评-->
                         <div id="pl-wrap197460" name="pl-wrap"></div>
                         <div class="pl-list-wrap">
                             <a href="javascript:void(0)" class="span-mark-author active js-default-new-pl" data-type="agree">评论列表</a>
+                            <c:forEach var="review" items="${pageData.reviewList}">
                             <div class="pl-box-wrap">
+                                <input type="hidden" value="${review.id}">
                                 <div class="pl-box-top">
                                     <div class="author-info">
-                                        <div class="author-face"><img src="https://img.huxiucdn.com/auth/data/avatar/001/68/30/86_1496144520.jpg?|imageMogr2/strip/interlace/1/quality/85/format/jpg"></div>
+                                        <div class="author-face"><img src="${review.reviewUserPicture}"></div>
                                         <span class="author-name">
-                    					<a href="#">lingboxiu</a>
+                    					<a href="#">${review.reviewUserName}</a>
                     					<a href="#" target="_blank"></a>
                 					</span>
-                                        <span class="time">6天前</span>
+                                        <span class="time">${review.dayDifferent}天前</span>
                                     </div>
-                                    <div class="pl-content">小罐茶，记得是非常非常贵</div>
+                                    <div class="pl-content">${review.content}</div>
                                     <div class="dp-box">
+                                        <c:forEach var="detail" items="${review.reviewDetailList}">
                                         <span class="span-mark-author">点评</span>
                                         <div class="dl-user dl-user-list  " data-type="dl-user" style="display:block">
                                             <ul>
-                                                <li class="del-pl108924"><a href="#" target="_blank"><img src="https://img.huxiucdn.com/auth/data/avatar/3.jpg?|imageMogr2/strip/interlace/1/quality/85/format/jpg"></a></li>
+                                                <li class="del-pl108924"><a href="#" target="_blank"><img src="${detail.reviewUserPicture}"></a></li>
                                             </ul>
                                             <!--只有一条点评时显示-->
                                             <div class="one-pl-content one-pl-content-box">
-                                                <div class="pull-right time">6天前</div>
+                                                <div class="pull-right time">${detail.dayDifferent}天前</div>
                                                 <p class="content">
-                                                    <span class="name">寂地_</span>
+                                                    <span class="name">${detail.reviewUserName}</span>
                                                     <a href="#" target="_blank"></a>&nbsp;&nbsp;
-                                                    <span class="author-content">@lingboxiu 马云家有，对我尔等来说确实是灰常贵</span>
+                                                    <span class="author-content">${detail.content}</span>
                                                 </p>
                                                 <div class="js-hf-article-pl"><span>回复</span></div>
                                                 <div class="pl-form-box dp-article-box">
                                                     <textarea class="form-control hide" placeholder="客官，8个字起评，不讲价哟"></textarea>
+                                                    <input type="hidden"  value="${detail.id}">
                                                     <button class="btn btn-article js-article-dp hide">发表</button>
                                                 </div>
+                                                <c:forEach var="detailsChild" items="${detail.reviewDetails}" >
                                                 <div class="dl-user dl-user-list  " data-type="dl-user" style="display:block">
                                                     <ul>
-                                                        <li class="del-pl108924"><a href="#" target="_blank"><img src="https://img.huxiucdn.com/auth/data/avatar/3.jpg?|imageMogr2/strip/interlace/1/quality/85/format/jpg"></a></li>
+                                                        <li class="del-pl108924"><a href="#" target="_blank"><img src="${detailsChild.reviewUserPicture}"></a></li>
                                                     </ul>
                                                     <!--只有一条点评时显示-->
                                                     <div class="one-pl-content one-pl-content-box">
-                                                        <div class="pull-right time">6天前</div>
+                                                        <div class="pull-right time">${detailsChild.dayDifferent}天前</div>
                                                         <p class="content">
-                                                            <span class="name">寂地_</span>
+                                                            <span class="name">${detailsChild.reviewUserName}</span>
                                                             <a href="#" target="_blank"></a>&nbsp;&nbsp;
-                                                            <span class="author-content">@lingboxiu 马云家有，对我尔等来说确实是灰常贵</span>
+                                                            <span class="author-content">${detailsChild.content}</span>
                                                         </p>
                                                     </div>
                                                 </div>
+                                                </c:forEach>
                                             </div>
                                         </div>
+                                        </c:forEach>
                                     </div>
                                 </div>
                                 <div class="pl-box-btm">
                                     <div class="article-type pull-right">
-                                        <div class="icon-like-prompt">
+<%--                                        <div class="icon-like-prompt">
                                             <i class="icon icon-like active"></i><span class="c1">+1</span>
                                         </div>
                                         <div class="icon-no-like-prompt">
                                             <i class="icon icon-no-like active"></i><span class="c1">+1</span>
-                                        </div>
+                                        </div>--%>
                                         <ul>
-                                            <li class="js-icon-like" data-type="like"><i class="icon icon-like "></i><span class="like">2</span></li>
-                                            <li class="js-no-icon-like" data-type="no-like"><i class="icon icon-no-like "></i><span class="like">1</span></li>
+                                            <li class="js-icon-like" data-type="like"><i class="icon icon-like "></i><span class="like">${review.countGoodReview}</span></li>
+                                            <li class="js-no-icon-like" data-type="no-like"><i class="icon icon-no-like "></i><span class="like">${review.countBadReview}</span></li>
                                         </ul>
                                     </div>
                                     <div class="btn-dp transition js-add-dp-box"><i class="icon icon-dp"></i>我要点评</div>
                                     <div class="pl-form-box dp-article-box">
                                         <textarea class="form-control hide" placeholder="客官，8个字起评，不讲价哟"></textarea>
                                         <button class="btn btn-article js-article-dp hide">发表</button>
+                                        <%--<input type="hidden" value="${review.id}">--%>
                                     </div>
                                 </div>
                             </div>
+                            </c:forEach>
                         </div>
                     </div>
+                    <div class="m-style" style="float: right;margin-right:500px"></div>
                     <!--相关文章位置-->
                     <div id="related-article-wrap197460"></div>
                 </div>
@@ -379,6 +392,8 @@
 </footer>
 <script type="text/javascript" src="js/firstjs/mouse.js"></script>
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/highlight.min.js"></script>
+<script type="text/javascript" src="/js/jquery.pagination.js"></script>
 <script type="text/javascript">
     //登录
     var loginType = "SHOW_PAGE";
@@ -484,7 +499,7 @@
         }
     })
     //发表
-    $(".pl-form-wrap").find(".transition").click(function () {
+    $(".pl-form-wrap").find("button").click(function () {
         var obj = {
             articleId:"${article.id}",
             reviewUserId:"${activeUser.userId}",
@@ -505,9 +520,10 @@
         })
     })
     //点评评论
-    $(".pl-box-btm").find("js-article-dp").click(function () {
+    $(".pl-box-btm").find(".js-article-dp").click(function () {
         var obj = {
-            reviewId:"",
+            reviewId:$(this).parent().parent().prevAll("input:hidden").val(),
+            content:$(this).prev("textarea").val(),
             articleId:"${article.id}",
             reviewUserId:"${activeUser.userId}"
         }
@@ -525,10 +541,81 @@
             }
         })
     })
+    //点评回复
+    $(".pl-box-top").find(".js-article-dp").click(function () {
+        var obj = {
+            reviewId:$(this).parent().parent().parent().parent().parent().prevAll("input:hidden").val(),
+            articleId:"${article.id}",
+            reviewUserId:"${activeUser.userId}",
+            parentReviewId:$(this).prev("input:hidden").val(),
+            content:$(this).prevAll("textarea").val()
+        }
+        $.ajax({
+            url:"/article/remark/on",
+            type:"post",
+            data:obj,
+            success:function (rs) {
+                if(rs.code==200){
+                    window.location="${ctx}/article/show?id=${article.id}";
+                }
+                if(rs.code==404){
+                    alert(rs.message);
+                }
+            }
+        })
+    })
     //评论 好评
     $(".pl-box-btm").find(".js-icon-like").click(function () {
-
+        var obj ={
+            reviewId:$(this).parent().parent().parent().prevAll("input:hidden").val(),
+            articleId:"${article.id}",
+            goodReviewUserId:"${activeUser.userId}"
+        }
+        $.ajax({
+            url:"/article/good/review",
+            type:"post",
+            data:obj,
+            success:function (rs) {
+                if(rs.code==200){
+                    window.location="${ctx}/article/show?id=${article.id}";
+                }
+                if(rs.code==404){
+                    alert(rs.message);
+                }
+            }
+        })
     })
+    //评论 差评
+    $(".pl-box-btm").find(".js-no-icon-like").click(function () {
+        var obj ={
+            reviewId:$(this).parent().parent().parent().prevAll("input:hidden").val(),
+            articleId:"${article.id}",
+            badReviewUserId:"${activeUser.userId}"
+        }
+        $.ajax({
+            url:"/article/bad/review",
+            type:"post",
+            data:obj,
+            success:function (rs) {
+                if(rs.code==200){
+                    window.location="${ctx}/article/show?id=${article.id}";
+                }
+                if(rs.code==404){
+                    alert(rs.message);
+                }
+            }
+        })
+    })
+    $('.m-style').pagination({
+        mode: 'fixed',
+        pageCount:${pageData.totalPage},
+        totalData:${pageData.totalCount},
+        showData:${pageData.pageSize},
+        current:${pageData.pageNo},
+        callback:function (api) {
+            window.location="${ctx}/article/show?pageNo="+api.getCurrent()+"&id=${article.id}";
+        }
+    });
 </script>
 </body>
 </html>

@@ -26,6 +26,8 @@ public class Article {
     private String createTimeStr;
 
     private Integer timeDifference;
+    /**评论数**/
+    private Long countReview;
 
     public String getId() {
         return id;
@@ -121,5 +123,13 @@ public class Article {
 
     public void setTimeDifference(Integer timeDifference) {
         this.timeDifference = timeDifference;
+    }
+
+    public Long getCountReview() {
+        return countReview;
+    }
+
+    public void setCountReview(Long countReview) {
+        this.countReview = countReview;
     }
 }

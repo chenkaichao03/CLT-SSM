@@ -18,4 +18,15 @@ public interface GoodReviewService {
      * @return
      */
     String insertGoodReview(GoodReview goodReview);
+
+    /**
+     * @Title countGoodReview
+     * @Description 获取文章评论对应的好评数
+     * @Author CLT
+     * @Date 2018/5/18 0:58
+     * @param articleId
+     * @param reviewId
+     * @return
+     */
+    Long countGoodReview(String articleId,String reviewId);
 }

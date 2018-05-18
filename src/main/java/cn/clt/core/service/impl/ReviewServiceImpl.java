@@ -3,6 +3,10 @@ package cn.clt.core.service.impl;
 import cn.clt.core.entity.*;
 import cn.clt.core.mapper.ReviewDetailMapper;
 import cn.clt.core.mapper.ReviewMapper;
+import cn.clt.core.params.ManagementPageData;
+import cn.clt.core.params.Pagination;
+import cn.clt.core.service.BadReviewService;
+import cn.clt.core.service.GoodReviewService;
 import cn.clt.core.service.ReviewService;
 import cn.clt.core.service.UserInfoService;
 import cn.clt.core.utils.DateUtil;
@@ -15,7 +19,9 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description ReviewServiceImpl
@@ -33,6 +39,10 @@ public class ReviewServiceImpl implements ReviewService {
     private ReviewMapper reviewMapper;
     @Autowired
     private ReviewDetailMapper reviewDetailMapper;
+    @Autowired
+    private GoodReviewService goodReviewService;
+    @Autowired
+    private BadReviewService badReviewService;
 
 
     /**
@@ -86,8 +96,8 @@ public class ReviewServiceImpl implements ReviewService {
      * @return
      */
     @Override
-    public List<Review> listReview(String articleId) {
-        return getReviews(articleId);
+    public ManagementPageData listReview(String articleId,Integer pageNo, Integer pageSize) {
+        return getReviews(articleId,pageNo,pageSize);
     }
 
     /**
@@ -98,24 +108,34 @@ public class ReviewServiceImpl implements ReviewService {
      * @param articleId
      * @return
      */
-    private List<Review> getReviews(String articleId){
-        ReviewExample example = new ReviewExample();
-        example.createCriteria().andArticleIdEqualTo(articleId).andStatusEqualTo(1);
-        List<Review> reviewList = reviewMapper.selectByExample(example);
+    private ManagementPageData getReviews(String articleId, Integer pageNo, Integer pageSize){
+        Pagination pagination = new Pagination(pageNo,pageSize);
+        Map<String,Object> params = new HashMap<>();
+        params.put("articleId",articleId);
+        params.put("pagination",pagination);
+        List<Review> reviewList = reviewMapper.listReview(params);
+        Long count = reviewMapper.countReview(params);
         if (!CollectionUtils.isEmpty(reviewList)){
             //获取点评
             for (Review review : reviewList){
+                String id = review.getId();
+                //获取评论的好评数
+                Long countGoodReview = goodReviewService.countGoodReview(review.getArticleId(),id);
+                review.setCountGoodReview(countGoodReview);
+                //获取评论的差评数
+                Long countBadReview = badReviewService.countBadReview(review.getArticleId(),id);
+                review.setCountBadReview(countBadReview);
                 //时间转换 天数
                 review.setDayDifferent(DateUtil.getDayDifference(System.currentTimeMillis(),review.getCreateTime().getTime()));
-                String id = review.getId();
                 List<ReviewDetail> reviewDetailList = getReviewDetails(id,null);
                 if (!CollectionUtils.isEmpty(reviewDetailList)){
                     for (ReviewDetail reviewDetail : reviewDetailList){
                         //时间转换 天数
                         reviewDetail.setDayDifferent(DateUtil.getDayDifference(System.currentTimeMillis(),reviewDetail.getCreateTime().getTime()));
                         String reviewDetailId = reviewDetail.getId();
+                        String reviewId = reviewDetail.getReviewId();
                         //获取点评的子评论
-                        List<ReviewDetail> reviewDetails = getReviewDetails(null,reviewDetailId);
+                        List<ReviewDetail> reviewDetails = getReviewDetails(reviewId,reviewDetailId);
                         if (!CollectionUtils.isEmpty(reviewDetails)){
                             for (ReviewDetail reviewDetail1 : reviewDetails){
                                 //时间转换 天数
@@ -128,7 +148,12 @@ public class ReviewServiceImpl implements ReviewService {
                 }
             }
         }
-        return reviewList;
+        ManagementPageData managementPageData = new ManagementPageData();
+        managementPageData.setReviewList(reviewList);
+        managementPageData.setTotalCount(count);
+        managementPageData.setPageNo(pageNo);
+        managementPageData.setPageSize(pageSize);
+        return managementPageData;
     }
 
     /**
@@ -144,14 +169,14 @@ public class ReviewServiceImpl implements ReviewService {
         ReviewDetailExample example = new ReviewDetailExample();
         if (StringUtils.isEmpty(parentReviewId)){
             if (!StringUtils.isEmpty(reviewId)) {
-                example.createCriteria().andReviewIdEqualTo(reviewId).andStatusEqualTo(1);
+                example.createCriteria().andReviewIdEqualTo(reviewId).andParentReviewIdIsNull().andStatusEqualTo(1);
             }
         }else {
-            if (StringUtils.isEmpty(reviewId)) {
-                example.createCriteria().andParentReviewIdEqualTo(parentReviewId).andStatusEqualTo(1);
+            if (!StringUtils.isEmpty(reviewId)) {
+                example.createCriteria().andReviewIdEqualTo(reviewId).andParentReviewIdEqualTo(parentReviewId).andStatusEqualTo(1);
             }
         }
-        List<ReviewDetail> reviewDetailList = reviewDetailMapper.selectByExample(example);
+        List<ReviewDetail> reviewDetailList = reviewDetailMapper.selectByExampleWithBLOBs(example);
         if (!CollectionUtils.isEmpty(reviewDetailList)){
             return reviewDetailList;
         }
