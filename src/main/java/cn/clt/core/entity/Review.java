@@ -28,6 +28,8 @@ public class Review {
 
     private Long countBadReview;
 
+    private Integer timeDifference;
+
     public String getId() {
         return id;
     }
@@ -122,5 +124,13 @@ public class Review {
 
     public void setCountBadReview(Long countBadReview) {
         this.countBadReview = countBadReview;
+    }
+
+    public Integer getTimeDifference() {
+        return timeDifference;
+    }
+
+    public void setTimeDifference(Integer timeDifference) {
+        this.timeDifference = timeDifference;
     }
 }

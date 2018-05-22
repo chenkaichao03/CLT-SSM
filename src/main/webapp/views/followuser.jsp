@@ -37,6 +37,7 @@
     <script src="js/morris.js"></script>
     <link rel="stylesheet" href="css/gonggao.css">
     <link href="css/public.css" rel="stylesheet" type="text/css">
+    <!--分页样式-->
     <link rel="stylesheet" href="/css/pagination/pagination.css" />
     <style>
         .user-info{

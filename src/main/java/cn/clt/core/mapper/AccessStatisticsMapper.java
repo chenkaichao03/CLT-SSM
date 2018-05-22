@@ -12,7 +12,7 @@ public interface AccessStatisticsMapper {
 
     int deleteByExample(AccessStatisticsExample example);
 
-    int deleteByPrimaryKey(byte[] id);
+    int deleteByPrimaryKey(String id);
 
     int insert(AccessStatistics record);
 
@@ -20,7 +20,7 @@ public interface AccessStatisticsMapper {
 
     List<AccessStatistics> selectByExample(AccessStatisticsExample example);
 
-    AccessStatistics selectByPrimaryKey(byte[] id);
+    AccessStatistics selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") AccessStatistics record, @Param("example") AccessStatisticsExample example);
 

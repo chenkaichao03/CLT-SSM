@@ -42,4 +42,37 @@ public interface ReviewService {
     ManagementPageData listReview(String articleId, Integer pageNo, Integer pageSize);
 
 
+    /**
+     * @Title listReviewComment
+     * @Description 获取评论内容 （一级 评论）
+     * @Author CLT
+     * @Date 2018/5/21 10:22
+     * @param userId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    ManagementPageData listReviewComment(String userId, Integer pageNo, Integer pageSize);
+
+    /**
+     * @Title selectReviewCommentPage
+     * @Description 获取某用户的评论 分页
+     * @Author CLT
+     * @Date 2018/5/21 15:28
+     * @param userId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    ManagementPageData selectReviewCommentPage(String userId, Integer pageNo, Integer pageSize);
+
+    /**
+     * @Title deleteReview
+     * @Description 删除评论
+     * @Author CLT
+     * @Date 2018/5/21 17:07
+     * @param id
+     * @return
+     */
+    Integer deleteReview(String id);
 }

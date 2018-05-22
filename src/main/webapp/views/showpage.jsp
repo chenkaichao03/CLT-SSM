@@ -28,6 +28,8 @@
     <script language="javascript" type="text/javascript" src="js/firstjs/main.js"></script>
     <script language="javascript" type="text/javascript" src="js/firstjs/popwin.js"></script>
     <link rel="stylesheet" type="text/css" href="css/firstcss/nanoscroller.css">
+    <!--分页样式-->
+    <link rel="stylesheet" href="/css/pagination/pagination.css" />
     <style>
         .btn{
             background: #f05050;
@@ -238,22 +240,32 @@
                     					<a href="#">${review.reviewUserName}</a>
                     					<a href="#" target="_blank"></a>
                 					</span>
+                                        <c:if test="${review.dayDifferent==0}">
+                                        <span class="time">${review.timeDifference}小时前</span>
+                                        </c:if>
+                                        <c:if test="${review.dayDifferent!=0}">
                                         <span class="time">${review.dayDifferent}天前</span>
+                                        </c:if>
                                     </div>
                                     <div class="pl-content">${review.content}</div>
                                     <div class="dp-box">
-                                        <c:forEach var="detail" items="${review.reviewDetailList}">
                                         <span class="span-mark-author">点评</span>
+                                        <c:forEach var="detail" items="${review.reviewDetailList}">
                                         <div class="dl-user dl-user-list  " data-type="dl-user" style="display:block">
                                             <ul>
-                                                <li class="del-pl108924"><a href="#" target="_blank"><img src="${detail.reviewUserPicture}"></a></li>
+                                                <li class="del-pl108924"><a href="${ctx}/individual/init/center?userId=${detail.reviewUserId}" target="_blank"><img src="${detail.reviewUserPicture}"></a></li>
                                             </ul>
                                             <!--只有一条点评时显示-->
                                             <div class="one-pl-content one-pl-content-box">
+                                                <c:if test="${detail.dayDifferent==0}">
+                                                <div class="pull-right time">${detail.timeDifference}小时前</div>
+                                                </c:if>
+                                                <c:if test="${detail.dayDifferent!=0}">
                                                 <div class="pull-right time">${detail.dayDifferent}天前</div>
+                                                </c:if>
                                                 <p class="content">
                                                     <span class="name">${detail.reviewUserName}</span>
-                                                    <a href="#" target="_blank"></a>&nbsp;&nbsp;
+                                                    <a href="${ctx}/individual/init/center?userId=${detail.reviewUserId}" target="_blank"></a>&nbsp;&nbsp;
                                                     <span class="author-content">${detail.content}</span>
                                                 </p>
                                                 <div class="js-hf-article-pl"><span>回复</span></div>
@@ -265,14 +277,19 @@
                                                 <c:forEach var="detailsChild" items="${detail.reviewDetails}" >
                                                 <div class="dl-user dl-user-list  " data-type="dl-user" style="display:block">
                                                     <ul>
-                                                        <li class="del-pl108924"><a href="#" target="_blank"><img src="${detailsChild.reviewUserPicture}"></a></li>
+                                                        <li class="del-pl108924"><a href="${ctx}/individual/init/center?userId=${detailsChild.reviewUserId}" target="_blank"><img src="${detailsChild.reviewUserPicture}"></a></li>
                                                     </ul>
                                                     <!--只有一条点评时显示-->
                                                     <div class="one-pl-content one-pl-content-box">
+                                                        <c:if test="${detailsChild.dayDifferent==0}">
+                                                        <div class="pull-right time">${detailsChild.timeDifference}小时前</div>
+                                                        </c:if>
+                                                        <c:if test="${detailsChild.dayDifferent != 0}">
                                                         <div class="pull-right time">${detailsChild.dayDifferent}天前</div>
+                                                        </c:if>
                                                         <p class="content">
                                                             <span class="name">${detailsChild.reviewUserName}</span>
-                                                            <a href="#" target="_blank"></a>&nbsp;&nbsp;
+                                                            <a href="${ctx}/individual/init/center?userId=${detailsChild.reviewUserId}" target="_blank"></a>&nbsp;&nbsp;
                                                             <span class="author-content">${detailsChild.content}</span>
                                                         </p>
                                                     </div>
@@ -338,7 +355,10 @@
                     </div>
                     <div class="author-next-article">
                         <div class="author-one c2">最近文章</div>
-                        <a href="#" target="_blank">冷眼看快手的"短视频社交"</a>
+                        <c:forEach var="article1" items="${articleList}">
+                            <a href="${ctx}/article/show?id=${article1.id}" target="_blank">${article1.articleTitle}</a>
+                            <br/><br/>
+                        </c:forEach>
                     </div>
                 </div>
                 </c:if>

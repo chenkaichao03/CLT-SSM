@@ -6,9 +6,10 @@ import cn.clt.core.mapper.ExchangeSettingMapper;
 import cn.clt.core.mapper.UserMapper;
 import cn.clt.core.params.ManagementPageData;
 import cn.clt.core.params.Pagination;
-import cn.clt.core.service.ExchangeSettingService;
-import cn.clt.core.service.UserExchangeService;
+import cn.clt.core.params.Result;
+import cn.clt.core.service.*;
 import cn.clt.core.utils.GuidUtil;
+import cn.clt.core.vo.ExchangeOperationVO;
 import cn.clt.core.vo.UserProfitVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,12 @@ public class ExchangeSettingServiceImpl implements ExchangeSettingService {
     private UserMapper userMapper;
     @Autowired
     private UserExchangeService userExchangeService;
+    @Autowired
+    private UserInfoService userInfoService;
+    @Autowired
+    private UserAccountService userAccountService;
+    @Autowired
+    private UserExchangeBalanceAccountService userExchangeBalanceAccountService;
 
     /**
      * @Title listExchangeSetting
@@ -165,6 +172,179 @@ public class ExchangeSettingServiceImpl implements ExchangeSettingService {
         }
         return null;
     }
+
+    /**
+     * @Title checkExchangeOperation
+     * @Description 检查兑换操作的余额
+     * @Author CLT
+     * @Date 2018/5/21 18:16
+     * @param exchangeOperationVO
+     * @return
+     */
+    @Override
+    public String checkExchangeOperation(ExchangeOperationVO exchangeOperationVO) {
+        //当前兑换数量
+        Integer exchangeNumber = exchangeOperationVO.getExchangeNumber();
+        if (StringUtils.isEmpty(exchangeOperationVO.getExchangeSettingId())){
+            return Result.error("该兑换规则不存在,请联系管理员");
+        }
+        if (StringUtils.isEmpty(exchangeOperationVO.getUserId())){
+            return Result.error("用户id不能为空，请登录后进行兑换.");
+        }
+        //获取兑换类型
+        ExchangeSetting exchangeSetting = exchangeSettingMapper.selectByPrimaryKey(exchangeOperationVO.getExchangeSettingId());
+        String exchangeType = exchangeSetting.getExchangeType();
+        //获取用户余额表
+        UserExchangeBalanceAccount userExchangeBalanceAccount = userExchangeBalanceAccountService.getUserExchangeBalanceAccount(exchangeOperationVO.getUserId());
+        if (exchangeType.equals(ExchangeTypeCode.BROWSE.name())){
+            //浏览量
+            Integer userTotalBrowse = userExchangeBalanceAccount.getBrowseAfterBalance();
+            if (userTotalBrowse == null || userTotalBrowse <= 0 || userTotalBrowse < exchangeNumber){
+                return Result.error("当前浏览量兑换余额不足.");
+            }
+        }else if (exchangeType.equals(ExchangeTypeCode.COMMENT.name())){
+            //评论量
+            Integer userTotalComment = userExchangeBalanceAccount.getCommentAfterBalance();
+            if (userTotalComment == null || userTotalComment <= 0 || userTotalComment < exchangeNumber){
+                return Result.error("当前评论量兑换余额不足.");
+            }
+        }else if (exchangeType.equals(ExchangeTypeCode.FABULOUS.name())){
+            //点赞数
+            Integer userTotalFabulous = userExchangeBalanceAccount.getFabulousAfterBalance();
+            if (userTotalFabulous == null || userTotalFabulous <= 0 || userTotalFabulous < exchangeNumber){
+                return Result.error("当前点赞量兑换余额不足.");
+            }
+        }else if (exchangeType.equals(ExchangeTypeCode.FANS.name())){
+            //粉丝数
+            Integer userTotalFans = userExchangeBalanceAccount.getFansAfterBalance();
+            if (userTotalFans == null || userTotalFans <= 0 || userTotalFans <exchangeNumber){
+                return Result.error("当前粉丝量兑换余额不足.");
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @Title doExchangeOperation
+     * @Description 用户兑换操作
+     * @Author CLT
+     * @Date 2018/5/21 18:05
+     * @param userId
+     * @param exchangeSettingId
+     */
+    @Override
+    public int doExchangeOperation(String userId, String exchangeSettingId, Integer exchangeNumber) {
+        //获取用户信息
+        List<UserInfo> userInfoList = userInfoService.listUserInfoByUsreId(userId);
+        if (CollectionUtils.isEmpty(userInfoList)){
+            return 0;
+        }
+        UserInfo userInfo = userInfoList.get(0);
+        if (userInfo == null){
+            return 0;
+        }
+        //获取兑换设置
+        ExchangeSetting exchangeSetting = exchangeSettingMapper.selectByPrimaryKey(exchangeSettingId);
+        //获取用户余额表
+        UserExchangeBalanceAccount userExchangeBalanceAccount = userExchangeBalanceAccountService.getUserExchangeBalanceAccount(userId);
+        //用户兑换记录
+        UserExchange userExchange = insertUserExchange(userInfo,exchangeSetting,exchangeNumber);
+        //处理用户兑换过程
+        return updateUserExchangeBalanceAccount(userExchangeBalanceAccount,exchangeSetting,exchangeNumber);
+    }
+
+
+    /**
+     * @Title updateUserExchangeBalanceAccount
+     * @Description 更新账户信息
+     * @Author CLT
+     * @Date 2018/5/22 11:00
+     * @param userExchangeBalanceAccount
+     * @param exchangeSetting
+     * @param exchangeNumber
+     * @return
+     */
+    private int updateUserExchangeBalanceAccount(UserExchangeBalanceAccount userExchangeBalanceAccount,ExchangeSetting exchangeSetting,Integer exchangeNumber){
+        String exchangeType = exchangeSetting.getExchangeType();
+        if (exchangeType.equals(ExchangeTypeCode.FANS.name())){
+            //粉丝兑换
+            userExchangeBalanceAccount.setFansExchangeNumber(exchangeNumber);
+            Integer fansBeforeBalance = userExchangeBalanceAccount.getFansBeforeBalance();
+            Integer fansAfterBalance = fansBeforeBalance - exchangeNumber;
+            userExchangeBalanceAccount.setFansAfterBalance(fansAfterBalance);
+            return userExchangeBalanceAccountService.updateUserExchangeBalanceAccount(userExchangeBalanceAccount);
+        }else if (exchangeType.equals(ExchangeTypeCode.COMMENT.name())){
+            //评论
+            userExchangeBalanceAccount.setCommentExchangeNumber(exchangeNumber);
+            Integer commentBeforeBalance = userExchangeBalanceAccount.getCommentBeforeBalance();
+            Integer commentAfterBalance = commentBeforeBalance - exchangeNumber;
+            userExchangeBalanceAccount.setCommentAfterBalance(commentAfterBalance);
+            return userExchangeBalanceAccountService.updateUserExchangeBalanceAccount(userExchangeBalanceAccount);
+        }else if (exchangeType.equals(ExchangeTypeCode.FABULOUS.name())){
+            //点赞数
+            userExchangeBalanceAccount.setFabulousExchangeNumber(exchangeNumber);
+            Integer fabulousBeforeBalance = userExchangeBalanceAccount.getFabulousBeforeBalance();
+            Integer fabulousAfterBalance = fabulousBeforeBalance - exchangeNumber;
+            userExchangeBalanceAccount.setFabulousAfterBalance(fabulousAfterBalance);
+            return userExchangeBalanceAccountService.updateUserExchangeBalanceAccount(userExchangeBalanceAccount);
+        }else if (exchangeType.equals(ExchangeTypeCode.BROWSE.name())){
+            //浏览量
+            userExchangeBalanceAccount.setBrowseExchangeNumber(exchangeNumber);
+            Integer browseBeforeBalance = userExchangeBalanceAccount.getBrowseBeforeBalance();
+            Integer browseAfterBalance = browseBeforeBalance - exchangeNumber;
+            userExchangeBalanceAccount.setBrowseAfterBalance(browseAfterBalance);
+            return userExchangeBalanceAccountService.updateUserExchangeBalanceAccount(userExchangeBalanceAccount);
+        }
+        return 0;
+    }
+
+    /**
+     * @Title insertUserExchange
+     * @Description 新增用户兑换记录
+     * @Author CLT
+     * @Date 2018/5/21 19:05
+     * @param userInfo
+     * @param exchangeSetting
+     * @param exchangeNumber
+     * @return
+     */
+    private UserExchange insertUserExchange(UserInfo userInfo,ExchangeSetting exchangeSetting,Integer exchangeNumber){
+        Date date = new Date();
+        BigDecimal exchangeNum = new BigDecimal(exchangeNumber);
+        BigDecimal exchangeRateNumber = new BigDecimal(exchangeSetting.getExchangeRateNumber());
+        BigDecimal exchangeRateMoney = new BigDecimal(exchangeSetting.getExchangeRateMoney());
+        //获取用户
+        User user = userMapper.selectByPrimaryKey(userInfo.getUserId());
+        //组装兑换记录
+        UserExchange userExchange = new UserExchange();
+        userExchange.setId(GuidUtil.newGuid());
+        userExchange.setUserId(userInfo.getUserId());
+        userExchange.setUserNo(userInfo.getUserNo());
+        userExchange.setUserName(user.getUserName());
+        userExchange.setUserRealName(userInfo.getRealName());
+        userExchange.setUserPhone(userInfo.getUserPhone());
+        userExchange.setExchangeType(exchangeSetting.getExchangeType());
+        userExchange.setExchangeTypeName(exchangeSetting.getExchangeTypeName());
+        userExchange.setExchangeRateNumber(exchangeRateNumber);
+        userExchange.setExchangeRateMoney(exchangeRateMoney);
+        userExchange.setExchangeAmountNumber(exchangeNum);
+        //根据比例算出兑换后的价格
+        BigDecimal exchangeAmountMoney = exchangeNum.divide(exchangeRateNumber).multiply(exchangeRateMoney).setScale(2,BigDecimal.ROUND_HALF_UP);
+        userExchange.setExchangeAmountMoney(exchangeAmountMoney);
+        userExchange.setStatus(1);
+        userExchange.setCreateTime(date);
+        userExchange.setModifyTime(date);
+        userExchangeService.insertUserExchange(userExchange);
+        //更新账户余额
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(userInfo.getUserId());
+        BigDecimal amoutMoney = userAccount.getUserAmoutMoney();
+        BigDecimal currentAmountMoney = amoutMoney.add(exchangeAmountMoney).setScale(2,BigDecimal.ROUND_HALF_UP);
+        userAccount.setUserAmoutMoney(currentAmountMoney);
+        userAccountService.updateUserAccount(userAccount);
+        return userExchange;
+    }
+
+
 
     /**
      * @Title getUserByRoleName

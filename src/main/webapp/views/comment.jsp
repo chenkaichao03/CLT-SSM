@@ -1,8 +1,10 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
     <base href="<%=basePath%>">
@@ -28,6 +30,7 @@
     <script src="js/morris.js"></script>
     <link rel="stylesheet" href="css/gonggao.css">
     <link href="css/public.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/pagination/pagination.css" />
 </head>
 <body>
 <section id="container">
@@ -49,146 +52,38 @@
                                 <span>评论管理</span>
                             </ul>
                         </div>
+                        <c:forEach var="review" items="${pageData.reviewVOList}">
                         <div class="comment-body">
                             <div class="comment-header" >
                                 <i class="fa fa-user"></i>
-                                <a class="comment-title" href="">小花</a>
+                                <a class="comment-title" href="${ctx}/article/show?id=${review.articleId}">${review.userRealName}</a>
                                 <div class="comment-time" style="float: right">
-                                    <span>2018-04-18</span>
+                                    <span>${review.createTimeStr}</span>
                                 </div>
                             </div>
                             <div>
-                                <div class="comment-content">啊哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
                                 <p class="comment-refer">
-                                    评论了我："<a href="">要坚持要坚持要坚持！</a>"
+                                    评论了我："<a href="${ctx}/article/show?id=${review.articleId}">${review.content}</a>
                                 </p>
                             </div>
                             <div class="comment-action">
                                 <div class="comment-aright" align="right">
                                     <i class="fa fa-trash"></i>
-                                    <input type="button" class="comment-btn" value="删除" onclick=" "/>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-share-alt"></i>
-                                    <span>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="hidden" value="${review.id}">
+                                    <input type="button" class="comment-btn" value="删除"/>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <i class="fa fa-thumbs-o-up"></i>
-                                    <span>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span>${review.countFabulous}</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <i class="fa fa-comment-o"></i>
-                                    <span>0</span>
+                                    <span>${review.countReview}</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="comment-body">
-                            <div class="comment-header" >
-                                <i class="fa fa-user"></i>
-                                <a class="comment-title" href="">小花</a>
-                                <div class="comment-time" style="float: right">
-                                    <span>2018-04-18</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="comment-content">啊哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
-                                <p class="comment-refer">
-                                    评论了我："<a href="">要坚持要坚持要坚持！</a>"
-                                </p>
-                            </div>
-                            <div class="comment-action">
-                                <div class="comment-aright" align="right">
-                                    <i class="fa fa-trash"></i>
-                                    <input type="button" class="comment-btn" value="删除" onclick=" "/>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-share-alt"></i>
-                                    <span>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                    <span>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-comment-o"></i>
-                                    <span>0</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-body">
-                            <div class="comment-header" >
-                                <i class="fa fa-user"></i>
-                                <a class="comment-title" href="">小花</a>
-                                <div class="comment-time" style="float: right">
-                                    <span>2018-04-18</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="comment-content">啊哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
-                                <p class="comment-refer">
-                                    评论了我："<a href="">要坚持要坚持要坚持！</a>"
-                                </p>
-                            </div>
-                            <div class="comment-action">
-                                <div class="comment-aright" align="right">
-                                    <i class="fa fa-trash"></i>
-                                    <input type="button" class="comment-btn" value="删除" onclick=" "/>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-share-alt"></i>
-                                    <span>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                    <span>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-comment-o"></i>
-                                    <span>0</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-body">
-                            <div class="comment-header" >
-                                <i class="fa fa-user"></i>
-                                <a class="comment-title" href="">小花</a>
-                                <div class="comment-time" style="float: right">
-                                    <span>2018-04-18</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="comment-content">啊哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
-                                <p class="comment-refer">
-                                    评论了我："<a href="">要坚持要坚持要坚持！</a>"
-                                </p>
-                            </div>
-                            <div class="comment-action">
-                                <div class="comment-aright" align="right">
-                                    <i class="fa fa-trash"></i>
-                                    <input type="button" class="comment-btn" value="删除" onclick=" "/>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-share-alt"></i>
-                                    <span>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                    <span>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-comment-o"></i>
-                                    <span>0</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-body">
-                            <div class="comment-header" >
-                                <i class="fa fa-user"></i>
-                                <a class="comment-title" href="">小花</a>
-                                <div class="comment-time" style="float: right">
-                                    <span>2018-04-18</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="comment-content">啊哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
-                                <p class="comment-refer">
-                                    评论了我："<a href="">要坚持要坚持要坚持！</a>"
-                                </p>
-                            </div>
-                            <div class="comment-action">
-                                <div class="comment-aright" align="right">
-                                    <i class="fa fa-trash"></i>
-                                    <input type="button" class="comment-btn" value="删除" onclick=" "/>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-share-alt"></i>
-                                    <span>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                    <span>0</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-comment-o"></i>
-                                    <span>0</span>
-                                </div>
-                            </div>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
         </section>
-
+        <div class="m-style" style="float: right;margin-right:500px"></div>
     </section>
     <!--main content end-->
 </section>
@@ -287,6 +182,39 @@
     });
 </script>
 <!-- //calendar -->
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/highlight.min.js"></script>
+<script type="text/javascript" src="/js/jquery.pagination.js"></script>
+<script type="text/javascript">
+    //删除
+    $(".comment-action").find(".comment-btn").click(function () {
+        if(confirm("确定删除该评论吗？")){
+            $.ajax({
+                url:"/review/delete",
+                type:"post",
+                data:"id="+$(this).prev("input:hidden").val(),
+                success:function (rs) {
+                    if (rs.code==200){
+                        window.location="${ctx}/review/list";
+                    }
+                    if (rs.code==404){
+                        alert(rs.message);
+                    }
+                }
+            })
+        }
+    })
 
+    $('.m-style').pagination({
+        mode: 'fixed',
+        pageCount:${pageData.totalPage},
+        totalData:${pageData.totalCount},
+        showData:${pageData.pageSize},
+        current:${pageData.pageNo},
+        callback:function (api) {
+            window.location="${ctx}/review/list?pageNo="+api.getCurrent();
+        }
+    });
+</script>
 </body>
 </html>

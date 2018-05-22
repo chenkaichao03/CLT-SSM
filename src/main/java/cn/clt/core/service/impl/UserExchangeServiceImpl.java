@@ -50,4 +50,16 @@ public class UserExchangeServiceImpl implements UserExchangeService {
     public Long countUserExchange(Map<String,Object> params) {
         return userExchangeMapper.countUserExchange(params);
     }
+
+    /**
+     * @Title insertUserExchange
+     * @Description 新增用户兑换记录
+     * @Author CLT
+     * @Date 2018/5/21 19:03
+     * @param userExchange
+     */
+    @Override
+    public void insertUserExchange(UserExchange userExchange) {
+        userExchangeMapper.insert(userExchange);
+    }
 }

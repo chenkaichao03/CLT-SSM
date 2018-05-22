@@ -1,4 +1,5 @@
 package cn.clt.module.bussiness;
+import cn.clt.config.BrowseStatisticsInit;
 import cn.clt.core.entity.*;
 import cn.clt.core.enums.ArticleCode;
 import cn.clt.core.enums.Code;
@@ -6,8 +7,10 @@ import cn.clt.core.enums.ConcernCode;
 import cn.clt.core.exception.BussinessException;
 import cn.clt.core.params.ManagementPageData;
 import cn.clt.core.params.Result;
+import cn.clt.core.property.BrowerCount;
 import cn.clt.core.service.*;
 import cn.clt.core.utils.DateUtil;
+import cn.clt.core.utils.IpUtil;
 import cn.clt.core.vo.ActiveUser;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -61,6 +64,8 @@ public class ArticleController {
     private GoodReviewService goodReviewService;
     @Autowired
     private BadReviewService badReviewService;
+    @Autowired
+    private BrowseStatisticsInit browseStatisticsInit;
 
 
     @RequestMapping("type/list")
@@ -235,8 +240,12 @@ public class ArticleController {
     @RequestMapping("/show")
     public String showArticle(@RequestParam(value = "id") String id,HttpSession session,Model model,
                               @RequestParam(defaultValue = "1") Integer pageNo,
-                              @RequestParam(defaultValue = "2") Integer pageSize){
+                              @RequestParam(defaultValue = "2") Integer pageSize,
+                              HttpServletRequest request){
         try {
+            //浏览记录
+            String ip = IpUtil.getIpAddr(request);
+            browseStatisticsInit.registration(id,ip);
             //获取用户信息
             ActiveUser activeUser = activeUserService.getActiveUser(session);
             String userId = null;
@@ -292,6 +301,9 @@ public class ArticleController {
             //获取评论内容
             ManagementPageData pageData = reviewService.listReview(id,pageNo,pageSize);
             model.addAttribute("pageData",pageData);
+            //获取最近发布的文章
+            List<Article> articleList = articleService.listArticle();
+            model.addAttribute("articleList",articleList);
         }catch (Exception e){
             e.printStackTrace();
             logger.error("文章获取失败.",e.getMessage());

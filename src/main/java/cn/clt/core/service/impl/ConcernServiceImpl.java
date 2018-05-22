@@ -2,12 +2,14 @@ package cn.clt.core.service.impl;
 
 import cn.clt.core.entity.Concern;
 import cn.clt.core.entity.ConcernExample;
+import cn.clt.core.entity.UserAccount;
 import cn.clt.core.entity.UserInfo;
 import cn.clt.core.enums.ConcernCode;
 import cn.clt.core.mapper.ConcernMapper;
 import cn.clt.core.params.ManagementPageData;
 import cn.clt.core.params.Pagination;
 import cn.clt.core.service.ConcernService;
+import cn.clt.core.service.UserAccountService;
 import cn.clt.core.utils.GuidUtil;
 import cn.clt.core.vo.ConcernVO;
 import cn.clt.core.vo.UserInfoVO;
@@ -33,6 +35,8 @@ public class ConcernServiceImpl implements ConcernService{
 
     @Autowired
     private ConcernMapper concernMapper;
+    @Autowired
+    private UserAccountService userAccountService;
 
 
     /**
@@ -56,21 +60,84 @@ public class ConcernServiceImpl implements ConcernService{
             concern.setConcernType(1);
             concern.setStatus(1);
             concernMapper.insert(concern);
+            //执行更新用户账户的粉丝和关注数量
+            updataUserAccountByConcern(concernedUserId, concernUserId, 1);
         }else {
             //编辑 查看当前的关注状态 0:无关注，1:已关注
             Integer concernType = concern.getConcernType();
             if (concernType == 0){
                 //改成关注
                 concern.setConcernType(1);
+                concernMapper.updateByPrimaryKeySelective(concern);
+                //执行更新用户账户的粉丝和关注数量
+                updataUserAccountByConcern(concernedUserId, concernUserId, 1);
             }
             if (concernType == 1){
                 //改成末关注
                 concern.setConcernType(0);
+                concernMapper.updateByPrimaryKeySelective(concern);
+                updataUserAccountByConcern(concernedUserId, concernUserId, 0);
             }
-            concernMapper.updateByPrimaryKeySelective(concern);
         }
         return concern.getConcernType();
     }
+
+
+    /**
+     * @Title updataUserAccountByConcern
+     * @Description 更行关注数量和粉丝数量
+     * @Author CLT
+     * @Date 2018/5/19 21:30
+     * @param concernedUserId 被关注者
+     * @param concernUserId 关注者
+     * @param status 状态
+     * @return
+     */
+    private void updataUserAccountByConcern(String concernedUserId, String concernUserId, Integer status){
+        //被关注者账户  被关注者的粉丝加1 取消关注减1
+        UserAccount concernedUserAccount = userAccountService.getUserAccountByUserId(concernedUserId);
+        //关注者账户  关注者的关注加1 取消关注减1
+        UserAccount concernUserAccount = userAccountService.getUserAccountByUserId(concernUserId);
+        if (status == 1){
+            //状态等于1 这时候执行加操作
+            //关注者
+            Integer totalCurrentConcern = concernUserAccount.getUserTotalConcern();
+            if (totalCurrentConcern < 0){
+                totalCurrentConcern = 0;
+            }
+            totalCurrentConcern = totalCurrentConcern + 1;
+            concernUserAccount.setUserTotalConcern(totalCurrentConcern);
+            userAccountService.updateUserAccount(concernUserAccount);
+            //被关注者
+            Integer totalCurrentFans = concernedUserAccount.getUserTotalFans();
+            if (totalCurrentConcern < 0){
+                totalCurrentFans = 0;
+            }
+            totalCurrentFans = totalCurrentFans + 1;
+            concernedUserAccount.setUserTotalFans(totalCurrentFans);
+            userAccountService.updateUserAccount(concernedUserAccount);
+        }
+        if (status == 0){
+            //状态等于0 这时候执行减操作
+            //关注者
+            Integer totalCurrentConcern = concernUserAccount.getUserTotalConcern();
+            //被关注者
+            Integer totalCurrentFans = concernedUserAccount.getUserTotalFans();
+
+            if (totalCurrentConcern <= 0 || totalCurrentFans <=0){
+                return;
+            }
+            //关注者
+            totalCurrentConcern = totalCurrentConcern - 1;
+            concernUserAccount.setUserTotalConcern(totalCurrentConcern);
+            userAccountService.updateUserAccount(concernUserAccount);
+            //被关注者
+            totalCurrentFans = totalCurrentFans - 1;
+            concernedUserAccount.setUserTotalFans(totalCurrentFans);
+            userAccountService.updateUserAccount(concernedUserAccount);
+        }
+    }
+
 
     /**
      * @Title getConcern

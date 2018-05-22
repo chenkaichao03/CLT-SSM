@@ -110,4 +110,25 @@ public interface ArticleService {
      * @return
      */
     String getArticleTypeId(String articleCode);
+
+    /**
+     * @Title listArticle
+     * @Description 获取最新的文章
+     * @Author CLT
+     * @Date 2018/5/18 17:00
+     * @return
+     */
+    List<Article> listArticle();
+
+    /**
+     * @Title selectArticlePage
+     * @Description 获取某用户下发布的文章 分页
+     * @Author CLT
+     * @Date 2018/5/21 14:34
+     * @param userId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    ManagementPageData selectArticlePage(String userId, Integer pageNo, Integer pageSize);
 }

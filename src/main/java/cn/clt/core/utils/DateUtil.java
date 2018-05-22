@@ -2,8 +2,10 @@ package cn.clt.core.utils;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -62,5 +64,24 @@ public class DateUtil {
      */
     public static Integer getDayDifference(Long beginDate,Long endDate){
         return  (int)((beginDate-endDate)/(1000*60*60*24));
+    }
+
+    /**
+     * @Title getCurrentTimeByTimeInterval
+     * @Description 获取每天的某一时段（小时:分钟:秒：毫秒）如 10:00:00:00
+     * @Author CLT
+     * @Date 2018/5/19 21:16
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    public static Date getCurrentTimeByTimeInterval(Integer beginTime,Integer endTime){
+        Calendar calendar = Calendar.getInstance();
+        BigDecimal bigDecimal = BigDecimal.ZERO;
+        calendar.set(Calendar.HOUR_OF_DAY, beginTime);
+        calendar.set(Calendar.MINUTE, endTime);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        return calendar.getTime();
     }
 }

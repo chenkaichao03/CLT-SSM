@@ -28,6 +28,8 @@ public class ReviewDetail {
 
     private Integer dayDifferent;
 
+    private Integer timeDifference;
+
     public String getId() {
         return id;
     }
@@ -122,5 +124,13 @@ public class ReviewDetail {
 
     public void setDayDifferent(Integer dayDifferent) {
         this.dayDifferent = dayDifferent;
+    }
+
+    public Integer getTimeDifference() {
+        return timeDifference;
+    }
+
+    public void setTimeDifference(Integer timeDifference) {
+        this.timeDifference = timeDifference;
     }
 }

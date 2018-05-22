@@ -2,6 +2,7 @@ package cn.clt.core.mapper;
 
 import cn.clt.core.entity.Article;
 import cn.clt.core.entity.ArticleExample;
+import cn.clt.core.vo.ReviewVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -44,4 +45,9 @@ public interface ArticleMapper {
     Long countArticle(Map<String,Object> params);
 
     List<Article> getArticleByArticleCode(Map<String,Object> params);
+
+    List<Article> listArticlePage(Map<String,Object> params);
+
+    Long countArticlePage(Map<String,Object> params);
+
 }

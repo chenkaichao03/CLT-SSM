@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-md-8 market-update-left">
                             <a href=""><h4>浏览量</h4></a>
-                            <h3>13,500</h3>
+                            <h3>${userAccount.userTotalBrowse}</h3>
                         </div>
                         <div class="clearfix"> </div>
                     </div>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="col-md-8 market-update-left">
                             <h4>粉丝数</h4>
-                            <h3>${countFansAndConcern.fansCount}</h3>
+                            <h3>${userAccount.userTotalFans}</h3>
                         </div>
                         <div class="clearfix"> </div>
                     </div>
@@ -70,11 +70,11 @@
                 <div class="col-md-3 market-update-gd">
                     <div class="market-update-block clr-block-3">
                         <div class="col-md-4 market-update-right">
-                            <i class="fa fa-video-camera"></i>
+                            <i class="fa fa-users" ></i>
                         </div>
                         <div class="col-md-8 market-update-left">
                             <a href="views/video.jsp"><h4>关注数</h4></a>
-                            <h3>1,500</h3>
+                            <h3>${userAccount.userTotalConcern}</h3>
                         </div>
                         <div class="clearfix"> </div>
                     </div>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-md-8 market-update-left">
                             <a href=""><h4>总收益</h4></a>
-                            <h3>1,500</h3>
+                            <h3>${userAccount.userAmoutMoney}</h3>
                         </div>
                         <div class="clearfix"> </div>
                     </div>

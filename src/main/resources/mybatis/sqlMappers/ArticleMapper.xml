@@ -382,4 +382,21 @@
       limit #{pagination.start},#{pagination.pageSize}
     </if>
   </select>
+  <select id="listArticlePage" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select * FROM article where status=1
+    <if test="userId != null">
+     and  create_user_id = #{userId,jdbcType=VARCHAR}
+    </if>
+    ORDER BY create_date
+    <if test="pagination">
+      limit #{pagination.start},#{pagination.pageSize}
+    </if>
+  </select>
+  <select id="countArticlePage" parameterType="map" resultType="java.lang.Long">
+    select count(1) FROM article where status=1
+    <if test="userId != null">
+      and create_user_id = #{userId,jdbcType=VARCHAR}
+    </if>
+    ORDER BY create_date
+  </select>
 </mapper>

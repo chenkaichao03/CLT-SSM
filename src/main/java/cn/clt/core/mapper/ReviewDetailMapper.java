@@ -3,7 +3,9 @@ package cn.clt.core.mapper;
 import cn.clt.core.entity.ReviewDetail;
 import cn.clt.core.entity.ReviewDetailExample;
 import java.util.List;
+import java.util.Map;
 
+import cn.clt.core.vo.ReviewDetalVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 @Mapper
@@ -35,4 +37,8 @@ public interface ReviewDetailMapper {
     int updateByPrimaryKeyWithBLOBs(ReviewDetail record);
 
     int updateByPrimaryKey(ReviewDetail record);
+
+    List<ReviewDetalVO> listReviewDetailPage(Map<String,Object> params);
+
+    Long countReviewDetailPage(Map<String,Object> params);
 }

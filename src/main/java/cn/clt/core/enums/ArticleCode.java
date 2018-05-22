@@ -1,5 +1,8 @@
 package cn.clt.core.enums;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @Description ArticleCode
  * @Aouthor CLT
@@ -15,5 +18,15 @@ public enum ArticleCode {
     NOTICE;//通知
 
     private ArticleCode(){}
+
+
+    public static List<String> getArticleCode(){
+        List<String> articleCodes = new LinkedList<>();
+        articleCodes.add(ArticleCode.ENTERTAINMENT.name());
+        articleCodes.add(ArticleCode.NEWS.name());
+        articleCodes.add(ArticleCode.HOT.name());
+        articleCodes.add(ArticleCode.HEADLINE.name());
+        return articleCodes;
+    }
 
 }

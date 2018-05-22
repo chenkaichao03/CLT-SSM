@@ -63,8 +63,12 @@
                 }
             })
         })
+        $(function () {
+            //兑换
+            $(".btn").click(function () {
 
-
+            })
+        })
     </script>
 </head>
 <body>
@@ -100,7 +104,6 @@
                                                     <option value="${browse.id}">浏览量兑换</option>
                                                     <option value="${comment.id}">评论量兑换</option>
                                                     <option value="${integral.id}">积分兑换</option>
-                                                    <option value="${exchangeCount.id}">兑换总次数</option>
                                                 </select>
                                             </span><br/><br/>
                                         <span style="margin-left: 230px;" id="rate">
@@ -108,6 +111,7 @@
                                         <br/><br/>
                                         <span style="margin-left: 198px">输入兑换数量：
                                                 <input type="text" style="height: 32px;margin-right: 10px;"/>
+                                                 <input type="hidden" value="${userInfo.userId}">
                                                 <input name="submit" style="height: 32px" class="btn" type="submit" value="兑换">
                                         </span>
                                     </td>

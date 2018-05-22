@@ -39,7 +39,7 @@
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu extended logout">
-                    <li><a href="views/usercenter.jsp"><i class=" fa fa-asterisk"></i>个人主页</a></li>
+                    <li><a href="/individual/init/center?userId=${userInfo.userId}"><i class=" fa fa-asterisk"></i>个人主页</a></li>
                     <li><a href="/account/get/user-info"><i class=" fa fa-user"></i>账号信息</a></li>
                     <li><a href="/account/get/picture"><i class="fa fa-cog"></i>头像设置</a></li>
                     <li><a href="/account/signout"><i class="fa fa-power-off"></i>退出登录</a></li>

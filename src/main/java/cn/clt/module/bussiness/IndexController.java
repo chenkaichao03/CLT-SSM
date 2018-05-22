@@ -2,9 +2,11 @@ package cn.clt.module.bussiness;
 
 import cn.clt.core.entity.Article;
 import cn.clt.core.entity.User;
+import cn.clt.core.entity.UserAccount;
 import cn.clt.core.entity.UserInfo;
 import cn.clt.core.enums.ArticleCode;
 import cn.clt.core.enums.Code;
+import cn.clt.core.enums.ExchangeTypeCode;
 import cn.clt.core.mapper.UserInfoMapper;
 import cn.clt.core.params.Result;
 import cn.clt.core.service.*;
@@ -46,6 +48,9 @@ public class IndexController {
     private ArticleService articleService;
     @Autowired
     private ActiveUserService activeUserService;
+    @Autowired
+    private UserAccountService userAccountService;
+
     /**
      * @Title index
      * @Description 后台首页
@@ -64,8 +69,9 @@ public class IndexController {
         if (!CollectionUtils.isEmpty(userInfoList)){
             model.addAttribute("userInfo",userInfoList.get(0));
         }
-        Map<String,Long> countFansAndConcern = concernService.countFansAndConcern(userId);
-        model.addAttribute("countFansAndConcern",countFansAndConcern);
+        //获取用户账户信息
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
+        model.addAttribute("userAccount",userAccount);
         //获取用户信息 用于判断是否是管理员
         User user = userService.getUserById(userId);
         if (user != null) {

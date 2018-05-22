@@ -63,7 +63,7 @@
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="views/comment.jsp">
+                    <a href="/review/list">
                         <i class="fa fa-comments"></i>
                         <span>评论管理</span>
                     </a>

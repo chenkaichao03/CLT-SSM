@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.clt.core.mapper.AccessStatisticsMapper">
   <resultMap id="BaseResultMap" type="cn.clt.core.entity.AccessStatistics">
-    <id column="id" jdbcType="VARBINARY" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="article_id" jdbcType="VARCHAR" property="articleId" />
     <result column="article_name" jdbcType="VARCHAR" property="articleName" />
     <result column="visit_count" jdbcType="INTEGER" property="visitCount" />
@@ -85,15 +85,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="byte[]" resultMap="BaseResultMap">
-    select 
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from access_statistics
-    where id = #{id,jdbcType=VARBINARY}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="byte[]">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from access_statistics
-    where id = #{id,jdbcType=VARBINARY}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cn.clt.core.entity.AccessStatisticsExample">
     delete from access_statistics
@@ -102,12 +102,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.clt.core.entity.AccessStatistics">
-    insert into access_statistics (id, article_id, article_name, 
-      visit_count, visit_ip, create_time, 
-      modify_time)
-    values (#{id,jdbcType=VARBINARY}, #{articleId,jdbcType=VARCHAR}, #{articleName,jdbcType=VARCHAR}, 
-      #{visitCount,jdbcType=INTEGER}, #{visitIp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{modifyTime,jdbcType=TIMESTAMP})
+    insert into access_statistics (id, article_id, article_name,
+    visit_count, visit_ip, create_time,
+    modify_time)
+    values (#{id,jdbcType=VARCHAR}, #{articleId,jdbcType=VARCHAR}, #{articleName,jdbcType=VARCHAR},
+    #{visitCount,jdbcType=INTEGER}, #{visitIp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+    #{modifyTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.clt.core.entity.AccessStatistics">
     insert into access_statistics
@@ -136,7 +136,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=VARBINARY},
+        #{id,jdbcType=VARCHAR},
       </if>
       <if test="articleId != null">
         #{articleId,jdbcType=VARCHAR},
@@ -168,7 +168,7 @@
     update access_statistics
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=VARBINARY},
+        id = #{record.id,jdbcType=VARCHAR},
       </if>
       <if test="record.articleId != null">
         article_id = #{record.articleId,jdbcType=VARCHAR},
@@ -195,13 +195,13 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update access_statistics
-    set id = #{record.id,jdbcType=VARBINARY},
-      article_id = #{record.articleId,jdbcType=VARCHAR},
-      article_name = #{record.articleName,jdbcType=VARCHAR},
-      visit_count = #{record.visitCount,jdbcType=INTEGER},
-      visit_ip = #{record.visitIp,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+    set id = #{record.id,jdbcType=VARCHAR},
+    article_id = #{record.articleId,jdbcType=VARCHAR},
+    article_name = #{record.articleName,jdbcType=VARCHAR},
+    visit_count = #{record.visitCount,jdbcType=INTEGER},
+    visit_ip = #{record.visitIp,jdbcType=VARCHAR},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -228,17 +228,17 @@
         modify_time = #{modifyTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=VARBINARY}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.clt.core.entity.AccessStatistics">
     update access_statistics
     set article_id = #{articleId,jdbcType=VARCHAR},
-      article_name = #{articleName,jdbcType=VARCHAR},
-      visit_count = #{visitCount,jdbcType=INTEGER},
-      visit_ip = #{visitIp,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARBINARY}
+    article_name = #{articleName,jdbcType=VARCHAR},
+    visit_count = #{visitCount,jdbcType=INTEGER},
+    visit_ip = #{visitIp,jdbcType=VARCHAR},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="listAccessStatistics" resultType="cn.clt.core.vo.AccessStatisticeVO">
     select

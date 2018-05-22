@@ -5,6 +5,7 @@ import cn.clt.core.entity.ReviewExample;
 import java.util.List;
 import java.util.Map;
 
+import cn.clt.core.vo.ReviewVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 @Mapper
@@ -40,4 +41,12 @@ public interface ReviewMapper {
     List<Review> listReview(Map<String,Object> params);
 
     Long countReview(Map<String,Object> params);
+
+    List<ReviewVO> listReviewVo(Map<String,Object> params);
+
+    Long countReviewVo(Map<String,Object> params);
+
+    List<ReviewVO> listReviewPage(Map<String,Object> params);
+
+    Long countReviewPage(Map<String,Object> params);
 }

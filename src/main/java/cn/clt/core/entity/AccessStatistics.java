@@ -3,7 +3,7 @@ package cn.clt.core.entity;
 import java.util.Date;
 
 public class AccessStatistics {
-    private byte[] id;
+    private String id;
 
     private String articleId;
 
@@ -17,12 +17,12 @@ public class AccessStatistics {
 
     private Date modifyTime;
 
-    public byte[] getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(byte[] id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public String getArticleId() {

@@ -4,6 +4,7 @@ import cn.clt.core.entity.ExchangeSetting;
 import cn.clt.core.entity.User;
 import cn.clt.core.entity.UserExchange;
 import cn.clt.core.params.ManagementPageData;
+import cn.clt.core.vo.ExchangeOperationVO;
 import cn.clt.core.vo.UserProfitVO;
 
 import java.util.List;
@@ -67,4 +68,26 @@ public interface ExchangeSettingService {
      * @return
      */
     ExchangeSetting getExchangeSettingById(String id);
+
+
+    /**
+     * @Title checkExchangeOperation
+     * @Description 检查兑换操作的余额
+     * @Author CLT
+     * @Date 2018/5/21 18:16
+     * @param exchangeOperationVO
+     * @return
+     */
+    String checkExchangeOperation(ExchangeOperationVO exchangeOperationVO);
+
+
+    /**
+     * @Title doExchangeOperation
+     * @Description 用户兑换操作
+     * @Author CLT
+     * @Date 2018/5/21 18:05
+     * @param userId
+     * @param exchangeSettingId
+     */
+    int doExchangeOperation(String userId, String exchangeSettingId,Integer exchangeNumber);
 }

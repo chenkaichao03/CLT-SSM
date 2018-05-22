@@ -81,4 +81,8 @@
             <tx:method name="get*" read-only="true"/>
         </tx:attributes>
     </tx:advice>
+
+    <bean id="browerCount" class="cn.clt.core.property.BrowerCount">
+        <property name="size" value="${size}"/>
+    </bean>
 </beans>

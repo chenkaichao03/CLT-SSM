@@ -338,4 +338,40 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="listReviewDetailPage" parameterType="map" resultType="cn.clt.core.vo.ReviewDetalVO">
+    select
+    article.article_title AS articleTitle,
+    review_detail.article_id AS articleId,
+    review_detail.create_time AS createTime,
+    review_detail.content AS content,
+    review.content AS reviewContent,
+    review.id AS reviewId
+    FROM review_detail
+    LEFT JOIN article
+    ON review_detail.article_id = article.id AND article.status = 1
+    LEFT JOIN review
+    ON review_detail.review_id = review.id AND review.status = 1
+    where review_detail.status =1
+    <if test="userId != null">
+     AND review_detail.review_user_id = #{userId}
+    </if>
+    ORDER by review_detail.create_time
+    <if test="pagination">
+      limit #{pagination.start},#{pagination.pageSize}
+    </if>
+  </select>
+  <select id="countReviewDetailPage" parameterType="map" resultType="java.lang.Long">
+    select
+    COUNT(1)
+    FROM review_detail
+    LEFT JOIN article
+    ON review_detail.article_id = article.id AND article.status = 1
+    LEFT JOIN review
+    ON review_detail.review_id = review.id AND review.status = 1
+    where review_detail.status =1
+    <if test="userId != null">
+      AND review_detail.review_user_id = #{userId}
+    </if>
+    ORDER by review_detail.create_time
+  </select>
 </mapper>

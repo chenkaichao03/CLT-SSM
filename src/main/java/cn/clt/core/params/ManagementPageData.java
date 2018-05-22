@@ -3,6 +3,8 @@ package cn.clt.core.params;
 import cn.clt.core.entity.Article;
 import cn.clt.core.entity.Review;
 import cn.clt.core.entity.UserExchange;
+import cn.clt.core.vo.ReviewDetalVO;
+import cn.clt.core.vo.ReviewVO;
 import cn.clt.core.vo.UserInfoVO;
 
 import java.util.List;
@@ -20,6 +22,8 @@ public class ManagementPageData extends BasePageData{
     private List<UserInfoVO> userList;
     private List<UserExchange> userExchangeList;
     private List<Review> reviewList;
+    private List<ReviewVO> reviewVOList;
+    private List<ReviewDetalVO> reviewDetalVOS;
 
     public List<Article> getArticleList() {
         return articleList;
@@ -67,5 +71,21 @@ public class ManagementPageData extends BasePageData{
 
     public void setReviewList(List<Review> reviewList) {
         this.reviewList = reviewList;
+    }
+
+    public List<ReviewVO> getReviewVOList() {
+        return reviewVOList;
+    }
+
+    public void setReviewVOList(List<ReviewVO> reviewVOList) {
+        this.reviewVOList = reviewVOList;
+    }
+
+    public List<ReviewDetalVO> getReviewDetalVOS() {
+        return reviewDetalVOS;
+    }
+
+    public void setReviewDetalVOS(List<ReviewDetalVO> reviewDetalVOS) {
+        this.reviewDetalVOS = reviewDetalVOS;
     }
 }

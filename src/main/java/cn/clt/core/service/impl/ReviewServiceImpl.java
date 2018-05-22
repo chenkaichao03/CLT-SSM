@@ -1,16 +1,16 @@
 package cn.clt.core.service.impl;
 
 import cn.clt.core.entity.*;
+import cn.clt.core.mapper.ArticleMapper;
 import cn.clt.core.mapper.ReviewDetailMapper;
 import cn.clt.core.mapper.ReviewMapper;
+import cn.clt.core.mapper.UserAccountMapper;
 import cn.clt.core.params.ManagementPageData;
 import cn.clt.core.params.Pagination;
-import cn.clt.core.service.BadReviewService;
-import cn.clt.core.service.GoodReviewService;
-import cn.clt.core.service.ReviewService;
-import cn.clt.core.service.UserInfoService;
+import cn.clt.core.service.*;
 import cn.clt.core.utils.DateUtil;
 import cn.clt.core.utils.GuidUtil;
+import cn.clt.core.vo.ReviewVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * @Description ReviewServiceImpl
@@ -43,6 +41,14 @@ public class ReviewServiceImpl implements ReviewService {
     private GoodReviewService goodReviewService;
     @Autowired
     private BadReviewService badReviewService;
+    @Autowired
+    private ArticleMapper articleMapper;
+    @Autowired
+    private UserAccountService userAccountService;
+    @Autowired
+    private ReviewDetailService reviewDetailService;
+    @Autowired
+    private UserAccountMapper userAccountMapper;
 
 
     /**
@@ -69,7 +75,28 @@ public class ReviewServiceImpl implements ReviewService {
             review.setCreateTime(new Date());
             reviewMapper.insert(review);
         }
+        //更新用户账户评论数
+        updateUserAccountByReview(review.getArticleId());
         return review.getId();
+    }
+
+    /**
+     * @Title updateUserAccountByReview
+     * @Description 更新用户账户评论数
+     * @Author CLT
+     * @Date 2018/5/19 22:04
+     * @param articleId
+     */
+    private void updateUserAccountByReview(String articleId){
+        Article article = articleMapper.selectByPrimaryKey(articleId);
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(article.getCreateUserId());
+        Integer totalCurrentComment = userAccount.getUserTotalComment();
+        if (totalCurrentComment < 0){
+            return;
+        }
+        totalCurrentComment = totalCurrentComment + 1;
+        userAccount.setUserTotalComment(totalCurrentComment);
+        userAccountService.updateUserAccount(userAccount);
     }
 
     /**
@@ -101,8 +128,167 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     /**
+     * @Title listReviewComment
+     * @Description 获取评论内容 （一级 评论）
+     * @Author CLT
+     * @Date 2018/5/21 10:22
+     * @param userId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public ManagementPageData listReviewComment(String userId, Integer pageNo, Integer pageSize) {
+        Map<String,Object> params = new HashMap<>();
+        Pagination pagination = new Pagination(pageNo,pageSize);
+        //获取用户下的文章id
+        List<String> articleIds = getArticleIds(userId);
+        params.put("pagination",pagination);
+        params.put("articleIds",articleIds);
+        List<ReviewVO> reviewVOList = reviewMapper.listReviewVo(params);
+        if (!CollectionUtils.isEmpty(reviewVOList)) {
+            for (ReviewVO reviewVO : reviewVOList) {
+                //处理日期
+                String createTimeStr = DateUtil.formatDate(DateUtil.DATE_FORMATS[0], reviewVO.getCreateTime());
+                reviewVO.setCreateTimeStr(createTimeStr);
+                //处理点赞数
+                Long goodReview = goodReviewService.countGoodReview(reviewVO.getArticleId(), reviewVO.getId());
+                reviewVO.setCountFabulous(goodReview.intValue());
+                //获取评论下的点评和回复个数
+                Integer countReviewDetail = reviewDetailService.countReviewDetail(reviewVO.getArticleId(), reviewVO.getId());
+                reviewVO.setCountReview(countReviewDetail);
+            }
+        }
+        Long count = reviewMapper.countReviewVo(params);
+        ManagementPageData pageData = new ManagementPageData();
+        pageData.setReviewVOList(reviewVOList);
+        pageData.setTotalCount(count);
+        pageData.setPageNo(pageNo);
+        pageData.setPageSize(pageSize);
+        return pageData;
+    }
+
+    /**
+     * @Title selectReviewCommentPage
+     * @Description 获取某用户的评论 分页
+     * @Author CLT
+     * @Date 2018/5/21 15:28
+     * @param userId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public ManagementPageData selectReviewCommentPage(String userId, Integer pageNo, Integer pageSize) {
+        Map<String,Object> params = new HashMap<>();
+        Pagination pagination = new Pagination(pageNo,pageSize);
+        params.put("userId",userId);
+        params.put("pagination",pagination);
+        List<ReviewVO> reviewList = reviewMapper.listReviewPage(params);
+        if (!CollectionUtils.isEmpty(reviewList)){
+            for (ReviewVO review : reviewList){
+                String createTimeStr = DateUtil.formatDate(DateUtil.DATE_FORMATS[0],review.getCreateTime());
+                review.setCreateTimeStr(createTimeStr);
+            }
+        }
+        Long count = reviewMapper.countReviewPage(params);
+        ManagementPageData pageData = new ManagementPageData();
+        pageData.setReviewVOList(reviewList);
+        pageData.setTotalCount(count);
+        pageData.setPageNo(pageNo);
+        pageData.setPageSize(pageSize);
+        return pageData;
+    }
+
+    /**
+     * @Title deleteReview
+     * @Description 删除评论
+     * @Author CLT
+     * @Date 2018/5/21 17:07
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer deleteReview(String id) {
+        //更新评论为不可用状态
+        Review review = reviewMapper.selectByPrimaryKey(id);
+        review.setStatus(0);
+        reviewMapper.updateByPrimaryKeySelective(review);
+        if (review == null){
+            return 0;
+        }
+        Article article = articleMapper.selectByPrimaryKey(review.getArticleId());
+        if (article == null){
+            return 0;
+        }
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(article.getCreateUserId());
+        if (userAccount == null){
+            UserAccount userAccount1 = AssembleUserAccount(review.getReviewUserId());
+            return 0;
+        }
+        //获取评论数
+        Integer userTotalComment = userAccount.getUserTotalComment();
+        if (userTotalComment <= 0){
+            return 0;
+        }
+        userTotalComment = userTotalComment - 1;
+        userAccount.setUserTotalComment(userTotalComment);
+        return userAccountService.updateUserAccount(userAccount);
+    }
+
+    /**
+     * @Title AssembleUserAccount
+     * @Description 新增用户账户信息 登录初始化
+     * @Author CLT
+     * @Date 2018/5/20 22:25
+     * @param userId
+     * @return
+     */
+    private UserAccount AssembleUserAccount(String userId){
+        Date date = new Date();
+        UserAccount userAccount = new UserAccount();
+        userAccount.setId(GuidUtil.newGuid());
+        userAccount.setUserId(userId);
+        userAccount.setUserAmoutMoney(BigDecimal.ZERO);
+        userAccount.setUserTotalConcern(0);
+        userAccount.setUserTotalFans(0);
+        userAccount.setUserTotalBrowse(0);
+        userAccount.setUserTotalComment(0);
+        userAccount.setUserTotalIntegral(BigDecimal.ZERO);
+        userAccount.setUserTotalConsume(BigDecimal.ZERO);
+        userAccount.setUserTotalRecharge(BigDecimal.ZERO);
+        userAccount.setUserTotalFabulous(0);
+        userAccount.setStatus(1);
+        userAccount.setCreateTime(date);
+        userAccount.setModifyTime(date);
+        userAccountMapper.insert(userAccount);
+        return userAccount;
+    }
+
+    /**
+     * @Title getArticleIds
+     * @Description 根据用户id获取用户下的所有文章id
+     * @Author CLT
+     * @Date 2018/5/21 10:49
+     * @param userId
+     * @return
+     */
+    private List<String> getArticleIds(String userId){
+        List<String> articleIds = new LinkedList<>();
+        ArticleExample example = new ArticleExample();
+        example.createCriteria().andCreateUserIdEqualTo(userId).andStatusEqualTo(1);
+        List<Article> articleList = articleMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(articleList)){
+            for (Article article : articleList){
+               articleIds.add(article.getId());
+            }
+        }
+        return articleIds;
+    }
+
+    /**
      * @Title getReviews
-     * @Description 获取评论内容
+     * @Description 获取评论内容(三级 评论 点评 回复)
      * @Author CLT
      * @Date 2018/5/17 11:19
      * @param articleId
@@ -127,11 +313,13 @@ public class ReviewServiceImpl implements ReviewService {
                 review.setCountBadReview(countBadReview);
                 //时间转换 天数
                 review.setDayDifferent(DateUtil.getDayDifference(System.currentTimeMillis(),review.getCreateTime().getTime()));
+                review.setTimeDifference(DateUtil.getTimeDifference(System.currentTimeMillis(),review.getCreateTime().getTime()));
                 List<ReviewDetail> reviewDetailList = getReviewDetails(id,null);
                 if (!CollectionUtils.isEmpty(reviewDetailList)){
                     for (ReviewDetail reviewDetail : reviewDetailList){
                         //时间转换 天数
                         reviewDetail.setDayDifferent(DateUtil.getDayDifference(System.currentTimeMillis(),reviewDetail.getCreateTime().getTime()));
+                        reviewDetail.setTimeDifference(DateUtil.getTimeDifference(System.currentTimeMillis(),review.getCreateTime().getTime()));
                         String reviewDetailId = reviewDetail.getId();
                         String reviewId = reviewDetail.getReviewId();
                         //获取点评的子评论
@@ -140,6 +328,7 @@ public class ReviewServiceImpl implements ReviewService {
                             for (ReviewDetail reviewDetail1 : reviewDetails){
                                 //时间转换 天数
                                 reviewDetail1.setDayDifferent(DateUtil.getDayDifference(System.currentTimeMillis(),reviewDetail1.getCreateTime().getTime()));
+                                reviewDetail1.setTimeDifference(DateUtil.getTimeDifference(System.currentTimeMillis(),review.getCreateTime().getTime()));
                             }
                             reviewDetail.setReviewDetails(reviewDetails);
                         }

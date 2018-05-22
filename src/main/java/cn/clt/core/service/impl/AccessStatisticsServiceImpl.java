@@ -1,5 +1,7 @@
 package cn.clt.core.service.impl;
 
+import cn.clt.core.entity.AccessStatistics;
+import cn.clt.core.entity.AccessStatisticsExample;
 import cn.clt.core.mapper.AccessStatisticsMapper;
 import cn.clt.core.service.AccessStatisticsService;
 import cn.clt.core.vo.AccessStatisticeVO;
@@ -57,5 +59,50 @@ public class AccessStatisticsServiceImpl implements AccessStatisticsService{
             }
         }
         return vector;
+    }
+
+    /**
+     * @Title getAccessStatisticsByArticleIdAndIp
+     * @Description 获取浏览量访问记录
+     * @Author CLT
+     * @Date 2018/5/18 18:21
+     * @param articleId
+     * @param visitIp
+     * @return
+     */
+    @Override
+    public AccessStatistics getAccessStatisticsByArticleIdAndIp(String articleId, String visitIp) {
+        AccessStatisticsExample example = new AccessStatisticsExample();
+        example.createCriteria().andArticleIdEqualTo(articleId).andVisitIpEqualTo(visitIp);
+        List<AccessStatistics> accessStatisticsList = accessStatisticsMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(accessStatisticsList)){
+            return accessStatisticsList.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * @Title updateAccessStatistics
+     * @Description 更行浏览访问记录
+     * @Author CLT
+     * @Date 2018/5/18 23:51
+     * @param accessStatistics
+     * @return
+     */
+    @Override
+    public int updateAccessStatistics(AccessStatistics accessStatistics) {
+        return accessStatisticsMapper.updateByPrimaryKeySelective(accessStatistics);
+    }
+
+    /**
+     * @Title insertAccessStatistics
+     * @Description 新增浏览访问记录
+     * @Author CLT
+     * @Date 2018/5/19 0:06
+     * @param accessStatistics
+     */
+    @Override
+    public void insertAccessStatistics(AccessStatistics accessStatistics){
+        accessStatisticsMapper.insert(accessStatistics);
     }
 }

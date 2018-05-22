@@ -338,4 +338,76 @@ public class ArticleServiceImpl implements ArticleService{
         }
         return null;
     }
+
+    /**
+     * @Title listArticle
+     * @Description 获取最新的文章
+     * @Author CLT
+     * @Date 2018/5/18 17:00 getArticleByArticleCode
+     * @return
+     */
+    @Override
+    public List<Article> listArticle() {
+        Map<String,Object> params = new HashMap<>();
+        List<String> articleIds = listArticleTypes(ArticleCode.getArticleCode());
+        Pagination pagination = new Pagination(1,3);
+        params.put("articleIds",articleIds);
+        params.put("pagination",pagination);
+        return articleMapper.getArticleByArticleCode(params);
+    }
+
+    /**
+     * @Title selectArticlePage
+     * @Description 获取某用户下发布的文章 分页
+     * @Author CLT
+     * @Date 2018/5/21 14:34
+     * @param userId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public ManagementPageData selectArticlePage(String userId, Integer pageNo, Integer pageSize) {
+        Map<String,Object> params = new HashMap<>();
+        Pagination pagination = new Pagination(pageNo,pageSize);
+        params.put("userId",userId);
+        params.put("pagination",pagination);
+        List<Article> articleList = articleMapper.listArticlePage(params);
+        if (!CollectionUtils.isEmpty(articleList)) {
+            for (Article article : articleList) {
+                //处理日期
+                String createTimeStr = DateUtil.formatDate(DateUtil.DATE_FORMATS[0], article.getCreateDate());
+                article.setCreateTimeStr(createTimeStr);
+            }
+        }
+        Long count = articleMapper.countArticlePage(params);
+        ManagementPageData pageData = new ManagementPageData();
+        pageData.setArticleList(articleList);
+        pageData.setTotalCount(count);
+        pageData.setPageNo(pageNo);
+        pageData.setPageSize(pageSize);
+        return pageData;
+    }
+
+    /**
+     * @Title listArticleTypes
+     * @Description 获取需要的文章类型id用于提取最新文章使用
+     * @Author CLT
+     * @Date 2018/5/18 17:18
+     * @param articleTypeNames
+     * @return
+     */
+    private List<String>  listArticleTypes(List<String> articleTypeNames){
+        ArticleTypeExample example = new ArticleTypeExample();
+        example.createCriteria().andArticleTypeNameIn(articleTypeNames);
+        List<ArticleType> articleTypeList = articleTypeMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(articleTypeList)){
+            List<String> typeIds = new LinkedList<>();
+            for (ArticleType articleType : articleTypeList){
+                typeIds.add(articleType.getId());
+            }
+            return typeIds;
+        }
+        return null;
+    }
 }

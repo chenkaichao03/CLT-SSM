@@ -318,4 +318,69 @@
     </if>
     order by create_time DESC
   </select>
+  <select id="listReviewVo" parameterType="map" resultType="cn.clt.core.vo.ReviewVO">
+    select
+    review.id AS id,
+    review.article_id AS articleId,
+    review.content AS content,
+    review.review_user_id AS reviewUserId,
+    review.review_user_picture AS reviewUserPicture,
+    review.review_user_name AS reviewUserName,
+    review.status AS status,
+    review.create_time AS createTime,
+    user_info.real_name AS userRealName
+    FROM review
+    LEFT  JOIN  user_info ON review.review_user_id = user_info.user_id
+    where review.status = 1
+    <if test="articleIds != null">
+      and review.article_id IN
+        <foreach collection="articleIds" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+    </if>
+    ORDER by review.create_time
+    <if test="pagination">
+      limit #{pagination.start},#{pagination.pageSize}
+    </if>
+  </select>
+  <select id="countReviewVo" parameterType="map" resultType="java.lang.Long">
+    select
+    COUNT(1)
+    FROM review
+    LEFT  JOIN  user_info ON review.review_user_id = user_info.user_id
+    where review.status = 1
+    <if test="articleIds != null">
+      and review.article_id IN
+      <foreach collection="articleIds" index="index" item="item" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    ORDER by review.create_time
+  </select>
+  <select id="listReviewPage" parameterType="map" resultType="cn.clt.core.vo.ReviewVO">
+    select
+    review.article_id AS articleId,
+    review.content AS content,
+    review.create_time AS createTime,
+    article.article_title AS articleTitle
+    from review
+    LEFT JOIN article ON  review.article_id = article.id
+    where review.status = 1 and article.status = 1
+    <if test="userId">
+      AND review_user_id = #{userId}
+    </if>
+    ORDER by review.create_time
+    <if test="pagination">
+      limit #{pagination.start},#{pagination.pageSize}
+    </if>
+  </select>
+  <select id="countReviewPage" parameterType="map" resultType="java.lang.Long">
+    select count(1) from review
+    LEFT JOIN article ON  review.article_id = article.id
+    where review.status = 1 and article.status = 1
+    <if test="userId">
+      AND review_user_id = #{userId}
+    </if>
+    ORDER by review.create_time
+  </select>
 </mapper>

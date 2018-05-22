@@ -14,6 +14,7 @@ import cn.clt.core.service.ExchangeSettingService;
 import cn.clt.core.service.UserInfoService;
 import cn.clt.core.service.UserService;
 import cn.clt.core.vo.ActiveUser;
+import cn.clt.core.vo.ExchangeOperationVO;
 import cn.clt.core.vo.UserProfitVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,8 +93,6 @@ public class ExchangeSettingController {
                         model.addAttribute("browse",exchangeSetting);
                     }else if (exchangeType.equals(ExchangeTypeCode.COMMENT.name())){
                         model.addAttribute("comment",exchangeSetting);
-                    }else if (exchangeType.equals(ExchangeTypeCode.EXCHANGE_COUNT.name())){
-                        model.addAttribute("exchangeCount",exchangeSetting);
                     }else if (exchangeType.equals(ExchangeTypeCode.INTEGRAL.name())){
                         model.addAttribute("integral",exchangeSetting);
                     }else if(exchangeType.equals(ExchangeTypeCode.FABULOUS.name())){
@@ -224,8 +223,6 @@ public class ExchangeSettingController {
                         model.addAttribute("browse",exchangeSetting);
                     }else if (exchangeType.equals(ExchangeTypeCode.COMMENT.name())){
                         model.addAttribute("comment",exchangeSetting);
-                    }else if (exchangeType.equals(ExchangeTypeCode.EXCHANGE_COUNT.name())){
-                        model.addAttribute("exchangeCount",exchangeSetting);
                     }else if (exchangeType.equals(ExchangeTypeCode.INTEGRAL.name())){
                         model.addAttribute("integral",exchangeSetting);
                     }else if(exchangeType.equals(ExchangeTypeCode.FABULOUS.name())){
@@ -266,6 +263,35 @@ public class ExchangeSettingController {
             return Result.error("获取兑换设置失败.");
         }
         return Result.error("获取兑换设置失败.");
+    }
+
+    /**
+     * @Title doExchangeOperation
+     * @Description 兑换操作
+     * @Author CLT
+     * @Date 2018/5/21 18:11
+     * @param exchangeOperationVO
+     * @return
+     */
+    @RequestMapping("/operation")
+    @ResponseBody
+    public String doExchangeOperation(ExchangeOperationVO exchangeOperationVO){
+        try{
+            //校验
+            String result = exchangeSettingService.checkExchangeOperation(exchangeOperationVO);
+            if (result != null){
+                return result;
+            }
+            int doresult = exchangeSettingService.doExchangeOperation(exchangeOperationVO.getUserId(),exchangeOperationVO.getExchangeSettingId(),exchangeOperationVO.getExchangeNumber());
+            if (doresult == 0){
+                return Result.error("兑换失败.");
+            }
+            return Result.ok(Code.OK.getValue(),"兑换成功.",null);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("兑换失败.");
+            return Result.error("兑换失败.");
+        }
     }
 
 }

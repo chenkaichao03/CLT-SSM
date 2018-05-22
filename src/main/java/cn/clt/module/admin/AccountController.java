@@ -1,12 +1,15 @@
 package cn.clt.module.admin;
 
 import cn.clt.core.entity.User;
+import cn.clt.core.entity.UserAccount;
 import cn.clt.core.entity.UserInfo;
 import cn.clt.core.enums.Code;
+import cn.clt.core.enums.ExchangeTypeCode;
 import cn.clt.core.enums.LoginTypeCode;
 import cn.clt.core.exception.BussinessException;
 import cn.clt.core.params.Result;
 import cn.clt.core.service.ActiveUserService;
+import cn.clt.core.service.UserAccountService;
 import cn.clt.core.service.UserInfoService;
 import cn.clt.core.service.UserService;
 import cn.clt.core.vo.ActiveUser;
@@ -51,6 +54,8 @@ public class AccountController {
     private UserInfoService userInfoService;
     @Autowired
     private ActiveUserService activeUserService;
+    @Autowired
+    private UserAccountService userAccountService;
 
 
     /**
@@ -79,6 +84,14 @@ public class AccountController {
             }
         }
         session.setAttribute("activeUser",activeUser);
+        //登录的时候重新统计该用户的文章浏览量
+        int resule = userAccountService.statisticsUserAccountByUserId(userId);
+        if (resule == 1){
+            System.out.println("------------已经统计了浏览量，id为："+userId + "-------------------");
+        }else {
+            System.out.println("------------没有统计了浏览量（可能不存在该用户，或文章），id为："+userId + "-------------------");
+        }
+        //userAccountService.updateUserExchangeBalanceAccount(userId);
         if (loginType.equals(LoginTypeCode.HOME_PAGE_LOGIN.name())){
             //前台页面
             return "redirect:/home/reception/index";

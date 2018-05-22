@@ -37,6 +37,7 @@
     <script src="js/morris.js"></script>
     <link rel="stylesheet" href="css/gonggao.css">
     <link href="css/public.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/pagination/pagination.css" />
 </head>
 <body>
 <section id="container">
@@ -61,14 +62,13 @@
                             </ul>
                         </div>
                         <div style="font-size: 15px;padding: 14px 0 55px 0" >
-                            <form style="float: left" action="" method="post" id="form2">
+                            <form style="float: left" action="/exchange/report" method="get" id="form2">
                                 <select name="exchangeType">
                                     <option value="" selected="selected">--未分类--</option>
                                     <option value="FANS" <c:out value="${exchangeTypeSearch=='FANS'?'selected=selected':''}"></c:out>>粉丝兑换</option>
                                     <option value="BROWSE" <c:out value="${exchangeTypeSearch=='BROWSE'?'selected=selected':''}"></c:out>>浏览量兑换</option>
                                     <option value="COMMENT" <c:out value="${exchangeTypeSearch=='COMMENT'?'selected=selected':''}"></c:out>>评论量兑换</option>
                                     <option value="INTEGRAL" <c:out value="${exchangeTypeSearch=='INTEGRAL'?'selected=selected':''}"></c:out>>积分兑换</option>
-                                    <option value="EXCHANGE_COUNT" <c:out value="${exchangeTypeSearch=='EXCHANGE_COUNT'?'selected=selected':''}"></c:out>>兑换总次数</option>
                                 </select>
                                 <input name="submit" style="height: 32px" class="btn" type="submit" value="筛选">
                             </form>

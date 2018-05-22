@@ -32,4 +32,14 @@ public interface UserExchangeService {
      * @return
      */
     Long countUserExchange(Map<String,Object> params);
+
+
+    /**
+     * @Title insertUserExchange
+     * @Description 新增用户兑换记录
+     * @Author CLT
+     * @Date 2018/5/21 19:03
+     * @param userExchange
+     */
+    void insertUserExchange(UserExchange userExchange);
 }

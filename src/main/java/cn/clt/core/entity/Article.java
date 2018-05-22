@@ -26,6 +26,7 @@ public class Article {
     private String createTimeStr;
 
     private Integer timeDifference;
+
     /**评论数**/
     private Long countReview;
 
