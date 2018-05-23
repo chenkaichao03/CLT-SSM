@@ -377,7 +377,7 @@
         #{item}
       </foreach>
     </if>
-    ORDER by create_date
+    ORDER by create_date DESC
     <if test="pagination">
       limit #{pagination.start},#{pagination.pageSize}
     </if>
@@ -397,6 +397,6 @@
     <if test="userId != null">
       and create_user_id = #{userId,jdbcType=VARCHAR}
     </if>
-    ORDER BY create_date
+    ORDER BY create_date DESC
   </select>
 </mapper>

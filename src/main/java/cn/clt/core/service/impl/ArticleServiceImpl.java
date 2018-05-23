@@ -5,6 +5,7 @@ import cn.clt.core.enums.ArticleCode;
 import cn.clt.core.exception.BussinessException;
 import cn.clt.core.mapper.ArticleMapper;
 import cn.clt.core.mapper.ArticleTypeMapper;
+import cn.clt.core.mapper.UserInfoMapper;
 import cn.clt.core.params.ManagementPageData;
 import cn.clt.core.params.Pagination;
 import cn.clt.core.service.ArticleService;
@@ -47,6 +48,8 @@ public class ArticleServiceImpl implements ArticleService{
     private ArticleTypeMapper articleTypeMapper;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
     /**
      * @Title seletArticlePage
@@ -316,8 +319,24 @@ public class ArticleServiceImpl implements ArticleService{
             article.setTimeDifference(timeDifference);
             //获取评论数
             article.setCountReview(reviewService.countReview(article.getId()));
+            //获取用户姓名和头像
+            UserInfo userInfo = getUserInfo(article.getCreateUserId());
+            if (userInfo != null){
+                article.setUserName(userInfo.getRealName());
+                article.setUserPicture(userInfo.getUserPicture());
+            }
         }
         return articleList;
+    }
+
+    private UserInfo getUserInfo(String userId){
+        UserInfoExample example = new UserInfoExample();
+        example.createCriteria().andUserIdEqualTo(userId);
+        List<UserInfo> userInfoList = userInfoMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(userInfoList)){
+            return userInfoList.get(0);
+        }
+        return null;
     }
 
     /**

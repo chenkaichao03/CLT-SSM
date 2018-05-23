@@ -30,6 +30,10 @@ public class Article {
     /**评论数**/
     private Long countReview;
 
+    private String userName;
+
+    private String userPicture;
+
     public String getId() {
         return id;
     }
@@ -132,5 +136,21 @@ public class Article {
 
     public void setCountReview(Long countReview) {
         this.countReview = countReview;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPicture() {
+        return userPicture;
+    }
+
+    public void setUserPicture(String userPicture) {
+        this.userPicture = userPicture;
     }
 }
