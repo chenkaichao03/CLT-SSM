@@ -150,6 +150,8 @@ public class BrowseStatisticsInit {
                 accessStatisticsMap.clear();
                 //统计所有用户浏览记录
                 userAccountService.statisticsUserAccount();
+                //统计所有用户的账户余额表记录
+                userAccountService.statisticsUserExchangeBalanceAccount();
             }
         };
         ExecutorUtil.doInBackground(runnable);

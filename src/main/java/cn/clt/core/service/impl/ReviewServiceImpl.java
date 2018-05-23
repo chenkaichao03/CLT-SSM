@@ -76,7 +76,9 @@ public class ReviewServiceImpl implements ReviewService {
             reviewMapper.insert(review);
         }
         //更新用户账户评论数
-        updateUserAccountByReview(review.getArticleId());
+        String articleUserId = updateUserAccountByReview(review.getArticleId());
+        //更新账户余额表
+        userAccountService.updateUserExchangeBalanceAccount(articleUserId);
         return review.getId();
     }
 
@@ -87,16 +89,17 @@ public class ReviewServiceImpl implements ReviewService {
      * @Date 2018/5/19 22:04
      * @param articleId
      */
-    private void updateUserAccountByReview(String articleId){
+    private String updateUserAccountByReview(String articleId){
         Article article = articleMapper.selectByPrimaryKey(articleId);
         UserAccount userAccount = userAccountService.getUserAccountByUserId(article.getCreateUserId());
         Integer totalCurrentComment = userAccount.getUserTotalComment();
         if (totalCurrentComment < 0){
-            return;
+            return article.getCreateUserId();
         }
         totalCurrentComment = totalCurrentComment + 1;
         userAccount.setUserTotalComment(totalCurrentComment);
         userAccountService.updateUserAccount(userAccount);
+        return article.getCreateUserId();
     }
 
     /**

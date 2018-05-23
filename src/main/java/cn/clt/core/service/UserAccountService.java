@@ -20,6 +20,15 @@ public interface UserAccountService {
     Integer statisticsUserAccount();
 
     /**
+     * @Title statisticsUserExchangeBalanceAccount
+     * @Description 统计所有用户的账户余额
+     * @Author CLT
+     * @Date 2018/5/23 14:59
+     * @return
+     */
+    Integer statisticsUserExchangeBalanceAccount();
+
+    /**
      * @Title statisticsUserAccountByUserId
      * @Description 统计某个用户账户下的文章浏览量
      * @Author CLT

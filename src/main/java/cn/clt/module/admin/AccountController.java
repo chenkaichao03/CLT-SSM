@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -85,13 +86,9 @@ public class AccountController {
         }
         session.setAttribute("activeUser",activeUser);
         //登录的时候重新统计该用户的文章浏览量
-        int resule = userAccountService.statisticsUserAccountByUserId(userId);
-        if (resule == 1){
-            System.out.println("------------已经统计了浏览量，id为："+userId + "-------------------");
-        }else {
-            System.out.println("------------没有统计了浏览量（可能不存在该用户，或文章），id为："+userId + "-------------------");
-        }
-        //userAccountService.updateUserExchangeBalanceAccount(userId);
+        userAccountService.statisticsUserAccountByUserId(userId);
+        //更新账户余额表
+        userAccountService.updateUserExchangeBalanceAccount(userId);
         if (loginType.equals(LoginTypeCode.HOME_PAGE_LOGIN.name())){
             //前台页面
             return "redirect:/home/reception/index";

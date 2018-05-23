@@ -111,26 +111,6 @@
                                             </div>
                                             <br/><br/><br/>
                                             <div style="">
-                                                <span>积分数兑换：设置 </span>
-                                                <input type="hidden" value="${integral.id}">
-                                                <input type="number" style="width:90px;color: red;text-align: center" value="${integral.exchangeRateNumber}"/>
-                                                <span>个积分，兑换</span>
-                                                <span style="color: red">1</span>
-                                                <span>元钱；</span>
-                                                <input name="submit" id="button4" style="height: 32px" class="btn" type="submit" value="保存">
-                                            </div>
-                                            <br/><br/><br/>
-                                            <div style="">
-                                                <span>兑换总次数：设置 </span>
-                                                <input type="hidden" value="${exchangeCount.id}">
-                                                <input type="number" style="width:90px;color: red;text-align: center" value="${exchangeCount.exchangeRateNumber}"/>
-                                                <span>次兑换，送</span>
-                                                <span style="color: red">10</span>
-                                                <span>个积分；</span>
-                                                <input name="submit" id="button5" style="height: 32px" class="btn" type="submit" value="保存">
-                                            </div>
-                                            <br/><br/><br/>
-                                            <div style="">
                                                 <span>点赞数兑换：设置 </span>
                                                 <input type="hidden" value="${fabulous.id}">
                                                 <input type="number" style="width:90px;color: red;text-align: center" value="${fabulous.exchangeRateNumber}"/>

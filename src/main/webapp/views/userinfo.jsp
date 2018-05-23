@@ -50,7 +50,7 @@
                                 <span>个人信息</span>
                             </ul>
                         </div>
-                        <form name="form1" action="/account/user-info/setting" method="get">
+                        <form name="form1" action="/account/user-info/setting" method="get" accept-charset="UTF-8">
                             <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
                                 <c:if test="${not empty userInfo.id}">
                                 <tr>

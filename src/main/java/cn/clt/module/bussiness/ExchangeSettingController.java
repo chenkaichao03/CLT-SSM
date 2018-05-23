@@ -93,8 +93,6 @@ public class ExchangeSettingController {
                         model.addAttribute("browse",exchangeSetting);
                     }else if (exchangeType.equals(ExchangeTypeCode.COMMENT.name())){
                         model.addAttribute("comment",exchangeSetting);
-                    }else if (exchangeType.equals(ExchangeTypeCode.INTEGRAL.name())){
-                        model.addAttribute("integral",exchangeSetting);
                     }else if(exchangeType.equals(ExchangeTypeCode.FABULOUS.name())){
                         model.addAttribute("fabulous",exchangeSetting);
                     }
@@ -174,7 +172,10 @@ public class ExchangeSettingController {
                 model.addAttribute("userRole", user);
             }
             ManagementPageData pageData = exchangeSettingService.selectPageUserExchange(userId,exchangeType,pageNo,pageSize);
-            UserProfitVO userProfit = exchangeSettingService.getUserProfit(pageData.getUserExchangeList());
+            UserProfitVO userProfit = null;
+            if (!CollectionUtils.isEmpty(pageData.getUserExchangeList())) {
+                userProfit = exchangeSettingService.getUserProfit(pageData.getUserExchangeList());
+            }
             model.addAttribute("pageData",pageData);
             model.addAttribute("userProfit",userProfit);
             model.addAttribute("exchangeTypeSearch",exchangeType);
@@ -223,8 +224,6 @@ public class ExchangeSettingController {
                         model.addAttribute("browse",exchangeSetting);
                     }else if (exchangeType.equals(ExchangeTypeCode.COMMENT.name())){
                         model.addAttribute("comment",exchangeSetting);
-                    }else if (exchangeType.equals(ExchangeTypeCode.INTEGRAL.name())){
-                        model.addAttribute("integral",exchangeSetting);
                     }else if(exchangeType.equals(ExchangeTypeCode.FABULOUS.name())){
                         model.addAttribute("fabulous",exchangeSetting);
                     }

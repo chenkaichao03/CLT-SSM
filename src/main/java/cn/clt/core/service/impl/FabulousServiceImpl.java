@@ -62,7 +62,9 @@ public class FabulousServiceImpl implements FabulousService {
             fabulous.setCareateTime(date);
             fabulousMapper.insert(fabulous);
             //更新用户账户的点赞数
-            updateUserFabulous(fabulous.getArticleId(),1);
+            String articleUserId = updateUserFabulous(fabulous.getArticleId(),1);
+            //更新账户余额表
+            userAccountService.updateUserExchangeBalanceAccount(articleUserId);
             return fabulous.getId();
         }else {
             //判断状态
@@ -72,14 +74,18 @@ public class FabulousServiceImpl implements FabulousService {
                 fabulous1.setCareateTime(date);
                 fabulousMapper.updateByPrimaryKeySelective(fabulous1);
                 //更新用户账户的点赞数
-                updateUserFabulous(fabulous1.getArticleId(),0);
+                String articleUserId = updateUserFabulous(fabulous1.getArticleId(),0);
+                //更新账户余额表
+                userAccountService.updateUserExchangeBalanceAccount(articleUserId);
                 return fabulous1.getId();
             }else if (status == 0){
                 fabulous1.setStatus(1);
                 fabulous1.setCareateTime(date);
-                //更新用户账户的点赞数
-                updateUserFabulous(fabulous1.getArticleId(),1);
                 fabulousMapper.updateByPrimaryKeySelective(fabulous1);
+                //更新用户账户的点赞数
+                String articleUserId = updateUserFabulous(fabulous1.getArticleId(),1);
+                //更新账户余额表
+                userAccountService.updateUserExchangeBalanceAccount(articleUserId);
                 return fabulous1.getId();
             }
         }
@@ -94,14 +100,14 @@ public class FabulousServiceImpl implements FabulousService {
      * @param articleId
      * @param status
      */
-    private void updateUserFabulous(String articleId,Integer status){
+    private String updateUserFabulous(String articleId,Integer status){
         Article article = articleMapper.selectByPrimaryKey(articleId);
         UserAccount userAccount = userAccountService.getUserAccountByUserId(article.getCreateUserId());
         if (status == 0){
             //减少点赞数
             Integer totalCurrentFabulous = userAccount.getUserTotalFabulous();
             if (totalCurrentFabulous <= 0){
-                return;
+                return article.getCreateUserId();
             }
             totalCurrentFabulous = totalCurrentFabulous - 1;
             userAccount.setUserTotalFabulous(totalCurrentFabulous);
@@ -111,12 +117,13 @@ public class FabulousServiceImpl implements FabulousService {
             //增加点赞数
             Integer totalCurrentFabulous = userAccount.getUserTotalFabulous();
             if (totalCurrentFabulous < 0){
-                return;
+                return article.getCreateUserId();
             }
             totalCurrentFabulous = totalCurrentFabulous + 1;
             userAccount.setUserTotalFabulous(totalCurrentFabulous);
             userAccountService.updateUserAccount(userAccount);
         }
+        return article.getCreateUserId();
     }
 
     /**

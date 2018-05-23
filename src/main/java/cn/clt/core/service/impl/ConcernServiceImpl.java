@@ -62,6 +62,10 @@ public class ConcernServiceImpl implements ConcernService{
             concernMapper.insert(concern);
             //执行更新用户账户的粉丝和关注数量
             updataUserAccountByConcern(concernedUserId, concernUserId, 1);
+            //更新账户余额表
+            userAccountService.updateUserExchangeBalanceAccount(concernedUserId);
+            //更新账户余额表
+            userAccountService.updateUserExchangeBalanceAccount(concernUserId);
         }else {
             //编辑 查看当前的关注状态 0:无关注，1:已关注
             Integer concernType = concern.getConcernType();
@@ -71,12 +75,20 @@ public class ConcernServiceImpl implements ConcernService{
                 concernMapper.updateByPrimaryKeySelective(concern);
                 //执行更新用户账户的粉丝和关注数量
                 updataUserAccountByConcern(concernedUserId, concernUserId, 1);
+                //更新账户余额表
+                userAccountService.updateUserExchangeBalanceAccount(concernedUserId);
+                //更新账户余额表
+                userAccountService.updateUserExchangeBalanceAccount(concernUserId);
             }
             if (concernType == 1){
                 //改成末关注
                 concern.setConcernType(0);
                 concernMapper.updateByPrimaryKeySelective(concern);
                 updataUserAccountByConcern(concernedUserId, concernUserId, 0);
+                //更新账户余额表
+                userAccountService.updateUserExchangeBalanceAccount(concernedUserId);
+                //更新账户余额表
+                userAccountService.updateUserExchangeBalanceAccount(concernUserId);
             }
         }
         return concern.getConcernType();

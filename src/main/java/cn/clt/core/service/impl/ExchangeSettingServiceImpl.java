@@ -121,6 +121,12 @@ public class ExchangeSettingServiceImpl implements ExchangeSettingService {
         params.put("pagination",pagination);
         //兑换列表
         List<UserExchange> userExchangeList = userExchangeService.listUserExchange(params);
+        for (UserExchange userExchange : userExchangeList){
+            String exchangeRateMoney = toPrettyNumber(userExchange.getExchangeRateMoney());
+            userExchange.setExchangeRateMoney(new BigDecimal(exchangeRateMoney));
+            String exchangeRateNumber = toPrettyNumber(userExchange.getExchangeRateNumber());
+            userExchange.setExchangeRateNumber(new BigDecimal(exchangeRateNumber));
+        }
         //获取兑换次数
         Long count = userExchangeService.countUserExchange(params);
         ManagementPageData pageData = new ManagementPageData();
@@ -129,6 +135,29 @@ public class ExchangeSettingServiceImpl implements ExchangeSettingService {
         pageData.setPageNo(pageNo);
         pageData.setPageSize(pageSize);
         return pageData;
+    }
+
+    /**
+     * 数据格式化
+     * @param content
+     * @return
+     */
+    public static String toPrettyNumber(BigDecimal content) {
+        if (content == null) {
+            return "0";
+        }
+        long contentLong = content.multiply(new BigDecimal(1000)).longValue();
+        int xs1 = (int) (contentLong % 1000) / 100;
+        int xs2 = (int) (contentLong % 100) / 10;
+        int xs3 = (int) (contentLong % 10);
+        if (xs3 >= 5) {
+            xs2 += 1;
+        }
+        boolean hasXs = false;
+        if (xs1 != 0 || xs2 != 0) {
+            hasXs = true;
+        }
+        return contentLong / 1000 + (hasXs ? "." + (xs2 == 0 ? String.valueOf(xs1) : String.valueOf(xs1) + xs2) : "");
     }
 
     /**
@@ -269,29 +298,29 @@ public class ExchangeSettingServiceImpl implements ExchangeSettingService {
         if (exchangeType.equals(ExchangeTypeCode.FANS.name())){
             //粉丝兑换
             userExchangeBalanceAccount.setFansExchangeNumber(exchangeNumber);
-            Integer fansBeforeBalance = userExchangeBalanceAccount.getFansBeforeBalance();
-            Integer fansAfterBalance = fansBeforeBalance - exchangeNumber;
+            Integer fansAfterBalance = userExchangeBalanceAccount.getFansAfterBalance();
+            fansAfterBalance = fansAfterBalance - exchangeNumber;
             userExchangeBalanceAccount.setFansAfterBalance(fansAfterBalance);
             return userExchangeBalanceAccountService.updateUserExchangeBalanceAccount(userExchangeBalanceAccount);
         }else if (exchangeType.equals(ExchangeTypeCode.COMMENT.name())){
             //评论
             userExchangeBalanceAccount.setCommentExchangeNumber(exchangeNumber);
-            Integer commentBeforeBalance = userExchangeBalanceAccount.getCommentBeforeBalance();
-            Integer commentAfterBalance = commentBeforeBalance - exchangeNumber;
+            Integer commentAfterBalance = userExchangeBalanceAccount.getCommentAfterBalance();
+            commentAfterBalance = commentAfterBalance - exchangeNumber;
             userExchangeBalanceAccount.setCommentAfterBalance(commentAfterBalance);
             return userExchangeBalanceAccountService.updateUserExchangeBalanceAccount(userExchangeBalanceAccount);
         }else if (exchangeType.equals(ExchangeTypeCode.FABULOUS.name())){
             //点赞数
             userExchangeBalanceAccount.setFabulousExchangeNumber(exchangeNumber);
-            Integer fabulousBeforeBalance = userExchangeBalanceAccount.getFabulousBeforeBalance();
-            Integer fabulousAfterBalance = fabulousBeforeBalance - exchangeNumber;
+            Integer fabulousAfterBalance = userExchangeBalanceAccount.getFabulousAfterBalance();
+            fabulousAfterBalance = fabulousAfterBalance - exchangeNumber;
             userExchangeBalanceAccount.setFabulousAfterBalance(fabulousAfterBalance);
             return userExchangeBalanceAccountService.updateUserExchangeBalanceAccount(userExchangeBalanceAccount);
         }else if (exchangeType.equals(ExchangeTypeCode.BROWSE.name())){
             //浏览量
             userExchangeBalanceAccount.setBrowseExchangeNumber(exchangeNumber);
-            Integer browseBeforeBalance = userExchangeBalanceAccount.getBrowseBeforeBalance();
-            Integer browseAfterBalance = browseBeforeBalance - exchangeNumber;
+            Integer browseAfterBalance = userExchangeBalanceAccount.getBrowseAfterBalance();
+            browseAfterBalance = browseAfterBalance - exchangeNumber;
             userExchangeBalanceAccount.setBrowseAfterBalance(browseAfterBalance);
             return userExchangeBalanceAccountService.updateUserExchangeBalanceAccount(userExchangeBalanceAccount);
         }

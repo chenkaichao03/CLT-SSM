@@ -65,12 +65,12 @@
                             <form style="float: left" action="/exchange/report" method="get" id="form2">
                                 <select name="exchangeType">
                                     <option value="" selected="selected">--未分类--</option>
-                                    <option value="FANS" <c:out value="${exchangeTypeSearch=='FANS'?'selected=selected':''}"></c:out>>粉丝兑换</option>
+                                    <option value="FANS" <c:out value="${exchangeTypeSearch=='FANS'?'selected=selected':''}"></c:out>>粉丝量兑换</option>
                                     <option value="BROWSE" <c:out value="${exchangeTypeSearch=='BROWSE'?'selected=selected':''}"></c:out>>浏览量兑换</option>
                                     <option value="COMMENT" <c:out value="${exchangeTypeSearch=='COMMENT'?'selected=selected':''}"></c:out>>评论量兑换</option>
-                                    <option value="INTEGRAL" <c:out value="${exchangeTypeSearch=='INTEGRAL'?'selected=selected':''}"></c:out>>积分兑换</option>
+                                    <option value="FABULOUS" <c:out value="${exchangeTypeSearch=='FABULOUS'?'selected=selected':''}"></c:out>>点赞量兑换</option>
                                 </select>
-                                <input name="submit" style="height: 32px" class="btn" type="submit" value="筛选">
+                                <input style="height: 32px" class="btn" type="submit">
                             </form>
                             <span style="float: right;color: red">${userProfit.totalAmountMomey}</span><span style="float: right">累计收益金额：</span>
                             <span style="float: right;color: red;padding-right: 15px">${userProfit.totalAmountNumber}</span><span style="float: right">累计兑换数：</span>

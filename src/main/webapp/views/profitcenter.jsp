@@ -10,6 +10,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
     <base href="<%=basePath%>">
@@ -47,9 +48,7 @@
                         data:"id="+exchangeId,
                         success:function (rs) {
                             if (rs.code==200){
-                                debugger
                                 var number = rs.object.exchangeRateNumber;
-                                console.log(number);
                                 var money = rs.object.exchangeRateMoney;
                                 $("#rate").html("兑换比例："+number+":"+money);
                             }
@@ -66,7 +65,24 @@
         $(function () {
             //兑换
             $(".btn").click(function () {
-
+                var obj ={
+                    userId:$(this).prev("input:hidden").val(),
+                    exchangeSettingId:$("#select1 option:selected").val(),
+                    exchangeNumber:$(this).prevAll("input:text").val()
+                }
+                $.ajax({
+                    url:"/exchange/operation",
+                    type:"post",
+                    data:obj,
+                    success:function (rs) {
+                        if (rs.code==200){
+                            window.location="${ctx}/exchange/report";
+                        }
+                        if (rs.code==404){
+                            alert(rs.message);
+                        }
+                    }
+                })
             })
         })
     </script>
@@ -100,10 +116,10 @@
                                         <span style="margin-left: 230px">兑换类型：
                                                 <select name="id" style="margin-right: 10px" id="select1">
                                                     <option value="" selected="id">--未选择--</option>
-                                                    <option value="${fans.id}">粉丝兑换</option>
+                                                    <option value="${fans.id}">粉丝量兑换</option>
                                                     <option value="${browse.id}">浏览量兑换</option>
                                                     <option value="${comment.id}">评论量兑换</option>
-                                                    <option value="${integral.id}">积分兑换</option>
+                                                    <option value="${fabulous.id}">点赞量兑换</option>
                                                 </select>
                                             </span><br/><br/>
                                         <span style="margin-left: 230px;" id="rate">
@@ -111,7 +127,7 @@
                                         <br/><br/>
                                         <span style="margin-left: 198px">输入兑换数量：
                                                 <input type="text" style="height: 32px;margin-right: 10px;"/>
-                                                 <input type="hidden" value="${userInfo.userId}">
+                                                 <input type="hidden" value="${userInfo.userId}"/>
                                                 <input name="submit" style="height: 32px" class="btn" type="submit" value="兑换">
                                         </span>
                                     </td>

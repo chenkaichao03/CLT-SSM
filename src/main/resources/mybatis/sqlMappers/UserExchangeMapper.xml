@@ -368,22 +368,30 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <select id="listUserExchange" parameterType="map" resultType="cn.clt.core.entity.UserExample">
+  <select id="listUserExchange" parameterType="map" resultType="cn.clt.core.entity.UserExchange">
     SELECT * from user_exchange
-    WHERE user_id = #{userId,jdbcType=VARCHAR}
-    AND status = 1
-    <if test="exchangeType != null">
-      exchange_type LIKE concat("%",#{exchangeType},"%")
+    WHERE status = 1
+    <if test="userId != null">
+      AND user_id = #{userId,jdbcType=VARCHAR}
     </if>
+    <if test="exchangeType != null">
+     AND exchange_type LIKE CONCAT('%','${exchangeType}','%')
+    </if>
+    ORDER by create_time DESC
+    <if test="pagination != null">
     limit #{pagination.start},#{pagination.pageSize}
+    </if>
   </select>
 
   <select id="countUserExchange" parameterType="map" resultType="java.lang.Long">
     SELECT count(1) from user_exchange
-    WHERE user_id = #{userId,jdbcType=VARCHAR}
-    AND status = 1
-    <if test="exchangeType != null">
-      exchange_type LIKE concat("%",#{exchangeType},"%")
+    WHERE status = 1
+    <if test="userId != null">
+      AND user_id = #{userId,jdbcType=VARCHAR}
     </if>
+    <if test="exchangeType != null">
+      AND  exchange_type LIKE CONCAT('%','${exchangeType}','%')
+    </if>
+    ORDER by create_time DESC
   </select>
 </mapper>

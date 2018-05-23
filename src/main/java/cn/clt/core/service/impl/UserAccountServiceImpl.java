@@ -95,7 +95,7 @@ public class UserAccountServiceImpl implements UserAccountService{
             UserAccount userAccount = getUserAccountByUserId(userId);
             if (userAccount == null){
                 //创建一个用户账户
-                userAccount = AssembleUserAccount(userId);
+                userAccount = assembleUserAccount(userId);
             }
             //获取用户下的可用文章ids
             List<String> articleIds = getArticleIds(userId);
@@ -112,6 +112,27 @@ public class UserAccountServiceImpl implements UserAccountService{
     }
 
     /**
+     * @Title statisticsUserExchangeBalanceAccount
+     * @Description 统计所有用户的账户余额
+     * @Author CLT
+     * @Date 2018/5/23 14:59
+     * @return
+     */
+    @Override
+    public Integer statisticsUserExchangeBalanceAccount() {
+        List<String> userIds = getUserIds();
+        if (CollectionUtils.isEmpty(userIds)){
+            //不存在用户
+            logger.info("不存在用户.");
+            return 0;
+        }
+        for (String userId : userIds){
+            updateUserExchangeBalanceAccount(userId);
+        }
+        return 1;
+    }
+
+    /**
      * @Title updateUserExchangeBalanceAccount
      * @Description 更新账户余额表
      * @Author CLT
@@ -123,7 +144,7 @@ public class UserAccountServiceImpl implements UserAccountService{
     public String updateUserExchangeBalanceAccount(String userId) {
         UserAccount userAccount = getUserAccountByUserId(userId);
         if (userAccount == null){
-            return null;
+            userAccount = assembleUserAccount(userId);
         }
         UserExchangeBalanceAccount userExchangeBalanceAccount = userExchangeBalanceAccountService.getUserExchangeBalanceAccount(userId);
         if (userExchangeBalanceAccount == null){
@@ -135,32 +156,56 @@ public class UserAccountServiceImpl implements UserAccountService{
         }
     }
 
-    public String  updateUserExchangeBalanceAccount(UserExchangeBalanceAccount userExchangeBalanceAccount,UserAccount userAccount){
+    /**
+     * @Title updateUserExchangeBalanceAccount
+     * @Description 更新账户余额表
+     * @Author CLT
+     * @Date 2018/5/22 17:55
+     * @param userExchangeBalanceAccount
+     * @param userAccount
+     * @return
+     */
+    public String updateUserExchangeBalanceAccount(UserExchangeBalanceAccount userExchangeBalanceAccount,UserAccount userAccount){
         //粉丝
-        Integer currentFans = userAccount.getUserTotalFabulous();
+        Integer currentFans = userAccount.getUserTotalFans();
         userExchangeBalanceAccount.setFansBeforeBalance(currentFans);//更新最新的兑换前值
-        //计算剩余的 根据上一次兑换
         Integer fansExchangeNum = userExchangeBalanceAccount.getFansExchangeNumber();
-        Integer fansAfterBalance = currentFans - fansExchangeNum;
-        userExchangeBalanceAccount.setFansAfterBalance(fansAfterBalance);
+        if (fansExchangeNum > 0) {
+            Integer fansAfterBalance = currentFans - fansExchangeNum;
+            userExchangeBalanceAccount.setFansAfterBalance(fansAfterBalance);
+        }else if (fansExchangeNum == 0){
+            userExchangeBalanceAccount.setFansAfterBalance(currentFans);
+        }
         //评论
         Integer currentComment = userAccount.getUserTotalComment();
         userExchangeBalanceAccount.setCommentBeforeBalance(currentComment);
         Integer commentExchangeNum = userExchangeBalanceAccount.getCommentExchangeNumber();
-        Integer commentAfterBalance = currentComment - commentExchangeNum;
-        userExchangeBalanceAccount.setCommentAfterBalance(commentAfterBalance);
+        if (commentExchangeNum > 0){
+            Integer commentAfterBalance = currentComment - commentExchangeNum;
+            userExchangeBalanceAccount.setCommentAfterBalance(commentAfterBalance);
+        }else if (commentExchangeNum == 0){
+            userExchangeBalanceAccount.setCommentAfterBalance(currentComment);
+        }
         //点赞数
         Integer currentFabulous = userAccount.getUserTotalFabulous();
-        userExchangeBalanceAccount.setFansBeforeBalance(currentFabulous);
+        userExchangeBalanceAccount.setFabulousBeforeBalance(currentFabulous);
         Integer fabulousExchangeNum = userExchangeBalanceAccount.getFabulousExchangeNumber();
-        Integer fabulousAfterBalance = currentFabulous - fabulousExchangeNum;
-        userExchangeBalanceAccount.setFabulousAfterBalance(fabulousAfterBalance);
+        if (fabulousExchangeNum > 0) {
+            Integer fabulousAfterBalance = currentFabulous - fabulousExchangeNum;
+            userExchangeBalanceAccount.setFabulousAfterBalance(fabulousAfterBalance);
+        }else if (fabulousExchangeNum == 0){
+            userExchangeBalanceAccount.setFabulousAfterBalance(currentFabulous);
+        }
         //浏览量
         Integer currentBrowse = userAccount.getUserTotalBrowse();
         userExchangeBalanceAccount.setBrowseBeforeBalance(currentBrowse);
         Integer browseExchangeNum = userExchangeBalanceAccount.getBrowseExchangeNumber();
-        Integer browseAfterBalance = currentBrowse - browseExchangeNum;
-        userExchangeBalanceAccount.setBrowseAfterBalance(browseAfterBalance);
+        if (browseExchangeNum > 0) {
+            Integer browseAfterBalance = currentBrowse - browseExchangeNum;
+            userExchangeBalanceAccount.setBrowseAfterBalance(browseAfterBalance);
+        }else if (browseExchangeNum == 0){
+            userExchangeBalanceAccount.setBrowseAfterBalance(currentBrowse);
+        }
         userExchangeBalanceAccountService.updateUserExchangeBalanceAccount(userExchangeBalanceAccount);
         return userExchangeBalanceAccount.getId();
     }
@@ -173,16 +218,16 @@ public class UserAccountServiceImpl implements UserAccountService{
         userExchangeBalanceAccount.setUserId(userId);
         userExchangeBalanceAccount.setFansExchangeNumber(0);
         userExchangeBalanceAccount.setFansBeforeBalance(userAccount.getUserTotalFans());
-        userExchangeBalanceAccount.setFansAfterBalance(0);
+        userExchangeBalanceAccount.setFansAfterBalance(userAccount.getUserTotalFans());
         userExchangeBalanceAccount.setBrowseExchangeNumber(0);
         userExchangeBalanceAccount.setBrowseBeforeBalance(userAccount.getUserTotalBrowse());
-        userExchangeBalanceAccount.setBrowseAfterBalance(0);
+        userExchangeBalanceAccount.setBrowseAfterBalance(userAccount.getUserTotalBrowse());
         userExchangeBalanceAccount.setFabulousExchangeNumber(0);
         userExchangeBalanceAccount.setFabulousBeforeBalance(userAccount.getUserTotalFabulous());
-        userExchangeBalanceAccount.setFabulousAfterBalance(0);
+        userExchangeBalanceAccount.setFabulousAfterBalance(userAccount.getUserTotalFabulous());
         userExchangeBalanceAccount.setCommentExchangeNumber(0);
         userExchangeBalanceAccount.setCommentBeforeBalance(userAccount.getUserTotalComment());
-        userExchangeBalanceAccount.setCommentAfterBalance(0);
+        userExchangeBalanceAccount.setCommentAfterBalance(userAccount.getUserTotalComment());
         userExchangeBalanceAccount.setStatus(1);
         userExchangeBalanceAccount.setCreateTime(new Date());
         userExchangeBalanceAccountService.insertUserExchangeBalanceAccount(userExchangeBalanceAccount);
@@ -202,7 +247,7 @@ public class UserAccountServiceImpl implements UserAccountService{
         //获取该用户的账户
         UserAccount userAccount = getUserAccountByUserId(userId);
         if (userAccount == null){
-            UserAccount userAccount1 = AssembleUserAccount(userId);
+            UserAccount userAccount1 = assembleUserAccount(userId);
             //获取该用户下的所有文章id
             List<String> articleIds = getArticleIds(userId);
             if (CollectionUtils.isEmpty(articleIds)){
@@ -212,7 +257,7 @@ public class UserAccountServiceImpl implements UserAccountService{
             //浏览量统计
             Integer countBrowse = countBrowse(articleIds);
             userAccount1.setUserTotalBrowse(countBrowse);
-            return userAccountMapper.updateByPrimaryKeySelective(userAccount);
+            return userAccountMapper.updateByPrimaryKeySelective(userAccount1);
         }else {
             //获取该用户下的所有文章id
             List<String> articleIds = getArticleIds(userId);
@@ -240,7 +285,7 @@ public class UserAccountServiceImpl implements UserAccountService{
         //获取该用户的账户
         UserAccount userAccount = getUserAccountByUserId(userId);
         if (userAccount == null){
-            UserAccount userAccount1 = AssembleUserAccount(userId);
+            UserAccount userAccount1 = assembleUserAccount(userId);
             //获取该用户下的所有文章id
             List<String> articleIds = getArticleIds(userId);
             if (CollectionUtils.isEmpty(articleIds)){
@@ -271,7 +316,7 @@ public class UserAccountServiceImpl implements UserAccountService{
      * @param userId
      * @return
      */
-    private UserAccount AssembleUserAccount(String userId){
+    private UserAccount assembleUserAccount(String userId){
         Date date = new Date();
         UserAccount userAccount = new UserAccount();
         userAccount.setId(GuidUtil.newGuid());
