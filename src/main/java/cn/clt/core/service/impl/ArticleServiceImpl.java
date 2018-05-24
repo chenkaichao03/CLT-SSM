@@ -366,13 +366,12 @@ public class ArticleServiceImpl implements ArticleService{
      * @return
      */
     @Override
-    public List<Article> listArticle() {
+    public List<Article> listArticle(String articleUserId) {
         Map<String,Object> params = new HashMap<>();
-        List<String> articleIds = listArticleTypes(ArticleCode.getArticleCode());
         Pagination pagination = new Pagination(1,3);
-        params.put("articleIds",articleIds);
+        params.put("userId",articleUserId);
         params.put("pagination",pagination);
-        return articleMapper.getArticleByArticleCode(params);
+        return articleMapper.listArticlePage(params);
     }
 
     /**

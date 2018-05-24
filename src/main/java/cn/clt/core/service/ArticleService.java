@@ -118,7 +118,7 @@ public interface ArticleService {
      * @Date 2018/5/18 17:00
      * @return
      */
-    List<Article> listArticle();
+    List<Article> listArticle(String articleUserId);
 
     /**
      * @Title selectArticlePage
@@ -131,4 +131,5 @@ public interface ArticleService {
      * @return
      */
     ManagementPageData selectArticlePage(String userId, Integer pageNo, Integer pageSize);
+
 }

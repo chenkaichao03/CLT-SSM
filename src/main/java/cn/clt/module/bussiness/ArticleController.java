@@ -302,7 +302,7 @@ public class ArticleController {
             ManagementPageData pageData = reviewService.listReview(id,pageNo,pageSize);
             model.addAttribute("pageData",pageData);
             //获取最近发布的文章
-            List<Article> articleList = articleService.listArticle();
+            List<Article> articleList = articleService.listArticle(articleUserId);
             model.addAttribute("articleList",articleList);
         }catch (Exception e){
             e.printStackTrace();
@@ -357,6 +357,9 @@ public class ArticleController {
                 return Result.error("兄dei,请登录.");
             }
             String userId = activeUser.getUserId();
+            if (concernedUserId.equals(userId)){
+                return Result.error("兄dei,无法关注自己哦.");
+            }
             Integer concernType = concernService.concernUser(concernedUserId,userId);
             return Result.ok(Code.OK.getValue(),"关注操作成功",concernType);
         }catch (Exception e){
